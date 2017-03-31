@@ -1,13 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
     <AssemblyName>LeanTest.Core</AssemblyName>
     <RootNamespace>LeanTest.Core</RootNamespace>
+    
+    <PackageId>LeanTest.Core</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>Brian Elgaard Bennett</Authors>
+    <Description>
+      A shared library used to simplify the process of creating and maintaining simple and consistent developer tests accross projects.
+    </Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright>LeanTest is licensed under the Apache License 2.0</Copyright>
+    <PackageTags>Unit Test UnitTest DeveloperTest Developer</PackageTags>  
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>LeanTest.Core.xml</DocumentationFile>
   </PropertyGroup>
-
 </Project>
