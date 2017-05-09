@@ -21,9 +21,9 @@ namespace LeanTest.Core.ExecutionHandling
         internal ContextBuilder(IIocContainer container, params Func<IIocContainer, IDataStore, IBuilder>[] builderFactories)
         {
             _container = container ?? throw new ArgumentNullException(nameof(container));
-            _builders = builderFactories?.Select(builderFactory => builderFactory(_container, DataStore)).ToArray() ?? throw new ArgumentNullException(nameof(builderFactories));
 
             DataStore = new DataStore();
+            _builders = builderFactories?.Select(builderFactory => builderFactory(_container, DataStore)).ToArray() ?? throw new ArgumentNullException(nameof(builderFactories));
         }
 
         /// <summary>
