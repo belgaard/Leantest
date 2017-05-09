@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core
+namespace Core.Examples
 {
     public class Class1
     {
