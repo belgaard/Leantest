@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Core.Examples.MsTest.Application;
 using LeanTest.Core.ExecutionHandling;
 
-namespace Core.Examples.MsTest.IoC
+namespace Core.Examples.MsTest.Domain
 {
     /// <summary>
     /// An IoC container made up for this example. In real-world examples you would use SimpleInjector, Unity or some 

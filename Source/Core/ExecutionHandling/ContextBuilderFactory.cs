@@ -21,11 +21,11 @@ namespace LeanTest.Core.ExecutionHandling
         /// Depending on the IoC mode, we will either have a single container instance (per AppDomain) which is reused across all test classes 
         /// of the assembly, or a new instance will be created whenever a context builder is created.
         /// </remarks>
-        private static Lazy<IIocContainer> lazyIocContainer;
-        private static Func<IIocContainer> iocContainerFactory;
+        private static Lazy<IIocContainer> _lazyIocContainer;
+        private static Func<IIocContainer> _iocContainerFactory;
 
-        private static CleanContextMode cleanContextMode;
-        private static readonly ICollection<Func<IIocContainer, IDataStore, IBuilder>> builderFactories = new List<Func<IIocContainer, IDataStore, IBuilder>>();
+        private static CleanContextMode _cleanContextMode;
+        private static readonly ICollection<Func<IIocContainer, IDataStore, IBuilder>> BuilderFactories = new List<Func<IIocContainer, IDataStore, IBuilder>>();
 
         /// <summary>
         /// The lastly created context builder instance for the currently running AppDomain.
@@ -42,19 +42,19 @@ namespace LeanTest.Core.ExecutionHandling
         public static ContextBuilder CreateContextBuilder()
         {
             IIocContainer iocContainer;
-            switch (cleanContextMode)
+            switch (_cleanContextMode)
             {
                 case CleanContextMode.ReCreate:
-                    iocContainer = iocContainerFactory();
+                    iocContainer = _iocContainerFactory();
                     break;
                 case CleanContextMode.ReUse:
-                    iocContainer = lazyIocContainer.Value;
+                    iocContainer = _lazyIocContainer.Value;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            return ContextBuilder = new ContextBuilder(iocContainer, Enumerable.ToArray<Func<IIocContainer, IDataStore, IBuilder>>(builderFactories));
+            return ContextBuilder = new ContextBuilder(iocContainer, BuilderFactories.ToArray());
         }
 
         /// <summary>
@@ -62,13 +62,13 @@ namespace LeanTest.Core.ExecutionHandling
         /// </summary>
         public static void Initialize(CleanContextMode mode, Func<IIocContainer> iocfactory)
         {
-            cleanContextMode = mode;
-            iocContainerFactory = iocfactory;
+            _cleanContextMode = mode;
+            _iocContainerFactory = iocfactory;
 
             // TODO: This should not be part of Initialize - to be removed as soon as 'state' is a separate nuGet package!
             AddBuilderFactory((container, dataStore) => new StateBuilder(container, dataStore));
 
-            lazyIocContainer = new Lazy<IIocContainer>(iocContainerFactory);
+            _lazyIocContainer = new Lazy<IIocContainer>(_iocContainerFactory);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace LeanTest.Core.ExecutionHandling
         /// </summary>
         internal static void AddBuilderFactory(Func<IIocContainer, IDataStore, IBuilder> builderFactory)
         {
-            builderFactories.Add(builderFactory);
+            BuilderFactories.Add(builderFactory);
         }
 
         /// <summary>

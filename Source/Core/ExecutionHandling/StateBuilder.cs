@@ -14,11 +14,8 @@ namespace LeanTest.Core.ExecutionHandling
 
         public StateBuilder(IIocContainer container, IDataStore dataStore)
         {
-            if (container == null) throw new ArgumentNullException(nameof(container));
-            if (dataStore == null) throw new ArgumentNullException(nameof(dataStore));
-
-            _container = container;
-            _dataStore = dataStore;
+            _container = container ?? throw new ArgumentNullException(nameof(container));
+            _dataStore = dataStore ?? throw new ArgumentNullException(nameof(dataStore));
 
             _clearer = (state, type) => state.Clear(type);
         }
@@ -32,7 +29,7 @@ namespace LeanTest.Core.ExecutionHandling
                 {
                     _clearer(state, stateKeyValuePair.Key);
 
-                    if (Enumerable.All<KeyValuePair<Type, List<object>>>(_dataStore.TypedData, t => t.Key != stateKeyValuePair.Key))
+                    if (_dataStore.TypedData.All(t => t.Key != stateKeyValuePair.Key))
                         continue;
                     foreach (object data in _dataStore.TypedData[stateKeyValuePair.Key])
                         state.WithData(stateKeyValuePair.Key, data);

@@ -28,7 +28,7 @@ namespace Core.Examples.MsTest
             _target = _contextBuilder.GetInstance<MyApplicationService>();
         }
 
-        [TestMethod, TestCategory("Unit"), TestCategory("SystemIntegration")]
+        [TestMethod]
         public void SumMustReturn42When10And32ArePassed()
         {
             _contextBuilder
