@@ -5,7 +5,7 @@
     <RootNamespace>LeanTest.Core</RootNamespace>
     
     <PackageId>LeanTest.Core</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Authors>Brian Elgaard Bennett</Authors>
     <Description>
       A shared library used to simplify the process of creating and maintaining simple and consistent developer tests accross projects.

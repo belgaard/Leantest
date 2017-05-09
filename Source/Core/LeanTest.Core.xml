@@ -88,7 +88,7 @@
             Eventually, this class will support the ability to isolate tests so that services can run in separate AppDomains.
             </remarks>
         </member>
-        <member name="F:LeanTest.Core.ExecutionHandling.ContextBuilderFactory.lazyIocContainer">
+        <member name="F:LeanTest.Core.ExecutionHandling.ContextBuilderFactory._lazyIocContainer">
             <summary>
             The container instance for the currently running AppDomain.
             </summary>
