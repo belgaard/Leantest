@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Examples.MsTest", "Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock", "Mock\Mock.csproj", "{E412F59B-73AF-4071-9275-A341595FCD5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock.Examples.MsTest", "Mock.Examples.MsTest\Mock.Examples.MsTest.csproj", "{D5D202EB-D9A1-47A7-9844-70BD649D7E4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E412F59B-73AF-4071-9275-A341595FCD5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E412F59B-73AF-4071-9275-A341595FCD5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E412F59B-73AF-4071-9275-A341595FCD5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5D202EB-D9A1-47A7-9844-70BD649D7E4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5D202EB-D9A1-47A7-9844-70BD649D7E4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5D202EB-D9A1-47A7-9844-70BD649D7E4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5D202EB-D9A1-47A7-9844-70BD649D7E4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
