@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <AssemblyName>LeanTest.Mock</AssemblyName>
+    <RootNamespace>LeanTest.Mock</RootNamespace>
+
+    <PackageId>LeanTest.Mock</PackageId>
+    <PackageVersion>1.0.1</PackageVersion>
+    <Authors>Brian Elgaard Bennett</Authors>
+    <Description>
+      Adds support for implementing mocks consistently and pass test data to be used in mocks.
+    </Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright>LeanTest is licensed under the Apache License 2.0</Copyright>
+    <PackageTags>Unit Test UnitTest DeveloperTest Developer Mock</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.4\LeanTest.Mock.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+
+</Project>
