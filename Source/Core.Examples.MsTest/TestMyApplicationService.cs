@@ -1,3 +1,4 @@
+using System;
 using Core.Examples.MsTest.Application;
 using Core.Examples.MsTest.IoC;
 using LeanTest.Core.ExecutionHandling;
@@ -32,13 +33,24 @@ namespace Core.Examples.MsTest
         public void SumMustReturn42When10And32ArePassed()
         {
             _contextBuilder
-                .WithData(new MyData { First = 10, Second = 32 })
+                .WithData(new MyData {First = 10, Second = 32})
                 .Build();
 
             int actual = _target.Sum(_contextBuilder.First<MyData>());
 
-            MultiAssert.Aggregate<AssertFailedException>(
+            MultiAssert.Aggregate(
                 () => Assert.AreEqual(42, actual));
+        }
+    }
+
+}
+namespace LeanTest.Core.ExecutionHandling
+{
+    public static partial class MultiAssert
+    {
+        public static void Aggregate(params Action[] actions)
+        {
+            MultiAssert.Aggregate<AssertFailedException>(actions);
         }
     }
 }

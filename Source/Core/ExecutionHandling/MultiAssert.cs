@@ -4,10 +4,19 @@ using System.Linq;
 
 namespace LeanTest.Core.ExecutionHandling
 {
+    public class AggregatedMessagesException : Exception
+    {
+        public AggregatedMessagesException(string message)
+            :base(message)
+        {
+            
+        }
+    }
+
     /// <summary>
     /// Allows support for multiple asserts.
     /// </summary>
-    public static class MultiAssert
+    public static partial class MultiAssert
     {
         /// <summary>
         /// Executes all actions regardless of failed assertions. If any assertions fail, a single assertion failure with
@@ -22,7 +31,7 @@ namespace LeanTest.Core.ExecutionHandling
         ///  - https://elgaard.blog/2011/02/06/multiple-asserts-in-a-single-unit-test-method/
         ///  - https://elgaard.blog/2013/05/26/even-more-asserts-in-a-single-unit-test-method/
         /// </remarks>
-        public static void Aggregate<TException>(params AssertAction<TException>[] actions) where TException: Exception, new()
+        public static void Aggregate<TException>(params Action[] actions) where TException: Exception
         {
             var exceptions = new List<TException>();
 
@@ -43,10 +52,9 @@ namespace LeanTest.Core.ExecutionHandling
             if (enumerable.Count() != 0)
             {
                 throw new
-                    TException();
-                //{ 
-                //        enumerable.Aggregate(
-                //            (aggregatedMessage, next) => aggregatedMessage + Environment.NewLine + next))};
+                    AggregatedMessagesException(
+                        enumerable.Aggregate(
+                            (aggregatedMessage, next) => aggregatedMessage + Environment.NewLine + next));
             }
         }
     }
