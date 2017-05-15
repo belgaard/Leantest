@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using LeanTest.Core.ExecutionHandling;
 using LeanTest.Mock;
 using Mock.Examples.MsTest.Application;
