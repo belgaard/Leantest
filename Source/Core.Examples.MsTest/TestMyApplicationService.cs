@@ -37,7 +37,8 @@ namespace Core.Examples.MsTest
 
             int actual = _target.Sum(_contextBuilder.First<MyData>());
 
-            Assert.AreEqual(42, actual);
+            MultiAssert.Aggregate<AssertFailedException>(
+                () => Assert.AreEqual(42, actual));
         }
     }
 }
