@@ -14,11 +14,8 @@ namespace LeanTest.Mock
 
         public MockingBuilder(IIocContainer container, IDataStore dataStore)
         {
-            if (container == null) throw new ArgumentNullException(nameof(container));
-            if (dataStore == null) throw new ArgumentNullException(nameof(dataStore));
-
-            _container = container;
-            _dataStore = dataStore;
+            _container = container ?? throw new ArgumentNullException(nameof(container));
+            _dataStore = dataStore ?? throw new ArgumentNullException(nameof(dataStore));
         }
 
         public void Build()
@@ -33,7 +30,7 @@ namespace LeanTest.Mock
                     MethodInfo clearMethod = theClass.GetTypeInfo().GetDeclaredMethod("Clear");
                     clearMethod.Invoke(mock, new object[] { mockDelegatesForType.Key });
 
-                    if (Enumerable.All<KeyValuePair<Type, List<object>>>(_dataStore.TypedData, t => t.Key != mockDelegatesForType.Key))
+                    if (_dataStore.TypedData.All(t => t.Key != mockDelegatesForType.Key))
                         continue;
                     MethodInfo withDataMethod = theClass.GetTypeInfo().GetDeclaredMethod("WithData");
                     foreach (object data in _dataStore.TypedData[mockDelegatesForType.Key])

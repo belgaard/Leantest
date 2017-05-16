@@ -1,6 +1,7 @@
 using System;
 using Core.Examples.MsTest.Application;
 using Core.Examples.MsTest.IoC;
+using Core.Examples.MsTest.TestSetup;
 using LeanTest.Core.ExecutionHandling;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -40,17 +41,6 @@ namespace Core.Examples.MsTest
 
             MultiAssert.Aggregate(
                 () => Assert.AreEqual(42, actual));
-        }
-    }
-
-}
-namespace LeanTest.Core.ExecutionHandling
-{
-    public static partial class MultiAssert
-    {
-        public static void Aggregate(params Action[] actions)
-        {
-            MultiAssert.Aggregate<AssertFailedException>(actions);
         }
     }
 }

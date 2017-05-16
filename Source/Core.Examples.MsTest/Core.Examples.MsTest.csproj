@@ -107,6 +107,7 @@
     <Compile Include="TestSetup\AssemblyInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestMyApplicationService.cs" />
+    <Compile Include="TestSetup\MultiAssert.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

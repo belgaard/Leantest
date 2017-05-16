@@ -4,19 +4,10 @@ using System.Linq;
 
 namespace LeanTest.Core.ExecutionHandling
 {
-    public class AggregatedMessagesException : Exception
-    {
-        public AggregatedMessagesException(string message)
-            :base(message)
-        {
-            
-        }
-    }
-
     /// <summary>
     /// Allows support for multiple asserts.
     /// </summary>
-    public static partial class MultiAssert
+    public static class MultiAssertForTException
     {
         /// <summary>
         /// Executes all actions regardless of failed assertions. If any assertions fail, a single assertion failure with
