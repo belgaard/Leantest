@@ -4,8 +4,6 @@ using System.Linq;
 
 namespace LeanTest.Core.ExecutionHandling
 {
-    public delegate void AssertAction<T>();
-
     internal class StateBuilder : IBuilder
     {
         private readonly IIocContainer _container;
