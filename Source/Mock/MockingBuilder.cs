@@ -27,16 +27,16 @@ namespace LeanTest.Mock
                 {
                     Type theClass = typeof(IMockForData<>).MakeGenericType(mockDelegatesForType.Key);
                     
-                    MethodInfo clearMethod = theClass.GetTypeInfo().GetDeclaredMethod("Clear");
+                    MethodInfo clearMethod = theClass.GetTypeInfo().GetDeclaredMethod(nameof(IMockForData<MockingBuilder>.Clear));
                     clearMethod.Invoke(mock, new object[] { mockDelegatesForType.Key });
 
                     if (_dataStore.TypedData.All(t => t.Key != mockDelegatesForType.Key))
                         continue;
-                    MethodInfo withDataMethod = theClass.GetTypeInfo().GetDeclaredMethod("WithData");
+                    MethodInfo withDataMethod = theClass.GetTypeInfo().GetDeclaredMethod(nameof(IMockForData<MockingBuilder>.WithData));
                     foreach (object data in _dataStore.TypedData[mockDelegatesForType.Key])
                         withDataMethod.Invoke(mock, new[] { data });
 
-                    MethodInfo buildMethod = theClass.GetTypeInfo().GetDeclaredMethod("Build");
+                    MethodInfo buildMethod = theClass.GetTypeInfo().GetDeclaredMethod(nameof(IMockForData<MockingBuilder>.Build));
                     buildMethod.Invoke(mock, null/*, new object[] { mockDelegatesForType.Key }*/); // TODO: Add a Type parameter to Build?
                 }
             }
