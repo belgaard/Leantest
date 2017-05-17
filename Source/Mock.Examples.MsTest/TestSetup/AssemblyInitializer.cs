@@ -12,9 +12,7 @@ namespace Mock.Examples.MsTest.TestSetup
         [AssemblyInitialize]
         public static void AssemblyInitialize(TestContext testContext)
         {
-            var iocFactory = new Func<IIocContainer>(() => new MyOwnIoC());
-
-            ContextBuilderFactory.Initialize(CleanContextMode.ReCreate, iocFactory);
+            ContextBuilderFactory.Initialize(() => new MyOwnIoC());
             MockingBuilderFactory.Initialize();
         }
     }

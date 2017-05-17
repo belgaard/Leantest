@@ -9,11 +9,6 @@ namespace Core.Examples.MsTest.TestSetup
     public static class AssemblyInitializer
     {
         [AssemblyInitialize]
-        public static void AssemblyInitialize(TestContext testContext)
-        {
-            var iocFactory = new Func<IIocContainer>(() => new MyOwnIoC());
-
-            ContextBuilderFactory.Initialize(CleanContextMode.ReCreate, iocFactory);
-        }
+        public static void AssemblyInitialize(TestContext testContext) => ContextBuilderFactory.Initialize(() => new MyOwnIoC());
     }
 }

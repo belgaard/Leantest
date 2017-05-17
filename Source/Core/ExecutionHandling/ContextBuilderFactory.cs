@@ -72,18 +72,18 @@ namespace LeanTest.Core.ExecutionHandling
         }
 
         /// <summary>
+        /// Setup IoC and builders to create the IoC context before each test. Eventually, this will initialize app domains.
+        /// </summary>
+        public static void Initialize(Func<IIocContainer> iocfactory) => Initialize(CleanContextMode.ReCreate, iocfactory);
+
+        /// <summary>
         /// Adds a builder factory for building e.g. 'mock' and 'state' builders.
         /// </summary>
-        internal static void AddBuilderFactory(Func<IIocContainer, IDataStore, IBuilder> builderFactory)
-        {
-            BuilderFactories.Add(builderFactory);
-        }
+        internal static void AddBuilderFactory(Func<IIocContainer, IDataStore, IBuilder> builderFactory) => BuilderFactories.Add(builderFactory);
 
         /// <summary>
         /// Eventually, this method will unload the separate app domains set up during <c>Initialize</c>.
         /// </summary>
-        public static void Cleanup()
-        {
-        }
+        public static void Cleanup() {}
     }
 }
