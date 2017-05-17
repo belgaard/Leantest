@@ -1,47 +1,50 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace LeanTest.Core.ExecutionHandling
 {
     internal class StateBuilder : IBuilder
     {
+        private const string WithDataMethod = nameof(IStateHandler<StateBuilder>.WithData);
+        private const string ClearMethod = nameof(IStateHandler<StateBuilder>.Clear);
+        private const string BuildMethod = nameof(IStateHandler<StateBuilder>.Build);
         private readonly IIocContainer _container;
         private readonly IDataStore _dataStore;
-        private readonly IDictionary<Type, Func<IEnumerable<IState>>> _typedStateEnumsDelegates = new Dictionary<Type, Func<IEnumerable<IState>>>();
-
-        private readonly Action<IState, Type> _clearer;
+        private readonly IDictionary<Type, Func<IEnumerable<object>>> _typedStateEnumsDelegates = new Dictionary<Type, Func<IEnumerable<object>>>();
 
         public StateBuilder(IIocContainer container, IDataStore dataStore)
         {
             _container = container ?? throw new ArgumentNullException(nameof(container));
             _dataStore = dataStore ?? throw new ArgumentNullException(nameof(dataStore));
-
-            _clearer = (state, type) => state.Clear(type);
         }
 
         public void Build()
         {
-            foreach (KeyValuePair<Type, Func<IEnumerable<IState>>> stateKeyValuePair in _typedStateEnumsDelegates)
+            foreach (KeyValuePair<Type, Func<IEnumerable<object>>> stateKeyValuePair in _typedStateEnumsDelegates)
             {
-                IEnumerable<IState> states = stateKeyValuePair.Value().ToArray();
-                foreach (IState state in states)
+                IEnumerable<object> states = stateKeyValuePair.Value().ToArray();
+                foreach (object state in states)
                 {
-                    _clearer(state, stateKeyValuePair.Key);
+                    Type theClass = typeof(IStateHandler<>).MakeGenericType(stateKeyValuePair.Key);
+
+                    MethodInfo clearMethod = theClass.GetTypeInfo().GetDeclaredMethod(ClearMethod);
+                    clearMethod.Invoke(state, new object[] { stateKeyValuePair.Key });
 
                     if (_dataStore.TypedData.All(t => t.Key != stateKeyValuePair.Key))
                         continue;
+                    MethodInfo withDataMethod = theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod);
                     foreach (object data in _dataStore.TypedData[stateKeyValuePair.Key])
-                        state.WithData(stateKeyValuePair.Key, data);
+                        withDataMethod.Invoke(state, new[] { data });
 
-                    state.Build();
+                    MethodInfo buildMethod = theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod);
+                    buildMethod.Invoke(state, null/*, new object[] { mockDelegatesForType.Key }*/); // TODO: Add a Type parameter to Build?
                 }
             }
         }
 
-        public void WithBuilderForData<T>()
-        {
-            _typedStateEnumsDelegates[typeof(T)] = () => from stateHandler in _container.TryResolveAll<IStateHandler<T>>() select stateHandler as IState;
-        }
+        public void WithBuilderForData<T>() =>
+            _typedStateEnumsDelegates[typeof(T)] = () => from stateHandler in _container.TryResolveAll<IStateHandler<T>>() select stateHandler as object;
     }
 }
