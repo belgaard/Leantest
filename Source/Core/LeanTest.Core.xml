@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LeanTest.Core</name>
+    </assembly>
+    <members>
+        <member name="T:LeanTest.Core.ExecutionHandling.AggregatedMessagesException">
+            <summary>
+            Aggregates messages from <c>MultiAssertForTException</c>.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.AggregatedMessagesException.#ctor(System.String)">
+            <summary></summary>
+        </member>
+        <member name="T:LeanTest.Core.ExecutionHandling.CleanContextMode">
+            <summary>
+            Determines how the context builder factory creates a 'clean' context.
+            </summary>
+        </member>
+        <member name="F:LeanTest.Core.ExecutionHandling.CleanContextMode.ReCreate">
+            <summary>
+            Re-create is the easy way.
+            </summary>
+        </member>
+        <member name="F:LeanTest.Core.ExecutionHandling.CleanContextMode.ReUse">
+            <summary>
+            Re-use requires more work, as e.g. an IoC container must have caches (and other singletons) cleared.
+            </summary>
+        </member>
+        <member name="T:LeanTest.Core.ExecutionHandling.ContextBuilder">
+            <summary>
+            Encapsulates the IoC container and builds the data and execution context for a test, including 'state' and 'mocks'.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilder.#ctor(LeanTest.Core.ExecutionHandling.IIocContainer,System.Func{LeanTest.Core.ExecutionHandling.IIocContainer,LeanTest.Core.ExecutionHandling.IDataStore,LeanTest.Core.ExecutionHandling.IBuilder}[])">
+            <summary>
+            Initialize internal fields, including data store and builders (for e.g. 'mocks' and 'state') .
+            </summary>
+            <param name="container"></param>
+            <param name="builderFactories"></param>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilder.GetInstance``1">
+            <summary>
+            Get an instance of type <c>T</c> from the IoC container.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilder.WithData``1(``0)">
+            <summary>
+            Declare data of type <c>T</c> to be stored, then used to fill in builders (e.g. 'mocks' and 'state') during <c>Build</c>.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilder.WithEnumerableData``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Declare an enumeration of data of type <c>T</c> to be stored, then used to fill builders (e.g. 'mocks' and 'state') during <c>Build</c>.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilder.WithClearDataStore">
+            <summary>
+            Clear all declared data from the data store.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilder.Build">
+            <summary>
+            Use the declared data to build builders (e.g. 'mocks' and 'state').
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:LeanTest.Core.ExecutionHandling.ContextBuilderDataStoreExtensions">
+            <summary>
+            Typed access to the data store. Simple First/Last/All operations.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilderDataStoreExtensions.First``1(LeanTest.Core.ExecutionHandling.ContextBuilder)">
+            <summary>
+            Get the first declared piece of data of type <c>T</c>.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilderDataStoreExtensions.Last``1(LeanTest.Core.ExecutionHandling.ContextBuilder)">
+            <summary>
+            Get the last declared piece of data of type <c>T</c>.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilderDataStoreExtensions.All``1(LeanTest.Core.ExecutionHandling.ContextBuilder)">
+            <summary>
+            Get all declared data of type <c>T</c>.
+            </summary>
+        </member>
+        <member name="T:LeanTest.Core.ExecutionHandling.ContextBuilderFactory">
+            <summary>
+            Used to create instances of context builders.
+            </summary>
+            <remarks>
+            Each context builder will reference an IoC container which is created by an IoC container factory method passed in during intialisation.
+            Also during initialisation, it is specified if the IoC container must be re-used or re-created per request.
+            Eventually, this class will support the ability to isolate tests so that services can run in separate AppDomains.
+            </remarks>
+        </member>
+        <member name="F:LeanTest.Core.ExecutionHandling.ContextBuilderFactory._lazyIocContainer">
+            <summary>
+            The container instance for the currently running AppDomain.
+            </summary>
+            <remarks>
+            Depending on the IoC mode, we will either have a single container instance (per AppDomain) which is reused across all test classes 
+            of the assembly, or a new instance will be created whenever a context builder is created.
+            </remarks>
+        </member>
+        <member name="P:LeanTest.Core.ExecutionHandling.ContextBuilderFactory.ContextBuilder">
+            <summary>
+            The lastly created context builder instance for the currently running AppDomain.
+            Use it to reference context builders in any number of AppDomains across TestInitialize, TestCleanup and test methods.
+            </summary>
+            <remarks>
+            You will create at least one context builder per test class, but never reuse across test classes.
+            </remarks>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilderFactory.CreateContextBuilder">
+            <summary>
+            Creates a context builder with the IoC composition root from the current AppDomain.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(LeanTest.Core.ExecutionHandling.CleanContextMode,System.Func{LeanTest.Core.ExecutionHandling.IIocContainer})">
+            <summary>
+            Setup IoC and builders. Eventually, this will initialize app domains.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(System.Func{LeanTest.Core.ExecutionHandling.IIocContainer})">
+            <summary>
+            Setup IoC and builders to create the IoC context before each test. Eventually, this will initialize app domains.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilderFactory.AddBuilderFactory(System.Func{LeanTest.Core.ExecutionHandling.IIocContainer,LeanTest.Core.ExecutionHandling.IDataStore,LeanTest.Core.ExecutionHandling.IBuilder})">
+            <summary>
+            Adds a builder factory for building e.g. 'mock' and 'state' builders.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Cleanup">
+            <summary>
+            Eventually, this method will unload the separate app domains set up during <c>Initialize</c>.
+            </summary>
+        </member>
+        <member name="T:LeanTest.Core.ExecutionHandling.IBuilder">
+            <summary>
+            Interface for all builders (for building stuff like e.g. 'mock' and 'state').
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.IBuilder.WithBuilderForData``1">
+            <summary>
+            Register a builder for data of type <c>TData</c>
+            </summary>
+            <typeparam name="TData"></typeparam>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.IBuilder.Build">
+            <summary>
+            Do the build.
+            </summary>
+        </member>
+        <member name="T:LeanTest.Core.ExecutionHandling.IDataStore">
+            <summary>
+            Interface for a data store that hold all data in the context.
+            </summary>
+        </member>
+        <member name="P:LeanTest.Core.ExecutionHandling.IDataStore.TypedData">
+            <summary>
+            The data of the store, per <c>Type</c> of data.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.IDataStore.WithData``1(``0)">
+            <summary>
+            Add data of type <c>T</c> to the store.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.IDataStore.WithEnumerable``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Add an enumerable of data of type <c>T</c> to the store.
+            </summary>
+        </member>
+        <member name="T:LeanTest.Core.ExecutionHandling.IIocContainer">
+            <summary>
+            Base interface for IoC containers.
+            </summary>
+            <remarks>
+            A specific implementation for the actual IoC container used in a given project must be provided.
+            </remarks>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.IIocContainer.Resolve``1">
+            <summary>
+            Resolve an instance of type <c>T</c>.
+            </summary>
+            <exception cref="T:System.Exception">Will be thrown if the container cannot resolve.</exception>
+            <returns>The resolved instance.</returns>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.IIocContainer.TryResolve``1">
+            <summary>
+            Resolve an instance of type <c>T</c>.
+            </summary>
+            <returns>The resolved instance, or null if the container cannot resolve.</returns>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.IIocContainer.TryResolveAll``1">
+            <summary>
+            Resolve all instances of type <c>T</c>.
+            </summary>
+            <returns>The resolved instances, or empty if the container cannot resolve.</returns>
+            <remarks>Note that different IoC containers have different requirements fo rregistration in order to make such 
+            an operation work as expected.
+            It is common to implement this with a call to <c>TryResolve&lt;T&gt;</c>, thus allowing only a single mock or state handler per <c>T</c>.</remarks>
+        </member>
+        <member name="T:LeanTest.Core.ExecutionHandling.IStateHandler`1">
+            <summary>
+            Interface for state handlers that implement state of type <c>T</c>.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.IStateHandler`1.WithData(`0)">
+            <summary>
+            Declare data of type <c>T</c>.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.IStateHandler`1.Clear(System.Type)">
+            <summary>
+            Clear data of type <c>Type</c>.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.IStateHandler`1.Build">
+            <summary>
+            Use the declared data to populate state.
+            </summary>
+        </member>
+        <member name="T:LeanTest.Core.ExecutionHandling.MultiAssertForTException">
+            <summary>
+            Allows support for multiple asserts.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.MultiAssertForTException.Aggregate``1(System.Action[])">
+            <summary>
+            Executes all actions regardless of failed assertions (a.k.a. <c>TException</c> thrown). If any assertions fail, a single 
+            assertion failure with aggregated assertion message texts is generated (i.e. a <c>AggregatedMessagesException</c> is thrown).
+            </summary>
+            <param name="actions">
+            A list of actions that represent a number of Assert method invocations (Assert.IsTrue etc.)
+            </param>
+            <remarks>
+            It is still Best Practice to have a single assert per unit test in most cases (but more often than not, developer tests will have several asserts per test).
+            Refer to the following blog posts for proper usage of MultiAssert,
+             - https://elgaard.blog/2011/02/06/multiple-asserts-in-a-single-unit-test-method/
+             - https://elgaard.blog/2013/05/26/even-more-asserts-in-a-single-unit-test-method/
+            </remarks>
+            <typeparam name="TException">The exception to catch and aggregate.</typeparam>
+        </member>
+    </members>
+</doc>
