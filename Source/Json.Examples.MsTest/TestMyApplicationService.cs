@@ -1,6 +1,7 @@
 ﻿using Core.Examples.MsTest.Application;
 using Core.Examples.MsTest.IoC;
 using LeanTest.Core.ExecutionHandling;
+using LeanTest.JSon;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Json.Examples.MsTest

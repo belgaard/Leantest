@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using LeanTest.JSon;
+using LeanTest.Core.ExecutionHandling;
 
-// ReSharper disable once CheckNamespace
-namespace LeanTest.Core.ExecutionHandling
+namespace LeanTest.JSon
 {
     /// <summary>
     /// Adds support for adding test data in Json format.
