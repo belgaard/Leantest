@@ -2,6 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
+    <AssemblyName>LeanTest.JSon</AssemblyName>
+    <RootNamespace>LeanTest.JSon</RootNamespace>
+
+    <PackageId>LeanTest.JSon</PackageId>
+    <PackageVersion>0.9.2</PackageVersion>
+    <Authors>Brian Elgaard Bennett</Authors>
+    <Description>
+      Adds support for adding test data in Json format.
+    </Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright>LeanTest is licensed under the Apache License 2.0</Copyright>
+    <PackageTags>Unit Test UnitTest DeveloperTest Developer</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
