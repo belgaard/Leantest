@@ -42,5 +42,11 @@ namespace Core.Examples.MsTest
             MultiAssert.Aggregate(
                 () => Assert.AreEqual(42, actual));
         }
+
+        [TestMethod]
+        public void DivideByNullMustThrow()
+        {
+            ExceptionAssert.Throws<DivideByZeroException>(() => _target.DivideByZero());
+        }
     }
 }

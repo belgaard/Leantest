@@ -54,7 +54,7 @@ namespace LeanTest.Core.ExecutionHandling
     public static class ExceptionAssertTException
     {
         /// <exception cref="AggregatedMessagesException">Thrown when the action did not throw the required exception.</exception>
-        public static TException Throws<TException>(Action action, string message = "")
+        public static TException Throws<TException>(Action action, string message)
             where TException : Exception
         {
             Exception exception = null;

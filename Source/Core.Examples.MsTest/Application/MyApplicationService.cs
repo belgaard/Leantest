@@ -8,5 +8,10 @@ namespace Core.Examples.MsTest.Application
         {
             return myData.First + myData.Second;
         }
+
+        public void DivideByZero()
+        {
+            throw new System.DivideByZeroException();
+        }
     }
 }
