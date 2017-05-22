@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LeanTest.Core" Version="0.9.2" />
+    <PackageReference Include="LeanTest.Core" Version="0.9.4" />
   </ItemGroup>
 
 </Project>
