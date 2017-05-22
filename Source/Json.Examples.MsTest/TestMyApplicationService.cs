@@ -1,16 +1,16 @@
-﻿using LeanTest.Core.ExecutionHandling;
+﻿using Core.Examples.MsTest.Application;
+using Core.Examples.MsTest.IoC;
+using LeanTest.Core.ExecutionHandling;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Mock.Examples.MsTest.Application;
-using Mock.Examples.MsTest.Domain;
 
-namespace Mock.Examples.MsTest
+namespace Json.Examples.MsTest
 {
     /// <summary>
     /// Work-in-progress. 
-    /// Note that in a real-world example we must choose an IoC container - here we have implemented our own for
+    /// Note that in a real-worl example we must choose an IoC container - here we have implemented our own for
     /// this example. See the ValueAdd solution for examples of using Unity. 
     /// This container must be initialized in an AssemblyInitializer class - refer to this class to see how it is
-    /// sone with our example IoC container.
+    /// done with our example IoC container.
     /// For the example to be more complete, there should be two projects, one for test one for what is being tested.
     /// </summary>
     [TestClass]
@@ -29,15 +29,15 @@ namespace Mock.Examples.MsTest
         }
 
         [TestMethod]
-        public void GetAgeMustReturn10WhenKeyMatchesNewedUpData()
+        public void SumMustReturn42When10And32ArePassedFromJson()
         {
             _contextBuilder
-                .WithData(new MyData { Age = 10, Key = "ac_32_576259321" })
+                .WithData<MyData>(TestData.MyData.TenAndThirtyTwo)
                 .Build();
 
-            int actual = _target.GetAge("FourtyTwo");
+            int actual = _target.Sum(_contextBuilder.First<MyData>());
 
-            Assert.AreEqual(10, actual);
+            Assert.AreEqual(42, actual);
         }
     }
 }

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock.Examples.MsTest", "Moc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSon", "JSon\JSon.csproj", "{4D4EC696-9F1E-473F-9A92-06A95E835C59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Json.Examples.MsTest", "Json.Examples.MsTest\Json.Examples.MsTest.csproj", "{942EE5B3-463C-4B00-9246-09CB55D136CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{4D4EC696-9F1E-473F-9A92-06A95E835C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D4EC696-9F1E-473F-9A92-06A95E835C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D4EC696-9F1E-473F-9A92-06A95E835C59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{942EE5B3-463C-4B00-9246-09CB55D136CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{942EE5B3-463C-4B00-9246-09CB55D136CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{942EE5B3-463C-4B00-9246-09CB55D136CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{942EE5B3-463C-4B00-9246-09CB55D136CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
