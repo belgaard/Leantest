@@ -12,6 +12,9 @@
         <member name="M:LeanTest.Core.ExecutionHandling.AggregatedMessagesException.#ctor(System.String)">
             <summary></summary>
         </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.AggregatedMessagesException.#ctor(System.String,System.Exception)">
+            <summary></summary>
+        </member>
         <member name="T:LeanTest.Core.ExecutionHandling.CleanContextMode">
             <summary>
             Determines how the context builder factory creates a 'clean' context.
@@ -245,6 +248,17 @@
              - https://elgaard.blog/2013/05/26/even-more-asserts-in-a-single-unit-test-method/
             </remarks>
             <typeparam name="TException">The exception to catch and aggregate.</typeparam>
+        </member>
+        <member name="T:LeanTest.Core.ExecutionHandling.ExceptionAssertTException">
+            <summary>
+            Exception helper methods for tests.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ExceptionAssertTException.Throws``1(System.Action,System.String)">
+            <exception cref="T:LeanTest.Core.ExecutionHandling.AggregatedMessagesException">Thrown when the action did not throw the required exception.</exception>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ExceptionAssertTException.DoesNotThrow(System.Action,System.String)">
+            <exception cref="T:LeanTest.Core.ExecutionHandling.AggregatedMessagesException">Thrown when the action threw and exception. </exception>
         </member>
     </members>
 </doc>
