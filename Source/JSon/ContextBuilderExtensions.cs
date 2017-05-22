@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using LeanTest.Core.ExecutionHandling;
 
-namespace JSon
+namespace LeanTest.JSon
 {
     /// <summary>
     /// Adds support for adding test data in Json format.

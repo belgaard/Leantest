@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace JSon
+namespace LeanTest.JSon
 {
     /// <summary>
     /// Utility for creating test data of type <c>T</c> from JSon.
