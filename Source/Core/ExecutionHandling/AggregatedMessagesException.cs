@@ -9,5 +9,7 @@ namespace LeanTest.Core.ExecutionHandling
     {
         /// <summary></summary>
         public AggregatedMessagesException(string message) :base(message) {}
+        /// <summary></summary>
+        public AggregatedMessagesException(string message, Exception innerException) : base(message, innerException) { }
     }
 }
