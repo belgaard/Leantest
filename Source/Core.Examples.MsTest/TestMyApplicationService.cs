@@ -44,9 +44,15 @@ namespace Core.Examples.MsTest
         }
 
         [TestMethod]
-        public void DivideByNullMustThrow()
+        public void DivideByZeroMustThrow()
         {
             ExceptionAssert.Throws<DivideByZeroException>(() => _target.DivideByZero());
+        }
+
+        [TestMethod]
+        public void DivideByZeroAsyncMustThrow()
+        {
+            ExceptionAssert.Throws<DivideByZeroException>(() => _target.DivideByZeroAsync(42));
         }
     }
 }

@@ -142,6 +142,26 @@
             Eventually, this method will unload the separate app domains set up during <c>Initialize</c>.
             </summary>
         </member>
+        <member name="T:LeanTest.Core.ExecutionHandling.ExceptionAssertTException">
+            <summary>
+            Exception helper methods for tests.
+            </summary>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ExceptionAssertTException.Throws``1(System.Func{System.Threading.Tasks.Task},System.String)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TException"></typeparam>
+            <param name="func"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ExceptionAssertTException.Throws``1(System.Action,System.String)">
+            <exception cref="T:LeanTest.Core.ExecutionHandling.AggregatedMessagesException">Thrown when the action did not throw the required exception.</exception>
+        </member>
+        <member name="M:LeanTest.Core.ExecutionHandling.ExceptionAssertTException.DoesNotThrow(System.Action,System.String)">
+            <exception cref="T:LeanTest.Core.ExecutionHandling.AggregatedMessagesException">Thrown when the action threw and exception. </exception>
+        </member>
         <member name="T:LeanTest.Core.ExecutionHandling.IBuilder">
             <summary>
             Interface for all builders (for building stuff like e.g. 'mock' and 'state').
@@ -248,17 +268,6 @@
              - https://elgaard.blog/2013/05/26/even-more-asserts-in-a-single-unit-test-method/
             </remarks>
             <typeparam name="TException">The exception to catch and aggregate.</typeparam>
-        </member>
-        <member name="T:LeanTest.Core.ExecutionHandling.ExceptionAssertTException">
-            <summary>
-            Exception helper methods for tests.
-            </summary>
-        </member>
-        <member name="M:LeanTest.Core.ExecutionHandling.ExceptionAssertTException.Throws``1(System.Action,System.String)">
-            <exception cref="T:LeanTest.Core.ExecutionHandling.AggregatedMessagesException">Thrown when the action did not throw the required exception.</exception>
-        </member>
-        <member name="M:LeanTest.Core.ExecutionHandling.ExceptionAssertTException.DoesNotThrow(System.Action,System.String)">
-            <exception cref="T:LeanTest.Core.ExecutionHandling.AggregatedMessagesException">Thrown when the action threw and exception. </exception>
         </member>
     </members>
 </doc>
