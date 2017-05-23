@@ -29,11 +29,8 @@ namespace Core.Examples.MsTest.TestSetup
     public static class ExceptionAssert
     {
         public static TException Throws<TException>(Func<Task> func, string message = "") where TException : Exception =>
-            ExceptionAssertTException.Adapter(func, message, ExceptionAssertTException.Throws<TException>, MsTestAssertFailedException);
+            ExceptionAssertTException.Adapter(func, message, ExceptionAssertTException.Throws<TException>, m => new AssertFailedException(m));
         public static TException Throws<TException>(Action action, string message = "") where TException : Exception =>
-            ExceptionAssertTException.Adapter(action, message, ExceptionAssertTException.Throws<TException>, MsTestAssertFailedException);
-
-        private static Exception MsTestAssertFailedException(string message) => 
-            new AssertFailedException(message);
+            ExceptionAssertTException.Adapter(action, message, ExceptionAssertTException.Throws<TException>, m => new AssertFailedException(m));
     }
 }
