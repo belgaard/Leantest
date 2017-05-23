@@ -28,25 +28,12 @@ namespace Core.Examples.MsTest.TestSetup
     /// </summary>
     public static class ExceptionAssert
     {
-        public static TException Throws<TException>(Func<Task> func, string message = "")
-            where TException : Exception
-        {
-            return MsTestAdapter(func, message, ExceptionAssertTException.Throws<TException>);
-        }
+        public static TException Throws<TException>(Func<Task> func, string message = "") where TException : Exception =>
+            ExceptionAssertTException.Adapter(func, message, ExceptionAssertTException.Throws<TException>, MsTestAssertFailedException);
+        public static TException Throws<TException>(Action action, string message = "") where TException : Exception =>
+            ExceptionAssertTException.Adapter(action, message, ExceptionAssertTException.Throws<TException>, MsTestAssertFailedException);
 
-        public static TException Throws<TException>(Action action, string message = "")
-                where TException : Exception
-        {
-            return MsTestAdapter(action, message, ExceptionAssertTException.Throws<TException>);
-        }
-
-        /// <summary>
-        /// Turn aggregated messages into a proper MS Test assert failed exception fall through:
-        /// </summary>
-        private static TException MsTestAdapter<TException, TFunc>(TFunc action, string message, Func<TFunc, string, TException> x) where TException : Exception
-        {
-            try { return x(action, message); }
-            catch (AggregatedMessagesException e) { throw new AssertFailedException(e.Message); }
-        }
+        private static Exception MsTestAssertFailedException(string message) => 
+            new AssertFailedException(message);
     }
 }

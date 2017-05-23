@@ -8,6 +8,13 @@ namespace LeanTest.Core.ExecutionHandling
     /// </summary>
     public static class ExceptionAssertTException
     {
+        public static TException Adapter<TException, TFunc>(TFunc action, string message, Func<TFunc, string, TException> throws, Func<string, Exception> assertFailedException)
+            where TException : Exception
+        {
+            try { return throws(action, message); }
+            catch (AggregatedMessagesException e) { throw assertFailedException(e.Message); }
+        }
+
         /// <summary>
         /// 
         /// </summary>
