@@ -38,12 +38,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LeanTest.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LeanTest.Core.0.9.4\lib\netstandard1.4\LeanTest.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="LeanTest.JSon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LeanTest.JSon.0.9.4\lib\netstandard1.4\LeanTest.JSon.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.1.17\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
@@ -130,6 +124,14 @@
     <ProjectReference Include="..\Core.Examples.MsTest\Core.Examples.MsTest.csproj">
       <Project>{9cac8524-6fd8-4cd4-924a-9e7748654207}</Project>
       <Name>Core.Examples.MsTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{a7e92ad6-6696-40ac-904b-4c7fa9509106}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JSon\JSon.csproj">
+      <Project>{4d4ec696-9f1e-473f-9a92-06a95e835c59}</Project>
+      <Name>JSon</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
