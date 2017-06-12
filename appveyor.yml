@@ -1,5 +1,5 @@
 build_script:  
-  .\Build.cmd
+  .\Source\Build.cmd
 image: Visual Studio 2017
 environment:
   matrix:
