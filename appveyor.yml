@@ -7,7 +7,7 @@ environment:
   matrix:
     - CLI_VERSION: Latest
 artifacts:
-  - path: '**\*.nupkg'
+  - path: '*\bin\release\*.nupkg'
 branches:
   only:
     - master
