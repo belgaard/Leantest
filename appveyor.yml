@@ -1,5 +1,7 @@
+before_build:
+  - cd Source
 build_script:  
-  .\Source\Build.cmd
+  .\Build.cmd
 image: Visual Studio 2017
 environment:
   matrix:
