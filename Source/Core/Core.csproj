@@ -12,7 +12,8 @@
     </Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Copyright>LeanTest is licensed under the Apache License 2.0</Copyright>
-    <PackageTags>Unit Test UnitTest DeveloperTest Developer</PackageTags>  
+    <PackageTags>Unit Test UnitTest DeveloperTest Developer</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
