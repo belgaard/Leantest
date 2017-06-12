@@ -6,7 +6,7 @@
     <RootNamespace>LeanTest.Mock</RootNamespace>
 
     <PackageId>LeanTest.Mock</PackageId>
-    <PackageVersion>0.9.7</PackageVersion>
+    <PackageVersion>$(appveyor_build_version)</PackageVersion>
     <Authors>Brian Elgaard Bennett</Authors>
     <Description>
       Adds support for implementing mocks consistently and pass test data to be used in mocks.
@@ -15,6 +15,8 @@
     <Copyright>LeanTest is licensed under the Apache License 2.0</Copyright>
     <PackageTags>Unit Test UnitTest DeveloperTest Developer Mock</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <AssemblyVersion>$(appveyor_build_version)</AssemblyVersion>
+    <FileVersion>$(appveyor_build_version)</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
