@@ -1,0 +1,19 @@
+build_script:  
+  .\Build.cmd
+image: Visual Studio 2017
+environment:
+  matrix:
+    - CLI_VERSION: Latest
+artifacts:
+  - path: '**\*.nupkg'
+branches:
+  only:
+    - master
+deploy:  
+- provider: NuGet
+  server: https://www.myget.org/F/belgaard-ci/api/v2/package
+  api_key:
+    secure: whdEZ/zZL09ILdI18RLIeGgL71etbLNJpiIY4hNBhHMbZVZ82ziU6tSyMR4gw1mt
+  skip_symbols: true
+  on:
+    branch: master	
