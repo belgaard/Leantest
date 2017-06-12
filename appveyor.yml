@@ -1,5 +1,5 @@
 before_build:
-  - cd Source
+  - cd Source\Core
 build_script:  
   .\Build.cmd
 image: Visual Studio 2017
