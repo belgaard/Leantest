@@ -8,7 +8,7 @@ In short developer testing is about developers writing tests while developing co
 ## An Example
 Note that the test below declares all _data_ that it depends on in a `WithData` method. This is quite central to lean tests - the target under test is always _empty_ before each test, while any data that each individual test depends on is explicitly declared. In this case, the data is fed into a simple mock of an external service. In other cases the data could be fed to an (initially empty) database or other means for keeping state.
 
-´´´´csharp
+````csharp
         [TestMethod]
         public void GetAgeMustReturn10WhenKeyMatchesNewedUpData()
         {
@@ -20,7 +20,7 @@ Note that the test below declares all _data_ that it depends on in a `WithData` 
 
             Assert.AreEqual(10, actual);
         }
-´´´´
+````
 
 ## References
 An early version of LeanTest, as well as the concept of developer testing, was used extensively while developing Saxo Bank's social web site, [TradingFloor.com](https://TradingFloor.com). Around 850+ developer tests (today 1000+ tests) covered most business functionality, running on a typical developer PC in around one minute. Major refactorings of the code were done with these tests as a safety net.
