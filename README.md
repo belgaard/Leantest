@@ -27,3 +27,9 @@ An early version of LeanTest, as well as the concept of developer testing, was u
 
 LeanTest is currently used internally in Saxo Bank's REST based [Open API](https://developer.saxo). I intend to also use LeanTest in my experimental [C# Open API](https://github.com/belgaard/TopOA) which wraps the official REST Open API.
 
+## Deployment
+The latest build (from the latest push to master on GitHub) is available on myGet.org,
+ - https://www.myget.org/F/belgaard-ci/api/v3/index.json
+ 
+Officially released builds are available on nuGet.org,
+ - https://api.nuget.org/v3/index.json
