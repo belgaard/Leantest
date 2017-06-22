@@ -1,9 +1,9 @@
 ﻿using ExampleApp.Domain;
 using LeanTest.Core.ExecutionHandling;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Mock.Examples.MsTest.Application;
+using State.Examples.MsTest.Application;
 
-namespace Mock.Examples.MsTest
+namespace State.Examples.MsTest
 {
     /// <summary>
     /// Note that in a real-world example we must choose an IoC container - here we have implemented our own for

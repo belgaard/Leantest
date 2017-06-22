@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\IMyExternalService.cs" />
+    <Compile Include="Application\MyApplicationService.cs" />
     <Compile Include="IoC\MyOwnIoC.cs" />
     <Compile Include="Mocks\MockMyExternalService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

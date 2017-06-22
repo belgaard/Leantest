@@ -1,9 +1,8 @@
 ﻿using LeanTest.Core.ExecutionHandling;
-using LeanTest.Mock;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Mock.Examples.MsTest.IoC;
+using State.Examples.MsTest.IoC;
 
-namespace Mock.Examples.MsTest.TestSetup
+namespace State.Examples.MsTest.TestSetup
 {
     [TestClass]
     public static class AssemblyInitializer
@@ -12,7 +11,6 @@ namespace Mock.Examples.MsTest.TestSetup
         public static void AssemblyInitialize(TestContext testContext)
         {
             ContextBuilderFactory.Initialize(() => new MyOwnIoC());
-            MockingBuilderFactory.Initialize();
         }
     }
 }

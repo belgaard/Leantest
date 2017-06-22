@@ -8,7 +8,6 @@ namespace State.Examples.MsTest.StateHandlers
 	{
 		public void WithData(MyData data)
 		{
-            
 		}
 
 		// TODO: Pre-build (not on individual IStateHandler): Turn off constraints, delete all records from all (relevant) tables?

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using ExampleApp.Domain;
 using LeanTest.Core.ExecutionHandling;
-using LeanTest.Mock;
-using Mock.Examples.MsTest.Application;
-using Mock.Examples.MsTest.Mocks;
+using State.Examples.MsTest.Application;
+using State.Examples.MsTest.StateHandlers;
 
-namespace Mock.Examples.MsTest.IoC
+namespace State.Examples.MsTest.IoC
 {
     /// <summary>
     /// An IoC container made up for this example. In real-world examples you would use SimpleInjector, Unity or some 
@@ -17,20 +17,22 @@ namespace Mock.Examples.MsTest.IoC
     public class MyOwnIoC : IIocContainer
     {
         private readonly MyApplicationService _myApplicationService;
-        private readonly MockMyExternalService _myExternalService;
+        private readonly MyDataLayer _myDataLayer;
+        private readonly MyStateHandler _myStateHandler;
 
         public MyOwnIoC()
         {
-            _myExternalService = new MockMyExternalService();
-            _myApplicationService = new MyApplicationService(_myExternalService);
+            _myDataLayer = new MyDataLayer();
+            _myApplicationService = new MyApplicationService(_myDataLayer);
+            _myStateHandler = new MyStateHandler();
         }
 
         public T Resolve<T>() where T : class
         {
             if (typeof(T) == typeof(MyApplicationService))
                 return _myApplicationService as T;
-            if (typeof(T) == typeof(IMyExternalService))
-                return _myExternalService as T;
+            if (typeof(T) == typeof(IMyDataLayer))
+                return _myDataLayer as T;
 
             throw new ArgumentException();
         }
@@ -49,8 +51,8 @@ namespace Mock.Examples.MsTest.IoC
 
         public IEnumerable<T> TryResolveAll<T>() where T : class
         {
-            if (typeof(T) == typeof(IMockForData<MyData>))
-                return from mock in new List<IMockForData<MyData>> { _myExternalService } select (T)mock;
+            if (typeof(T) == typeof(IStateHandler<MyData>))
+                return from stateHandler in new List<IStateHandler<MyData>> { _myStateHandler } select (T)stateHandler;
 
             return new List<T>();
         }
