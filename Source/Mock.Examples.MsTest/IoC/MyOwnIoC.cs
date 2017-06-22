@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ExampleApp.Application;
+using ExampleApp.Domain;
 using LeanTest.Core.ExecutionHandling;
 using LeanTest.Mock;
-using Mock.Examples.MsTest.Application;
-using Mock.Examples.MsTest.Domain;
 using Mock.Examples.MsTest.Mocks;
 
 namespace Mock.Examples.MsTest.IoC

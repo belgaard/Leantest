@@ -1,7 +1,7 @@
 ﻿using System.Linq;
+using ExampleApp.Application;
+using ExampleApp.Domain;
 using LeanTest.Mock;
-using Mock.Examples.MsTest.Application;
-using Mock.Examples.MsTest.Domain;
 
 namespace Mock.Examples.MsTest.Mocks
 {

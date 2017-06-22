@@ -1,4 +1,4 @@
-namespace Mock.Examples.MsTest.Application
+﻿namespace ExampleApp.Application
 {
     public class MyApplicationService
     {

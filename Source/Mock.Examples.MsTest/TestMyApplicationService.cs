@@ -1,7 +1,7 @@
-﻿using LeanTest.Core.ExecutionHandling;
+﻿using ExampleApp.Application;
+using ExampleApp.Domain;
+using LeanTest.Core.ExecutionHandling;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Mock.Examples.MsTest.Application;
-using Mock.Examples.MsTest.Domain;
 
 namespace Mock.Examples.MsTest
 {

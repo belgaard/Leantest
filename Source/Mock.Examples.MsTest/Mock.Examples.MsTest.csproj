@@ -61,9 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\IMyExternalService.cs" />
-    <Compile Include="Application\MyApplicationService.cs" />
-    <Compile Include="Domain\MyData.cs" />
     <Compile Include="IoC\MyOwnIoC.cs" />
     <Compile Include="Mocks\MockMyExternalService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,6 +122,10 @@
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{a7e92ad6-6696-40ac-904b-4c7fa9509106}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExampleApp\ExampleApp.csproj">
+      <Project>{6e0992fc-c481-49c0-8a03-d36fe95f67c4}</Project>
+      <Name>ExampleApp</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mock\Mock.csproj">
       <Project>{e412f59b-73af-4071-9275-a341595fcd5b}</Project>

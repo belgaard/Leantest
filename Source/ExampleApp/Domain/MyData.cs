@@ -1,4 +1,8 @@
-﻿namespace Mock.Examples.MsTest.Domain
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ExampleApp.Domain
 {
     public class MyData
     {
