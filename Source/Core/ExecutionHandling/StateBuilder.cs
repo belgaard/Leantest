@@ -8,7 +8,8 @@ namespace LeanTest.Core.ExecutionHandling
     internal class StateBuilder : IBuilder
     {
         private const string WithDataMethod = nameof(IStateHandler<StateBuilder>.WithData);
-        private const string ClearMethod = nameof(IStateHandler<StateBuilder>.Clear);
+        private const string PreBuildMethod = nameof(IStateHandler<StateBuilder>.PreBuild);
+        private const string PostBuildMethod = nameof(IStateHandler<StateBuilder>.PostBuild);
         private const string BuildMethod = nameof(IStateHandler<StateBuilder>.Build);
         private readonly IIocContainer _container;
         private readonly IDataStore _dataStore;
@@ -22,24 +23,37 @@ namespace LeanTest.Core.ExecutionHandling
 
         public void Build()
         {
+            var preAndPostBuiltHandlers = new List<object>();
             foreach (KeyValuePair<Type, Func<IEnumerable<object>>> stateKeyValuePair in _typedStateEnumsDelegates)
             {
-                IEnumerable<object> states = stateKeyValuePair.Value().ToArray();
-                foreach (object state in states)
+                IEnumerable<object> handlers = stateKeyValuePair.Value().ToArray();
+                
+                foreach (object handler in handlers)
                 {
+                    bool mustPreAndPostBuild = !preAndPostBuiltHandlers.Contains(handler);
+                    if (mustPreAndPostBuild)
+                        preAndPostBuiltHandlers.Add(handler);
+
                     Type theClass = typeof(IStateHandler<>).MakeGenericType(stateKeyValuePair.Key);
 
-                    MethodInfo clearMethod = theClass.GetTypeInfo().GetDeclaredMethod(ClearMethod);
-                    clearMethod.Invoke(state, new object[] { stateKeyValuePair.Key });
+                    if (mustPreAndPostBuild)
+                    {
+                        MethodInfo preBuildMethod = theClass.GetTypeInfo().GetDeclaredMethod(PreBuildMethod);
+                        preBuildMethod.Invoke(handler, null);
+                    }
 
-                    if (_dataStore.TypedData.All(t => t.Key != stateKeyValuePair.Key))
-                        continue;
                     MethodInfo withDataMethod = theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod);
                     foreach (object data in _dataStore.TypedData[stateKeyValuePair.Key])
-                        withDataMethod.Invoke(state, new[] { data });
+                        withDataMethod.Invoke(handler, new[] { data });
 
                     MethodInfo buildMethod = theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod);
-                    buildMethod.Invoke(state, null/*, new object[] { mockDelegatesForType.Key }*/); // TODO: Add a Type parameter to Build?
+                    buildMethod.Invoke(handler, new object[] { stateKeyValuePair.Key });
+
+                    if (!mustPreAndPostBuild)
+                        continue;
+
+                    MethodInfo postBuildMethod = theClass.GetTypeInfo().GetDeclaredMethod(PostBuildMethod);
+                    postBuildMethod.Invoke(handler, null);
                 }
             }
         }

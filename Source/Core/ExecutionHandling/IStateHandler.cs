@@ -12,12 +12,16 @@ namespace LeanTest.Core.ExecutionHandling
         /// </summary>
         void WithData(T data);
         /// <summary>
-        /// Clear data of type <c>Type</c>.
+        /// Called before build, allows you to prepare to populate state.
         /// </summary>
-        void Clear(Type type);
+        void PreBuild();
         /// <summary>
         /// Use the declared data to populate state.
         /// </summary>
-        void Build();
+        void Build(Type type);
+        /// <summary>
+        /// Called after build.
+        /// </summary>
+        void PostBuild();
     }
 }

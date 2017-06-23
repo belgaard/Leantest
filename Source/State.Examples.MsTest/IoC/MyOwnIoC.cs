@@ -53,6 +53,8 @@ namespace State.Examples.MsTest.IoC
         {
             if (typeof(T) == typeof(IStateHandler<MyData>))
                 return from stateHandler in new List<IStateHandler<MyData>> { _myStateHandler } select (T)stateHandler;
+            if (typeof(T) == typeof(IStateHandler<MyOtherData>))
+                return from stateHandler in new List<IStateHandler<MyOtherData>> { _myStateHandler } select (T)stateHandler;
 
             return new List<T>();
         }
