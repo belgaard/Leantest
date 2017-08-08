@@ -32,6 +32,7 @@ namespace Mock.Examples.MsTest
         {
             _contextBuilder
                 .WithData(new MyData { Age = 10, Key = "ac_32_576259321" })
+                .WithData(new MyOtherData { OtherAge = 10, OtherKey = "ac_32_576259321" })
                 .Build();
 
             int actual = _target.GetAge("FourtyTwo");

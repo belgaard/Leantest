@@ -24,7 +24,8 @@ namespace LeanTest.Mock
 
         public void Build()
         {
-            var preAndPostBuiltMocks = new List<object>();
+            var preBuildMocks = new List<object>();
+            var postBuildMethods = new List<Action>();
 
             foreach (KeyValuePair<Type, Func<IEnumerable<object>>> mockDelegatesForType in _typedMockEnumsDelegates)
             {
@@ -32,31 +33,27 @@ namespace LeanTest.Mock
 
                 foreach (object mock in mocks)
                 {
-                    bool mustPreAndPostBuild = !preAndPostBuiltMocks.Contains(mock);
-                    if (mustPreAndPostBuild)
-                        preAndPostBuiltMocks.Add(mock);
-
                     Type theClass = typeof(IMockForData<>).MakeGenericType(mockDelegatesForType.Key);
+
+                    bool mustPreAndPostBuild = !preBuildMocks.Contains(mock);
                     if (mustPreAndPostBuild)
                     {
-                        MethodInfo preBuildMethod = theClass.GetTypeInfo().GetDeclaredMethod(PreBuildMethod);
-                        preBuildMethod.Invoke(mock, null);
+                        preBuildMocks.Add(mock);
+                        theClass.GetTypeInfo().GetDeclaredMethod(PreBuildMethod).Invoke(mock, null);
                     }
 
-                    MethodInfo withDataMethod = theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod);
                     foreach (object data in _dataStore.TypedData[mockDelegatesForType.Key])
-                        withDataMethod.Invoke(mock, new[] { data });
+                        theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod).Invoke(mock, new[] { data });
 
-                    MethodInfo buildMethod = theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod);
-                    buildMethod.Invoke(mock, new object[] { mockDelegatesForType.Key });
+                    theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod).Invoke(mock, new object[] { mockDelegatesForType.Key });
 
-                    if (!mustPreAndPostBuild)
-                        continue;
-
-                    MethodInfo postBuildMethod = theClass.GetTypeInfo().GetDeclaredMethod(PostBuildMethod);
-                    postBuildMethod.Invoke(mock, null);
+                    if (mustPreAndPostBuild)
+                        postBuildMethods.Add(() => theClass.GetTypeInfo().GetDeclaredMethod(PostBuildMethod).Invoke(mock, null));
                 }
             }
+
+            foreach (Action postBuildMethod in postBuildMethods)
+                postBuildMethod();
         }
 
         public void WithBuilderForData<T>() => 

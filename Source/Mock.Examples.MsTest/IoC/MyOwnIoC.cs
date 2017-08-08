@@ -51,6 +51,8 @@ namespace Mock.Examples.MsTest.IoC
         {
             if (typeof(T) == typeof(IMockForData<MyData>))
                 return from mock in new List<IMockForData<MyData>> { _myExternalService } select (T)mock;
+            if (typeof(T) == typeof(IMockForData<MyOtherData>))
+                return from mock in new List<IMockForData<MyOtherData>> { _myExternalService } select (T)mock;
 
             return new List<T>();
         }
