@@ -13,14 +13,16 @@ namespace LeanTest.Mock
         void WithData(T data);
 
         /// <summary>
-        /// 
+        /// Called before build, allows you to prepare to populate state.
         /// </summary>
-        /// <param name="type"></param>
-        void Clear(Type type);
-
+        void PreBuild();
         /// <summary>
-        /// 
+        /// Use the declared data to populate state.
         /// </summary>
-        void Build(); // TODO: Add Type parameter?
+        void Build(Type type);
+        /// <summary>
+        /// Called after build.
+        /// </summary>
+        void PostBuild();
     }
 }

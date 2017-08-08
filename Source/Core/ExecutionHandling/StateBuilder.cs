@@ -23,39 +23,36 @@ namespace LeanTest.Core.ExecutionHandling
 
         public void Build()
         {
-            var preAndPostBuiltHandlers = new List<object>();
+            var preBuildHandlers = new List<object>();
+            var postBuildMethods = new List<Action>();
+
             foreach (KeyValuePair<Type, Func<IEnumerable<object>>> stateKeyValuePair in _typedStateEnumsDelegates)
             {
                 IEnumerable<object> handlers = stateKeyValuePair.Value().ToArray();
                 
                 foreach (object handler in handlers)
                 {
-                    bool mustPreAndPostBuild = !preAndPostBuiltHandlers.Contains(handler);
-                    if (mustPreAndPostBuild)
-                        preAndPostBuiltHandlers.Add(handler);
-
                     Type theClass = typeof(IStateHandler<>).MakeGenericType(stateKeyValuePair.Key);
 
+                    bool mustPreAndPostBuild = !preBuildHandlers.Contains(handler);
                     if (mustPreAndPostBuild)
                     {
-                        MethodInfo preBuildMethod = theClass.GetTypeInfo().GetDeclaredMethod(PreBuildMethod);
-                        preBuildMethod.Invoke(handler, null);
+                        preBuildHandlers.Add(handler);
+                        theClass.GetTypeInfo().GetDeclaredMethod(PreBuildMethod).Invoke(handler, null);
                     }
 
-                    MethodInfo withDataMethod = theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod);
                     foreach (object data in _dataStore.TypedData[stateKeyValuePair.Key])
-                        withDataMethod.Invoke(handler, new[] { data });
+                        theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod).Invoke(handler, new[] { data });
 
-                    MethodInfo buildMethod = theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod);
-                    buildMethod.Invoke(handler, new object[] { stateKeyValuePair.Key });
+                    theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod).Invoke(handler, new object[] { stateKeyValuePair.Key });
 
-                    if (!mustPreAndPostBuild)
-                        continue;
-
-                    MethodInfo postBuildMethod = theClass.GetTypeInfo().GetDeclaredMethod(PostBuildMethod);
-                    postBuildMethod.Invoke(handler, null);
+                    if (mustPreAndPostBuild)
+                        postBuildMethods.Add(() => theClass.GetTypeInfo().GetDeclaredMethod(PostBuildMethod).Invoke(handler, null));
                 }
             }
+
+            foreach (Action postBuildMethod in postBuildMethods)
+                postBuildMethod();
         }
 
         public void WithBuilderForData<T>() =>
