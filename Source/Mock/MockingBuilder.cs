@@ -42,8 +42,9 @@ namespace LeanTest.Mock
                         theClass.GetTypeInfo().GetDeclaredMethod(PreBuildMethod).Invoke(mock, null);
                     }
 
-                    foreach (object data in _dataStore.TypedData[mockDelegatesForType.Key])
-                        theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod).Invoke(mock, new[] { data });
+                    if (_dataStore.TypedData.ContainsKey(mockDelegatesForType.Key))
+                        foreach (object data in _dataStore.TypedData[mockDelegatesForType.Key])
+                            theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod).Invoke(mock, new[] { data });
 
                     theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod).Invoke(mock, new object[] { mockDelegatesForType.Key });
 
