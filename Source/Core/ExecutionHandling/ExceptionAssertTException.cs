@@ -61,7 +61,7 @@ namespace LeanTest.Core.ExecutionHandling
             throw new AggregatedMessagesException("ExceptionAssert.Throws failed. Expected exception type: " + typeof(TException).Name + ". Thrown: " + exception.GetType() + ". " + message);
         }
 
-        /// <exception cref="AggregatedMessagesException">Thrown when the action threw and exception. </exception>
+        /// <exception cref="AggregatedMessagesException">Thrown when the action threw an exception. </exception>
         public static void DoesNotThrow(Action action, string message = "")
         {
             try

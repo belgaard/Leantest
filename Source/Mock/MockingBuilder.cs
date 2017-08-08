@@ -8,6 +8,10 @@ namespace LeanTest.Mock
 {
     internal class MockingBuilder : IBuilder
     {
+        private const string WithDataMethod = nameof(IMockForData<MockingBuilder>.WithData);
+        private const string PreBuildMethod = nameof(IMockForData<MockingBuilder>.PreBuild);
+        private const string PostBuildMethod = nameof(IMockForData<MockingBuilder>.PostBuild);
+        private const string BuildMethod = nameof(IStateHandler<StateBuilder>.Build);
         private readonly IIocContainer _container;
         private readonly IDataStore _dataStore;
         private readonly IDictionary<Type, Func<IEnumerable<object>>> _typedMockEnumsDelegates = new Dictionary<Type, Func<IEnumerable<object>>>();
@@ -20,26 +24,36 @@ namespace LeanTest.Mock
 
         public void Build()
         {
+            var preBuildMocks = new List<object>();
+            var postBuildMethods = new List<Action>();
+
             foreach (KeyValuePair<Type, Func<IEnumerable<object>>> mockDelegatesForType in _typedMockEnumsDelegates)
             {
                 IEnumerable<object> mocks = mockDelegatesForType.Value().ToArray();
+
                 foreach (object mock in mocks)
                 {
                     Type theClass = typeof(IMockForData<>).MakeGenericType(mockDelegatesForType.Key);
-                    
-                    MethodInfo clearMethod = theClass.GetTypeInfo().GetDeclaredMethod(nameof(IMockForData<MockingBuilder>.Clear));
-                    clearMethod.Invoke(mock, new object[] { mockDelegatesForType.Key });
 
-                    if (_dataStore.TypedData.All(t => t.Key != mockDelegatesForType.Key))
-                        continue;
-                    MethodInfo withDataMethod = theClass.GetTypeInfo().GetDeclaredMethod(nameof(IMockForData<MockingBuilder>.WithData));
+                    bool mustPreAndPostBuild = !preBuildMocks.Contains(mock);
+                    if (mustPreAndPostBuild)
+                    {
+                        preBuildMocks.Add(mock);
+                        theClass.GetTypeInfo().GetDeclaredMethod(PreBuildMethod).Invoke(mock, null);
+                    }
+
                     foreach (object data in _dataStore.TypedData[mockDelegatesForType.Key])
-                        withDataMethod.Invoke(mock, new[] { data });
+                        theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod).Invoke(mock, new[] { data });
 
-                    MethodInfo buildMethod = theClass.GetTypeInfo().GetDeclaredMethod(nameof(IMockForData<MockingBuilder>.Build));
-                    buildMethod.Invoke(mock, null/*, new object[] { mockDelegatesForType.Key }*/); // TODO: Add a Type parameter to Build?
+                    theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod).Invoke(mock, new object[] { mockDelegatesForType.Key });
+
+                    if (mustPreAndPostBuild)
+                        postBuildMethods.Add(() => theClass.GetTypeInfo().GetDeclaredMethod(PostBuildMethod).Invoke(mock, null));
                 }
             }
+
+            foreach (Action postBuildMethod in postBuildMethods)
+                postBuildMethod();
         }
 
         public void WithBuilderForData<T>() => 

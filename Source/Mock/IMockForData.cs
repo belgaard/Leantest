@@ -11,16 +11,17 @@ namespace LeanTest.Mock
         /// Declare data of type <c>T</c>.
         /// </summary>
         void WithData(T data);
-
         /// <summary>
-        /// 
+        /// Called before build only once for the state handler instance, allows you to prepare to populate state.
         /// </summary>
-        /// <param name="type"></param>
-        void Clear(Type type);
-
+        void PreBuild();
         /// <summary>
-        /// 
+        /// Use the declared data to populate state, called after all data of type <c>type</c> has been put to the state handler instance with <c>WithData</c>.
         /// </summary>
-        void Build(); // TODO: Add Type parameter?
+        void Build(Type type);
+        /// <summary>
+        /// Called after build, only once for the state handler instance.
+        /// </summary>
+        void PostBuild();
     }
 }

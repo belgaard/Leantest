@@ -20,17 +20,17 @@ namespace LeanTest.Mock
             Data.Add(data);
         }
         /// <summary>
-        /// Clear all stored data.
+        /// Override this in order to execute pre build actions.
         /// </summary>
-        public virtual void Clear(Type type)
-        {
-            if (type != typeof(T)) throw new ArgumentException(nameof(type));
-            Data.Clear();
-        }
+        public virtual void PreBuild() { }
         /// <summary>
-        /// Override this in order to execute build actions.
+        /// Override this in order to execute build actions per type.
         /// </summary>
-        public virtual void Build() { }
+        public virtual void Build(Type type) { }
+        /// <summary>
+        /// Override this in order to execute post build actions.
+        /// </summary>
+        public virtual void PostBuild() { }
         /// <summary>
         /// Stores data for type <c>type</c>.
         /// </summary>
