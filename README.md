@@ -3,7 +3,7 @@ A shared library used to simplify the process of creating and maintaining simple
 
 The concept of _developer testing_ is not very well understood. This is my fault, but watch [my blog](https://blog.elgaard.com), I intend to eventually explain the concept in great detail.
 
-In short developer testing is about developers writing tests while developing code. And I mean tests that testers would call _real_ tests, not simply unit tests. Tests which are simple to write initially, then simple to maintain going forward. Tests which cover actual functionality which is recognisable and valuable to the business.
+In short developer testing is about developers writing tests while developing code. And I mean tests that testers would call _real_ tests, not simply unit tests. Tests which are simple to write initially, then simple to maintain going forward. Tests which cover actual functionality which is recognisable by and valuable to the business.
 
 Note that the versions built so far start with _0._, which means that I consider the code to be in a pre-release state. The consequence of this is that there may be small breaking changes even though only the minor part of the version is bumped up. As soon as the major part of the version is bumped to _1._ I will start using semantic versioning, so you can count on minor version upgrades are backwards compatible.
 
