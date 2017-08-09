@@ -41,8 +41,9 @@ namespace LeanTest.Core.ExecutionHandling
                         theClass.GetTypeInfo().GetDeclaredMethod(PreBuildMethod).Invoke(handler, null);
                     }
 
-                    foreach (object data in _dataStore.TypedData[stateKeyValuePair.Key])
-                        theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod).Invoke(handler, new[] { data });
+                    if (_dataStore.TypedData.ContainsKey(stateKeyValuePair.Key))
+                        foreach (object data in _dataStore.TypedData[stateKeyValuePair.Key])
+                            theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod).Invoke(handler, new[] { data });
 
                     theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod).Invoke(handler, new object[] { stateKeyValuePair.Key });
 
