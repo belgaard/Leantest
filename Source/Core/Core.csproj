@@ -23,6 +23,6 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard1.4\LeanTest.Core.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\LeanTest.Core.xml</DocumentationFile>
   </PropertyGroup>
 </Project>

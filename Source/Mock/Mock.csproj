@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard1.4\LeanTest.Mock.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\LeanTest.Mock.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
