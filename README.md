@@ -5,6 +5,8 @@ A shared library used to simplify the process of creating and maintaining simple
 The latest AppVeyor build [![Build status](https://ci.appveyor.com/api/projects/status/gd05aw9aslc3kgbq/branch/master?svg=true)](https://ci.appveyor.com/project/belgaard/leantest/branch/master) (from the latest push to master on GitHub) is available on myGet.org,
  - https://www.myget.org/F/belgaard-ci/api/v3/index.json
 
+ LeanTest is built on .Net Standard 2.0 and will work for both .Net and .Net Core.
+
 Officially released builds are available on nuGet.org,
  - Core: [![nuGet Core](https://img.shields.io/nuget/v/LeanTest.Core.svg?style=plastic)](https://www.nuget.org/Packages/LeanTest.Core)
  - Mock: [![nuGet Mock](https://img.shields.io/nuget/v/LeanTest.Mock.svg?style=plastic)](https://www.nuget.org/Packages/LeanTest.Mock)
