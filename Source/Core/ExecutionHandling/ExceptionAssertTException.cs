@@ -8,6 +8,16 @@ namespace LeanTest.Core.ExecutionHandling
     /// </summary>
     public static class ExceptionAssertTException
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TException"></typeparam>
+        /// <typeparam name="TFunc"></typeparam>
+        /// <param name="action"></param>
+        /// <param name="message"></param>
+        /// <param name="throws"></param>
+        /// <param name="assertFailedException"></param>
+        /// <returns></returns>
         public static TException Adapter<TException, TFunc>(TFunc action, string message, Func<TFunc, string, TException> throws, Func<string, Exception> assertFailedException)
             where TException : Exception
         {
