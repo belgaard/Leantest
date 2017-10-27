@@ -1,6 +1,4 @@
-﻿using LeanTest.Core.ExecutionHandling;
-
-namespace LeanTest.Mock
+﻿namespace LeanTest.Mock
 {
     /// <summary>
     /// Instantiate and initialize a mocking builder to handle IMockForData-based mocks
@@ -8,9 +6,8 @@ namespace LeanTest.Mock
     public static class MockingBuilderFactory
     {
         /// <summary>
-        /// Call this in order to allow the mocking builder to kick in and handle IMockForData-based mocks.
+        /// This method is here for backwards compatibility - you can safely call it or not, it will do nothing at all.
         /// </summary>
-        public static void Initialize() => 
-            ContextBuilderFactory.AddBuilderFactory((container, dataStore) => new MockingBuilder(container, dataStore));
+        public static void Initialize() {}
     }
 }

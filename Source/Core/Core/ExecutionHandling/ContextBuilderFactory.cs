@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LeanTest.Mock;
 
 namespace LeanTest.Core.ExecutionHandling
 {
@@ -60,13 +61,13 @@ namespace LeanTest.Core.ExecutionHandling
         /// <summary>
         /// Setup IoC and builders. Eventually, this will initialize app domains.
         /// </summary>
-        public static void Initialize(CleanContextMode mode, Func<IIocContainer> iocfactory)
+        public static void Initialize(CleanContextMode mode, Func<IIocContainer> iocFactory)
         {
             _cleanContextMode = mode;
-            _iocContainerFactory = iocfactory;
+            _iocContainerFactory = iocFactory;
 
-            // TODO: This should not be part of Initialize - to be removed as soon as 'state' is a separate nuGet package!
             AddBuilderFactory((container, dataStore) => new StateBuilder(container, dataStore));
+            AddBuilderFactory((container, dataStore) => new MockingBuilder(container, dataStore));
 
             _lazyIocContainer = new Lazy<IIocContainer>(_iocContainerFactory);
         }
@@ -74,7 +75,7 @@ namespace LeanTest.Core.ExecutionHandling
         /// <summary>
         /// Setup IoC and builders to create the IoC context before each test. Eventually, this will initialize app domains.
         /// </summary>
-        public static void Initialize(Func<IIocContainer> iocfactory) => Initialize(CleanContextMode.ReCreate, iocfactory);
+        public static void Initialize(Func<IIocContainer> iocFactory) => Initialize(CleanContextMode.ReCreate, iocFactory);
 
         /// <summary>
         /// Adds a builder factory for building e.g. 'mock' and 'state' builders.
