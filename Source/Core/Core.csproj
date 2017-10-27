@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>LeanTest.Core</AssemblyName>
-    <RootNamespace>LeanTest.Core</RootNamespace>
+    <RootNamespace>LeanTest</RootNamespace>
     
     <PackageId>LeanTest.Core</PackageId>
     <PackageVersion>$(appveyor_build_version)</PackageVersion>
@@ -25,4 +25,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\LeanTest.Core.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="ExecutionHandling\" />
+  </ItemGroup>
 </Project>
