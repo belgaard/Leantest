@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace LeanTest.Mock
 {
     /// <summary>
-    /// Use this as a base class for classes which implement <c>IMockForData</c> type <c>T</c>.
+    /// If you find in convenient, you can use this as a base class for classes which implement <c>IMockForData</c> type <c>T</c>.
     /// </summary>
     public class TypedData<T>
     {
