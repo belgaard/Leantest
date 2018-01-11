@@ -46,6 +46,7 @@ namespace LeanTest.Core.ExecutionHandling
             switch (_cleanContextMode)
             {
                 case CleanContextMode.ReCreate:
+					// TODO: Dispose the old container!
                     iocContainer = _iocContainerFactory();
                     break;
                 case CleanContextMode.ReUse:

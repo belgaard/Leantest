@@ -9,7 +9,7 @@ namespace Mock.Examples.MsTest
     /// Note that in a real-world example we must choose an IoC container - here we have implemented our own for
     /// this example. See the ValueAdd solution for examples of using Unity. 
     /// This container must be initialized in an AssemblyInitializer class - refer to this class to see how it is
-    /// sone with our example IoC container.
+    /// done with our example IoC container.
     /// For the example to be more complete, there should be two projects, one for test one for what is being tested.
     /// </summary>
     [TestClass]
