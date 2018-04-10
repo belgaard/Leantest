@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Examples.MsTest.Domain;
+﻿using Core.Examples.MsTest.Domain;
 using LeanTest.Core.ExecutionHandling;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
