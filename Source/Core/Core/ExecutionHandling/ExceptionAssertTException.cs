@@ -37,8 +37,7 @@ namespace LeanTest.Core.ExecutionHandling
         {
             return Throws<TException>(() =>
             {
-                var action = new Task(() => func());
-                action.RunSynchronously();
+                Task action = Task.WhenAll(func());
                 if (!action.IsFaulted)
                     return;
                 if (action.Exception?.InnerException != null)

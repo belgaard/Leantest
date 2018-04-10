@@ -1,5 +1,4 @@
 ﻿using LeanTest.Core.ExecutionHandling;
-using LeanTest.Mock;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Mock.Examples.MsTest.IoC;
 
