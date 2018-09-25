@@ -24,7 +24,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj" />
+    <PackageReference Include="LeanTest.Core" Version="0.15.*" />
   </ItemGroup>
-
 </Project>
