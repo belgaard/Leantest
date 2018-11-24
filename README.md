@@ -14,6 +14,7 @@ Officially released builds are available on nuGet.org,
  - Mock: [![nuGet Mock](https://img.shields.io/nuget/v/LeanTest.Mock.svg?style=plastic)](https://www.nuget.org/Packages/LeanTest.Mock)
  - JSon: [![nuGet JSon](https://img.shields.io/nuget/v/LeanTest.JSon.svg?style=plastic)](https://www.nuget.org/Packages/LeanTest.JSon) 
  
+ ## Support
  [![Join the chat at https://gitter.im/Leantestnet/Lobby](https://badges.gitter.im/Leantestnet/Lobby.svg)](https://gitter.im/Leantestnet/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## The Concept
