@@ -8,6 +8,10 @@
     <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\MSTest\ExceptionAssert.cs" Link="ExceptionAssert.cs" />
+    <Compile Include="..\MSTest\MultiAssert.cs" Link="MultiAssert.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />

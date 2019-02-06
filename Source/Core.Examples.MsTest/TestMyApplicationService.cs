@@ -1,8 +1,8 @@
 using System;
 using Core.Examples.MsTest.Application;
 using Core.Examples.MsTest.IoC;
-using Core.Examples.MsTest.TestSetup;
 using LeanTest.Core.ExecutionHandling;
+using LeanTest.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Core.Examples.MsTest

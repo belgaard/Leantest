@@ -42,6 +42,7 @@ namespace LeanTest.Core.ExecutionHandling
 			DataStore.WithData(data);
 			foreach (IBuilder builder in _builders)
 				builder.WithBuilderForData<T>();
+			// TODO: Throw if no builder was found for this piece of data!
 
 			return this;
 		}
@@ -54,6 +55,7 @@ namespace LeanTest.Core.ExecutionHandling
 		{
 			foreach (IBuilder builder in _builders)
 				builder.WithBuilderForData<T>();
+			// TODO: Throw if no builder was found for this piece of data!
 
 			return this;
 		}
@@ -66,6 +68,7 @@ namespace LeanTest.Core.ExecutionHandling
 			DataStore.WithEnumerable(ts);
 			foreach (IBuilder builder in _builders)
 				builder.WithBuilderForData<T>();
+			// TODO: Throw if no builder was found for this piece of data!
 
 			return this;
 		}
