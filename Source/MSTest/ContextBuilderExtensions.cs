@@ -23,8 +23,8 @@ namespace LeanTest.MSTest
 			    .ToArray();
 
 		    foreach (MethodInfo methodInfo in methods)
-		    foreach (TestScenarioIdAttribute testScenarioIdAttribute in methodInfo.GetCustomAttributes(typeof(TestScenarioIdAttribute), false))
-			    Console.WriteLine($@"{TestScenarioIdAttribute.Prefix}{testScenarioIdAttribute?.Value}{TestScenarioIdAttribute.Postfix}");
+		        foreach (TestScenarioIdAttribute testScenarioIdAttribute in methodInfo.GetCustomAttributes(typeof(TestScenarioIdAttribute), false))
+			        Console.WriteLine($@"{TestScenarioIdAttribute.Prefix}{testScenarioIdAttribute?.Value}{TestScenarioIdAttribute.Postfix}");
 
 		    return theContextBuilder;
 	    }
@@ -40,19 +40,17 @@ namespace LeanTest.MSTest
 			    .ToArray();
 
 		    foreach (MethodInfo methodInfo in methods)
-		    foreach (TestTagAttribute testTagAttribute in methodInfo.GetCustomAttributes(typeof(TestTagAttribute), false))
-			    Console.WriteLine($@"{TestTagAttribute.Prefix}{testTagAttribute?.Value}{TestTagAttribute.Postfix}");
+		        foreach (TestTagAttribute testTagAttribute in methodInfo.GetCustomAttributes(typeof(TestTagAttribute), false))
+			        Console.WriteLine($@"{TestTagAttribute.Prefix}{testTagAttribute?.Value}{TestTagAttribute.Postfix}");
 
 		    return theContextBuilder;
 	    }
 		/// <summary>Registers an intend to use the LeanTest attribute on test methods.</summary>
 		/// <remarks>This causes scenario IDs and tags to be written to the test log (.trx-file).</remarks>
-		public static ContextBuilder RegisterAttributes(this ContextBuilder theContextBuilder, TestContext testContext)
-		{
-		    RegisterScenarioId(theContextBuilder, testContext);
-		    RegisterTags(theContextBuilder, testContext);
-
-		    return theContextBuilder;
-	    }
-   }
+		// TODO: Use the builder pattern - defer writing until build!?
+		public static ContextBuilder RegisterAttributes(this ContextBuilder theContextBuilder, TestContext testContext) => 
+		    theContextBuilder
+		        .RegisterScenarioId(testContext)
+		        .RegisterTags(testContext);
+    }
 }
