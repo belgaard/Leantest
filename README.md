@@ -26,7 +26,7 @@ The way we achieve all this is by _maximizing code under test_ but _minimizing d
 
 Maximizing code under test means not mocking away logic unless we really have to. And we only really have to mock logic away if we cannot control it deterministically (or if it is really slow to execute). In practice, this usually means that truly external dependencies must be mocked and nothing more. And we have a single mocking strategy for an entire test suite, having slightly different mocking per test case is a no-no.
 
-Minimizing data means ensuring that exactly the data needed for a given test to run (yes, this is _per-test_ unlike mocking) is provided for the test. With naming we try to express exactly what characteristica of teh data will make the test run.
+Minimizing data means ensuring that exactly the data needed for a given test to run (yes, we do this _per-test_ unlike the way we do mocking) is provided for the test. With naming we try to express exactly what characteristica of the data will make the test run.
 
 Note that the versions built so far start with _0._, which means that I consider the code to be in a pre-release state. The consequence of this is that there may be small breaking changes even though only the minor part of the version is bumped up. As soon as the major part of the version is bumped to _1._ I will start using semantic versioning, so you can count on minor version upgrades being backwards compatible.
 
