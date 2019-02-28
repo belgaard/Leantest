@@ -5,6 +5,7 @@ using LeanTest.Core.ExecutionHandling;
 using LeanTest.JSon;
 using LeanTest.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static LeanTest.MSTest.TestTagAttribute;
 
 namespace MSTest.Examples.MsTest
 {
@@ -21,14 +22,14 @@ namespace MSTest.Examples.MsTest
         public void TestInitialize()
         {
             _contextBuilder = ContextBuilderFactory.CreateContextBuilder()
-	            .RegisterScenarioId(TestContext)
+	            .RegisterTags(TestContext)
                 .Build();
 
             _target = _contextBuilder.GetInstance<MyApplicationService>();
         }
 
         [TestMethod]
-        [TestScenarioId("{439E173C-D2A8-4E1B-9D6D-B3EF9A72A3F9}")]
+        [TestScenarioId("{439E173C-D2A8-4E1B-9D6D-B3EF9A72A3F9}"), TestTag(NotImplemented)]
         public void SumMustReturn42When10And32ArePassedFromJson()
         {
             _contextBuilder

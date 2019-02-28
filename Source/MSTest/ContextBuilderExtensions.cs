@@ -28,5 +28,31 @@ namespace LeanTest.MSTest
 
 		    return theContextBuilder;
 	    }
+		/// <summary>Registers an intend to use the LeanTest attribute on test methods.</summary>
+		/// <remarks>This causes scenario IDs and tags to be written to the test log (.trx-file).</remarks>
+		public static ContextBuilder RegisterTags(this ContextBuilder theContextBuilder, TestContext testContext)
+	    {
+		    Assembly assembly = Assembly.GetCallingAssembly();
+		    MethodInfo[] methods = assembly.GetTypes()
+			    .SelectMany(t => t.GetMethods())
+			    .Where(m => m.GetCustomAttributes(typeof(TestTagAttribute), false).Length > 0)
+			    .Where(m => m.Name == testContext.TestName)
+			    .ToArray();
+
+		    foreach (MethodInfo methodInfo in methods)
+		    foreach (TestTagAttribute testTagAttribute in methodInfo.GetCustomAttributes(typeof(TestTagAttribute), false))
+			    Console.WriteLine($@"{TestTagAttribute.Prefix}{testTagAttribute?.Value}{TestTagAttribute.Postfix}");
+
+		    return theContextBuilder;
+	    }
+		/// <summary>Registers an intend to use the LeanTest attribute on test methods.</summary>
+		/// <remarks>This causes scenario IDs and tags to be written to the test log (.trx-file).</remarks>
+		public static ContextBuilder RegisterAttributes(this ContextBuilder theContextBuilder, TestContext testContext)
+		{
+		    RegisterScenarioId(theContextBuilder, testContext);
+		    RegisterTags(theContextBuilder, testContext);
+
+		    return theContextBuilder;
+	    }
    }
 }
