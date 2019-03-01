@@ -13,9 +13,9 @@ namespace LeanTest.MSTest
     {
 		/// <summary>Registers an intend to use the <c>TestScenarioId</c> attribute on test methods.</summary>
 		/// <remarks>This causes scenario IDs to be written to the test log (.trx-file).</remarks>
-		public static ContextBuilder RegisterScenarioId(this ContextBuilder theContextBuilder, TestContext testContext)
+		public static ContextBuilder RegisterScenarioId(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
 	    {
-		    Assembly assembly = Assembly.GetCallingAssembly();
+	        assembly = assembly ?? Assembly.GetCallingAssembly();
 		    MethodInfo[] methods = assembly.GetTypes()
 			    .SelectMany(t => t.GetMethods())
 			    .Where(m => m.GetCustomAttributes(typeof(TestScenarioIdAttribute), false).Length > 0)
@@ -30,9 +30,9 @@ namespace LeanTest.MSTest
 	    }
 		/// <summary>Registers an intend to use the LeanTest attribute on test methods.</summary>
 		/// <remarks>This causes scenario IDs and tags to be written to the test log (.trx-file).</remarks>
-		public static ContextBuilder RegisterTags(this ContextBuilder theContextBuilder, TestContext testContext)
+		public static ContextBuilder RegisterTags(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
 	    {
-		    Assembly assembly = Assembly.GetCallingAssembly();
+		    assembly = assembly ?? Assembly.GetCallingAssembly();
 		    MethodInfo[] methods = assembly.GetTypes()
 			    .SelectMany(t => t.GetMethods())
 			    .Where(m => m.GetCustomAttributes(typeof(TestTagAttribute), false).Length > 0)
@@ -48,9 +48,12 @@ namespace LeanTest.MSTest
 		/// <summary>Registers an intend to use the LeanTest attribute on test methods.</summary>
 		/// <remarks>This causes scenario IDs and tags to be written to the test log (.trx-file).</remarks>
 		// TODO: Use the builder pattern - defer writing until build!?
-		public static ContextBuilder RegisterAttributes(this ContextBuilder theContextBuilder, TestContext testContext) => 
-		    theContextBuilder
-		        .RegisterScenarioId(testContext)
-		        .RegisterTags(testContext);
+		public static ContextBuilder RegisterAttributes(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
+        {
+            assembly = assembly ?? Assembly.GetCallingAssembly();
+            return theContextBuilder
+                .RegisterScenarioId(testContext, assembly)
+                .RegisterTags(testContext, assembly);
+        }
     }
 }

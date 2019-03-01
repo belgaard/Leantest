@@ -22,7 +22,7 @@ namespace MSTest.Examples.MsTest
         public void TestInitialize()
         {
             _contextBuilder = ContextBuilderFactory.CreateContextBuilder()
-	            .RegisterTags(TestContext)
+	            .RegisterAttributes(TestContext)
                 .Build();
 
             _target = _contextBuilder.GetInstance<MyApplicationService>();
