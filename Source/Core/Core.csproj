@@ -16,13 +16,11 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyVersion>$(appveyor_build_version)</AssemblyVersion>
     <FileVersion>$(appveyor_build_version)</FileVersion>
-  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>LeanTest.Core.xml</DocumentationFile>
-  </PropertyGroup>
+    <!-- Embed PDB inside dll -->
+    <DebugType>embedded</DebugType>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\LeanTest.Core.xml</DocumentationFile>
+    <!-- Generate XML doc for consumers -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 </Project>
