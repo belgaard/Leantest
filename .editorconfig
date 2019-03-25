@@ -1,0 +1,12 @@
+# top-most EditorConfig file
+root = true
+
+[*.cs]
+indent_style = tab
+indent_size = 4
+
+
+# Spaces in XML files
+[*.{props,targets,config,nuspec,csproj,proj}]
+indent_style = space
+indent_size = 2
