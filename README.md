@@ -24,6 +24,43 @@ In short, developer testing is about developers writing tests while developing c
 
 The way we achieve all this is by _maximizing code under test_ but _minimizing data_.
 
+But before we dig into that, let's look at an even more fundamental concep, that of _existing state_.
+
+### Existing state
+
+When _testers write tests_ they often talk about _test data_. What they usually mean is that they use a set of test data, say a washed and minimized version of the full production database, which is sufficient for a number of tests to run. 
+
+There are well known problems with this approach, for example that it can be difficult to keep the data and schema up-to-date with changes to the production system.
+
+Personally, I don't like such a scatter-gun approach to test data, but I will come back to that.
+
+When _developers write unit tests_ they usually don't think much about test data as a concept, but naturally they do use it.
+
+In a unit test, data is usually passed directly in each test, possibly via some kind of a mocking framework. Some of this data is similar to the test database in a _tester test_, while other data is input to the target under test. Usually, it is not clear which is which because unit tests traditionally work on such a low level that input to the target under test in a unit test would be data read from a database in a _tester test_.
+
+The effect of this is that for a traditional unit tests, it is not clear what the data is, there is often many mocks and there is a separate mocking strategy per test. I don't like any of that.
+
+We have a single concept for teh equivalent of a test database in Lean Testing - we call it _existing state_. We simply insist that each test must declare what data it needs to succeed. For this we have a _test context_ to which we declare the data needed per test. Something like the following,
+
+````csharp
+        [TestMethod]
+        public void GetAgeMustReturn10WhenKeyMatchesNewedUpData()
+        {
+            _contextBuilder
+                .WithData(new MyData { Age = 10, Key = "ac_32_576259321" })
+                .Build();
+
+            int actual = _target.GetAge("FourtyTwo");
+
+            Assert.AreEqual(10, actual);
+        }
+````
+In the above example, we have declared that our test must succeed if the only test data available is one specific instance of MyData. By the magic of dependency injection and a builder pattern (which will be described below), the data will be available to our test target.
+
+Our test target can potentially be part of a tangle of a huge code base, but by minimizing the data per test, we can handle that with very few and simple mocks. Which is what the next section is about.
+
+### Maximizing code under test but minimizing data
+
 Maximizing code under test means not mocking away logic unless we really have to. And we only really have to mock logic away if we cannot control it deterministically (or if it is really slow to execute). In practice, this usually means that truly external dependencies must be mocked and nothing more. And we have a single mocking strategy for an entire test suite, having slightly different mocking per test case is a no-no.
 
 Minimizing data means ensuring that exactly the data needed for a given test to run (yes, we do this _per-test_ unlike the way we do mocking) is provided for the test. With naming we try to express exactly what characteristica of the data will make the test run.
