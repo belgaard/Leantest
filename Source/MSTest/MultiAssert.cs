@@ -7,6 +7,8 @@ namespace LeanTest.MSTest
 	/// <summary>The MS Test adaption to <c>MultiAssertForTException</c>.</summary>
 	public static class MultiAssert
 	{
+		/// <summary>Executes all actions regardless of failed assertions (a.k.a. <c>AssertFailedException</c> thrown). If any assertions fail, a single 
+		/// assertion failure with aggregated assertion message texts is generated.</summary>
 		public static void Aggregate(params Action[] actions)
 		{
 			try
