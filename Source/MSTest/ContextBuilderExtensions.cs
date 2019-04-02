@@ -13,32 +13,32 @@ namespace LeanTest.MSTest
 	{
 		/// <summary>Registers an intend to use the <c>TestScenarioId</c> attribute on test methods.</summary>
 		/// <remarks>This causes scenario IDs to be written to the test log (.trx-file).</remarks>
-		public static ContextBuilder RegisterScenarioId(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
+		public static ContextBuilder RegisterScenarioId(this ContextBuilder theContextBuilder, TestContext testContext)
 		{
 			if (testContext == null) throw new ArgumentNullException(nameof(testContext));
 
-			testContext.RegisterScenarioId(assembly);
+			testContext.RegisterScenarioId();
 			return theContextBuilder;
 		}
 
 		/// <summary>Registers an intend to use the LeanTest attribute on test methods.</summary>
 		/// <remarks>This causes scenario IDs and tags to be written to the test log (.trx-file).</remarks>
-		public static ContextBuilder RegisterTags(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
+		public static ContextBuilder RegisterTags(this ContextBuilder theContextBuilder, TestContext testContext)
 		{
 			if (testContext == null) throw new ArgumentNullException(nameof(testContext));
 
-			testContext.RegisterTags(assembly);
+			testContext.RegisterTags();
 			return theContextBuilder;
 		}
 
 		/// <summary>Registers an intend to use the LeanTest attribute on test methods.</summary>
 		/// <remarks>This causes scenario IDs and tags to be written to the test log (.trx-file).</remarks>
 		// TODO: Use the builder pattern - defer writing until build!?
-		public static ContextBuilder RegisterAttributes(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
+		public static ContextBuilder RegisterAttributes(this ContextBuilder theContextBuilder, TestContext testContext)
 		{
 			if (testContext == null) throw new ArgumentNullException(nameof(testContext));
 
-			testContext.RegisterAttributes(assembly);
+			testContext.RegisterAttributes();
 			return theContextBuilder;
 		}
 	}
