@@ -6,40 +6,54 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LeanTest.MSTest
 {
-	/// <summary>
-	/// Adds support for adding test data in Json format.
-	/// </summary>
-	public static class ContextBuilderExtensions
-	{
+    /// <summary>
+    /// Adds support for adding test data in Json format.
+    /// </summary>
+    public static class ContextBuilderExtensions
+    {
 		/// <summary>Registers an intend to use the <c>TestScenarioId</c> attribute on test methods.</summary>
 		/// <remarks>This causes scenario IDs to be written to the test log (.trx-file).</remarks>
 		public static ContextBuilder RegisterScenarioId(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
-		{
-			if (testContext == null) throw new ArgumentNullException(nameof(testContext));
+	    {
+	        assembly = assembly ?? Assembly.GetCallingAssembly();
+		    MethodInfo[] methods = assembly.GetTypes()
+			    .SelectMany(t => t.GetMethods())
+			    .Where(m => m.GetCustomAttributes(typeof(TestScenarioIdAttribute), false).Length > 0)
+			    .Where(m => m.Name == testContext.TestName)
+			    .ToArray();
 
-			testContext.RegisterScenarioId(assembly);
-			return theContextBuilder;
-		}
+		    foreach (MethodInfo methodInfo in methods)
+		        foreach (TestScenarioIdAttribute testScenarioIdAttribute in methodInfo.GetCustomAttributes(typeof(TestScenarioIdAttribute), false))
+			        Console.WriteLine($@"{TestScenarioIdAttribute.Prefix}{testScenarioIdAttribute?.Value}{TestScenarioIdAttribute.Postfix}");
 
+		    return theContextBuilder;
+	    }
 		/// <summary>Registers an intend to use the LeanTest attribute on test methods.</summary>
 		/// <remarks>This causes scenario IDs and tags to be written to the test log (.trx-file).</remarks>
 		public static ContextBuilder RegisterTags(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
-		{
-			if (testContext == null) throw new ArgumentNullException(nameof(testContext));
+	    {
+		    assembly = assembly ?? Assembly.GetCallingAssembly();
+		    MethodInfo[] methods = assembly.GetTypes()
+			    .SelectMany(t => t.GetMethods())
+			    .Where(m => m.GetCustomAttributes(typeof(TestTagAttribute), false).Length > 0)
+			    .Where(m => m.Name == testContext.TestName)
+			    .ToArray();
 
-			testContext.RegisterTags(assembly);
-			return theContextBuilder;
-		}
+		    foreach (MethodInfo methodInfo in methods)
+		        foreach (TestTagAttribute testTagAttribute in methodInfo.GetCustomAttributes(typeof(TestTagAttribute), false))
+			        Console.WriteLine($@"{TestTagAttribute.Prefix}{testTagAttribute?.Value}{TestTagAttribute.Postfix}");
 
+		    return theContextBuilder;
+	    }
 		/// <summary>Registers an intend to use the LeanTest attribute on test methods.</summary>
 		/// <remarks>This causes scenario IDs and tags to be written to the test log (.trx-file).</remarks>
 		// TODO: Use the builder pattern - defer writing until build!?
 		public static ContextBuilder RegisterAttributes(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
-		{
-			if (testContext == null) throw new ArgumentNullException(nameof(testContext));
-
-			testContext.RegisterAttributes(assembly);
-			return theContextBuilder;
-		}
-	}
+        {
+            assembly = assembly ?? Assembly.GetCallingAssembly();
+            return theContextBuilder
+                .RegisterScenarioId(testContext, assembly)
+                .RegisterTags(testContext, assembly);
+        }
+    }
 }
