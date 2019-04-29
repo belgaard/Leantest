@@ -24,8 +24,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LeanTest.Core" Version="0.21.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0" />
+    <PackageReference Include="LeanTest.Core" Version="0.22.1.109" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
 </Project>
