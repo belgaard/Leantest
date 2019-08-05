@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{A7E92AD6-6696-40AC-904B-4C7FA9509106}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Source\Core\Core.csproj", "{A7E92AD6-6696-40AC-904B-4C7FA9509106}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Examples.MsTest", "Core.Examples.MsTest\Core.Examples.MsTest.csproj", "{9CAC8524-6FD8-4CD4-924A-9E7748654207}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Examples.MsTest", "Source\Core.Examples.MsTest\Core.Examples.MsTest.csproj", "{9CAC8524-6FD8-4CD4-924A-9E7748654207}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mock", "Mock\Mock.csproj", "{E412F59B-73AF-4071-9275-A341595FCD5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mock", "Source\Mock\Mock.csproj", "{E412F59B-73AF-4071-9275-A341595FCD5B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mock.Examples.MsTest", "Mock.Examples.MsTest\Mock.Examples.MsTest.csproj", "{D5D202EB-D9A1-47A7-9844-70BD649D7E4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mock.Examples.MsTest", "Source\Mock.Examples.MsTest\Mock.Examples.MsTest.csproj", "{D5D202EB-D9A1-47A7-9844-70BD649D7E4C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSon", "JSon\JSon.csproj", "{4D4EC696-9F1E-473F-9A92-06A95E835C59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSon", "Source\JSon\JSon.csproj", "{4D4EC696-9F1E-473F-9A92-06A95E835C59}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Json.Examples.MsTest", "Json.Examples.MsTest\Json.Examples.MsTest.csproj", "{942EE5B3-463C-4B00-9246-09CB55D136CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Json.Examples.MsTest", "Source\Json.Examples.MsTest\Json.Examples.MsTest.csproj", "{942EE5B3-463C-4B00-9246-09CB55D136CD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{62FABEA8-7550-483D-839C-C0D50444D674}"
 	ProjectSection(SolutionItems) = preProject
@@ -21,17 +21,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{62FABEA8
 		Build.cmd = Build.cmd
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "State.Examples.MsTest", "State.Examples.MsTest\State.Examples.MsTest.csproj", "{A7470C2D-CB2B-4D63-BEE2-835381A29F00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "State.Examples.MsTest", "Source\State.Examples.MsTest\State.Examples.MsTest.csproj", "{A7470C2D-CB2B-4D63-BEE2-835381A29F00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleApp", "ExampleApp\ExampleApp.csproj", "{6E0992FC-C481-49C0-8A03-D36FE95F67C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleApp", "Source\ExampleApp\ExampleApp.csproj", "{6E0992FC-C481-49C0-8A03-D36FE95F67C4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSTest", "MSTest\MSTest.csproj", "{FBEBB99E-BE1E-45AC-94C1-DFBBCEC69E05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSTest", "Source\MSTest\MSTest.csproj", "{FBEBB99E-BE1E-45AC-94C1-DFBBCEC69E05}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSTest.Examples.MsTest", "MSTest.Examples.MsTest\MSTest.Examples.MsTest.csproj", "{BC15DD45-522D-4086-B7D1-63806896D417}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSTest.Examples.MsTest", "Source\MSTest.Examples.MsTest\MSTest.Examples.MsTest.csproj", "{BC15DD45-522D-4086-B7D1-63806896D417}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67FE6255-20F5-443D-979A-8839C6666C9B}"
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		..\defaults.yml = ..\defaults.yml
+		..\index.md = ..\index.md
+		..\README.md = ..\README.md
+		..\TOC.yml = ..\TOC.yml
 	EndProjectSection
 EndProject
 Global

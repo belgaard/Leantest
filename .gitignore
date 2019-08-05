@@ -226,7 +226,7 @@ FakesAssemblies/
 *.GhostDoc.xml
 
 # LiterateCS generated files
-Source/docs/
+docs/
 
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
