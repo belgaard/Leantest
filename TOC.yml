@@ -2,6 +2,10 @@
 # for description of the format.
 
 contents:
+  - page: Home
+    file: index.md
+    desc: Lean Testing home page.
+
   - page: Introduction
     file: README.md
-    desc: Library home page.
+    desc: Introduction to Lean Testing.
