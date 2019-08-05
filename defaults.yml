@@ -19,5 +19,6 @@ solution: LeanTest.sln
 format: html
 trim: true
 verbose: true
-updatetoc: true
+# TODO: Eventually, we want the TOC to be updated automatically:
+updatetoc: false
 buildlog: buildlog.txt

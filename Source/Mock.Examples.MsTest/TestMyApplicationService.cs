@@ -25,7 +25,7 @@ namespace Mock.Examples.MsTest
 
 			_target = _contextBuilder.GetInstance<MyApplicationService>();
 		}
-
+#region Example of existing state
 		[TestMethod]
 		public void GetAgeMustReturn10WhenKeyMatchesNewedUpData()
 		{
@@ -38,5 +38,6 @@ namespace Mock.Examples.MsTest
 
 			Assert.AreEqual(10, actual);
 		}
+#endregion
 	}
 }
