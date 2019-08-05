@@ -225,6 +225,9 @@ FakesAssemblies/
 # GhostDoc plugin setting file
 *.GhostDoc.xml
 
+# LiterateCS generated files
+Source/docs/
+
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 

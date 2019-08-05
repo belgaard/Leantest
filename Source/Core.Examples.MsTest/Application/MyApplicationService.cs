@@ -5,12 +5,13 @@ namespace Core.Examples.MsTest.Application
 {
     public class MyApplicationService
     {
-        public int Sum(MyData myData)
+#region Add function
+		public int Sum(MyData myData)
         {
             return myData.First + myData.Second;
         }
-
-        public void DivideByZero()
+#endregion
+		public void DivideByZero()
         {
             throw new System.DivideByZeroException();
         }

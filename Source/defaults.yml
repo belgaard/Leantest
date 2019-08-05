@@ -1,0 +1,23 @@
+﻿# Front matter defaults. See https://johtela.github.io/LiterateCS/FrontMatter.html 
+# for description of how the parameters affect the output.
+---
+ProjectName: LeanTest
+GitHub: https://github.com/user/project
+Footer: "Copyright © 2018 John Doe"
+MarkdownStyle: book
+SyntaxHighlight: monokai
+ShowDescriptionsInToc: true
+
+# Command line options. See https://johtela.github.io/LiterateCS/LiterateCS/Options.html
+# to learn how they are used.
+---
+filters:
+  - "**.cs"
+  - "**.md"
+output: docs
+solution: LeanTest.sln
+format: html
+trim: true
+verbose: true
+updatetoc: true
+buildlog: buildlog.txt
