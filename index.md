@@ -6,108 +6,25 @@ _Jumbotron: >
     A shared library used to simplify the process of creating and maintaining simple and consistent developer tests across projects.
 ---
 
-<div class="row">
-<div class="col-md-6">
+# Deployment
+The latest AppVeyor build [![Build status](https://ci.appveyor.com/api/projects/status/gd05aw9aslc3kgbq/branch/master?svg=true)](https://ci.appveyor.com/project/belgaard/leantest/branch/master) (from the latest push to master on GitHub) is available on myGet.org,
+ - https://www.myget.org/F/belgaard-ci/api/v3/index.json
 
-## Step 1: Write Your Documentation
+Note that v0.13.* LeanTest is built on .Net Standard 1.0. By using the very lowest common denominator it is possible to use LeanTest on all platforms dupported by .Net Standard.
 
-Embed your documentation inside code comments or put it into separate markdown 
-files. All the formatting features of markdown are available to you. The [Markdig] 
-library is used to convert the markdown to HTML. It offers a lot of useful extensions 
-from [MathJax] formulas to [mermaid] diagrams. 
+The latest version will be built on at least .Net Standard 2.0, in order to avoid the many supporting dependencies needed by 1.0.
 
-</div>
-<div class="col-md-6">
-<p><img src="images/Diagram.png" class="img-responsive center-block" /></p>
-</div>
-</div>
+Note that the versions built so far start with _0._, which means that I consider the code to be in a pre-release state. The consequence of this is that there may be small breaking changes even though only the minor part of the version is bumped up. As soon as the major part of the version is bumped to _1._ I will start using semantic versioning, so you can count on minor version upgrades being backwards compatible.
 
-<div class="row">
-<div class="col-md-6">
-<p><img src="images/FrontMatter.png" class="img-responsive center-block" /></p>
-</div>
-<div class="col-md-6">
+Officially released builds are available on nuGet.org,
+ - Core: [![nuGet Core](https://img.shields.io/nuget/v/LeanTest.Core.svg?style=plastic)](https://www.nuget.org/Packages/LeanTest.Core)
+ - Mock: [![nuGet Mock](https://img.shields.io/nuget/v/LeanTest.Mock.svg?style=plastic)](https://www.nuget.org/Packages/LeanTest.Mock)
+ - JSon: [![nuGet JSon](https://img.shields.io/nuget/v/LeanTest.JSon.svg?style=plastic)](https://www.nuget.org/Packages/LeanTest.JSon) 
+ 
+# Support
+ [![Join the chat at https://gitter.im/Leantestnet/Lobby](https://badges.gitter.im/Leantestnet/Lobby.svg)](https://gitter.im/Leantestnet/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Step 2: Customize the Output
+# References
+An early version of LeanTest, as well as the concept of developer testing, was used extensively while developing Saxo Bank's social web site, [TradingFloor.com](https://www.tradingfloor.com/). Around 850+ developer tests (today 1000+ tests) covered most business functionality, running on a typical developer PC in around one minute. Major refactorings of the code were done with these tests as a safety net.
 
-Generate either raw markdown files or standalone, static web sites. Using themes 
-and styles you can customize the appearance of the pages. Include a [YAML]
-front matter in your source files to pass parameters to the site generator.
-
-</div>
-</div>
-
-<div class="row">
-<div class="col-md-6">
-
-## Step 3: Add Table of Contents
-
-A table of contents file defines the structure of your documentation. A TOC 
-file can be automatically generated and updated. The outputted web pages 
-include a navigation pane and navigation buttons to jump from one page to 
-another.
-
-</div>
-<div class="col-md-6">
-<p><img src="images/Navigation.png" class="img-responsive center-block" /></p>
-</div>
-</div>
-
-<div class="row">
-<div class="col-md-6">
-<p><img src="images/Code.png" class="img-responsive center-block" /></p>
-</div>
-<div class="col-md-6">
-
-## Step 4: Generate the Documentation
-
-The documentation "weaver" uses [Roslyn] to parse and analyze your source code. 
-Syntactic and semantic information provided by Roslyn is used for syntax-highlighting, 
-and for adding cross-references and type information to the code blocks. You can jump 
-to the definition of a symbol by clicking it, or inspect its type by hovering over it.
-
-</div>
-</div>
-
-<div class="row">
-<div class="col-md-6">
-
-## Step 5: Publish Your Docs
-
-If your code resides under GitHub, you can publish it on [GitHub Pages] by turning on 
-a single option in the project settings. Just generate your documentation under the 
-`docs` folder, and switch it on. Done!
-
-</div>
-<div class="col-md-6">
-<p><img src="images/GitHubPages.png" class="img-responsive center-block" /></p>
-</div>
-</div>
-
-<div class="row">
-<div class="col-md-3">
-<i class="fa fa-cloud-download fa-5x pull-right"></i>
-</div>
-<div class="col-md-6">
-
-## Give It a Try!
-
-The tool targets the [.NET Core] framework, so it works on Windows, Mac, and Linux.
-It is distributed as a [NuGet] package and is installed as a [global tool]. Installation
-instructions can be found [here](Installation.html). You can also clone the [source repository] 
-and build the tool from the sources.
-
-<a class="btn btn-default" href="https://www.nuget.org/packages/LiterateCS/" role="button">Download &raquo;</a>
-</div>
-</div>
-
-[Markdig]: https://github.com/lunet-io/markdig
-[MathJax]: https://www.mathjax.org/
-[mermaid]: https://knsv.github.io/mermaid/
-[YAML]: http://yaml.org/
-[Roslyn]: https://github.com/dotnet/roslyn
-[GitHub Pages]: https://pages.github.com/
-[.NET Core]: https://www.microsoft.com/net/learn/get-started/
-[global tool]: https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools
-[Nuget]: https://www.nuget.org/
-[source repository]: https://github.com/johtela/LiterateCS
+LeanTest is currently used internally in Saxo Bank's REST based [Open API](https://developer.saxo).

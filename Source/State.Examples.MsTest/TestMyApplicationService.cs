@@ -29,11 +29,11 @@ namespace State.Examples.MsTest
         public void GetAgeMustReturn10WhenKeyMatchesNewedUpData()
         {
             _contextBuilder
-                .WithData(new MyData { Age = 10, Key = "ac_32_576259321" })
+				.WithData(new MyData { Age = 10, Key = "ac_32_576259321" })
                 .WithData(new MyOtherData { OtherAge = 10, OtherKey = "ac_32_576259321" })
                 .Build();
 
-            int actual = _target.GetAge("FourtyTwo");
+			int actual = _target.GetAge("FourtyTwo");
 
             Assert.AreEqual(10, actual);
         }

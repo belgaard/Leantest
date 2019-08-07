@@ -29,10 +29,12 @@ namespace Mock.Examples.MsTest
 		[TestMethod]
 		public void GetAgeMustReturn10WhenKeyMatchesNewedUpData()
 		{
+			#region Example of using a builder pattern
 			_contextBuilder
 				.WithData(new MyData { Age = 10, Key = "ac_32_576259321" })
 				.WithData(new MyOtherData { OtherAge = 10, OtherKey = "ac_32_576259321" })
 				.Build();
+			#endregion
 
 			int actual = _target.GetAge("FourtyTwo");
 
