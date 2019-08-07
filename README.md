@@ -1,4 +1,5 @@
-# Readme
+# Lean Testing in C# with LeanTest.Net
+
 LeanTest.Net is a shared library which is used to simplify the process of creating and maintaining simple and consistent developer tests across projects.
 
 You can find the documentation in [GitHub Pages](https://belgaard.github.io/Leantest/).
