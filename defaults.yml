@@ -6,7 +6,7 @@ GitHub: https://github.com/user/project
 Footer: "Copyright © 2019 Brian Elgaard Bennett"
 MarkdownStyle: book
 SyntaxHighlight: monokai
-ShowDescriptionsInToc: true
+ShowDescriptionsInToc: false
 
 # Command line options. See https://johtela.github.io/LiterateCS/LiterateCS/Options.html
 # to learn how they are used.

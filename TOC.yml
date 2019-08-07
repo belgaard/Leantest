@@ -5,11 +5,9 @@ contents:
   - page: Home
     file: index.md
     desc: Lean Testing home page.
-
-  - page: Readme
-    file: README.md
-    desc: Deployment, support and references.
-
   - page: Introduction
     file: Introduction.md
     desc: Introduction to Lean Testing.
+  - page: Readme
+    file: README.md
+    desc: Deployment, support and references.
