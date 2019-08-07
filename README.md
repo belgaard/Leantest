@@ -1,6 +1,8 @@
 # Readme
 LeanTest.Net is a shared library which is used to simplify the process of creating and maintaining simple and consistent developer tests across projects.
 
+You can find the documentation in [GitHub Pages](https://belgaard.github.io/Leantest/).
+
 ## Deployment
 The latest AppVeyor build [![Build status](https://ci.appveyor.com/api/projects/status/gd05aw9aslc3kgbq/branch/master?svg=true)](https://ci.appveyor.com/project/belgaard/leantest/branch/master) (from the latest push to master on GitHub) is available on myGet.org,
  - https://www.myget.org/F/belgaard-ci/api/v3/index.json
