@@ -8,6 +8,9 @@ contents:
   - page: Introduction
     file: Introduction.md
     desc: Introduction to Lean Testing.
+  - page: License
+    file: License.md
+    desc: Program license and terms of use.
   - page: Readme
     file: README.md
     desc: Deployment, support and references.
