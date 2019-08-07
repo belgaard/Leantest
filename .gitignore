@@ -226,7 +226,6 @@ FakesAssemblies/
 *.GhostDoc.xml
 
 # LiterateCS generated files
-docs/
 buildlog.txt
 
 # Node.js Tools for Visual Studio
