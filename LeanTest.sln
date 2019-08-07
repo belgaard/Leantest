@@ -18,7 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{62FABEA8-7550-483D-839C-C0D50444D674}"
 	ProjectSection(SolutionItems) = preProject
 		..\appveyor.yml = ..\appveyor.yml
-		Build.cmd = Build.cmd
+		Source\Build.cmd = Source\Build.cmd
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "State.Examples.MsTest", "Source\State.Examples.MsTest\State.Examples.MsTest.csproj", "{A7470C2D-CB2B-4D63-BEE2-835381A29F00}"
