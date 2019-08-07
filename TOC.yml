@@ -1,0 +1,13 @@
+﻿# Table of contents data. See https://johtela.github.io/LiterateCS/TableOfContents.html
+# for description of the format.
+
+contents:
+  - page: Home
+    file: index.md
+    desc: Lean Testing home page.
+  - page: Introduction
+    file: Introduction.md
+    desc: Introduction to Lean Testing.
+  - page: Readme
+    file: README.md
+    desc: Deployment, support and references.

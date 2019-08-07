@@ -1,8 +1,6 @@
 version: 0.22.1.{build}
 configuration: Release
 platform: Any CPU
-before_build:
-  - cd Source
 build_script:  
   .\Build.cmd
 image: Visual Studio 2017
