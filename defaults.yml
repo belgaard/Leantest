@@ -4,7 +4,7 @@
 ProjectName: LeanTest
 GitHub: https://github.com/user/project
 Download: https://www.nuget.org/packages?q=leantest
-License: LICENSE.html
+License: License.html
 Footer: "Copyright © 2019 Brian Elgaard Bennett"
 MarkdownStyle: book
 ShowDescriptionsInToc: false
