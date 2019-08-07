@@ -1,0 +1,122 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ExceptionAssert - LeanTest</title>
+
+	<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="../bootstrap/css/default/bootstrap.min.css" />
+<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../sidebar/sidebar.min.css" />
+<link rel="stylesheet" href="../css/book.min.css" />
+<link rel="stylesheet" href="../syntax-highlight/monokai.min.css" />
+<link rel="stylesheet" href="../mermaid/mermaid.css" />
+
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#sidebar-toggle" id="sidebar-toggle">
+					<i id="sidebar-toggle-icon" class="hidden-md hidden-lg hidden-xl fa fa-angle-double-right" aria-hidden="true"></i>
+					LeanTest
+				</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					<li><a href="https://github.com/user/project"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-md-3 hidden-sm hidden-xs">
+                
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>On This Page</h4>
+            </div>
+            <div id="header-menu" class="panel-body main-menu">
+                <ul></ul>
+            </div>
+        </div>  
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Table of Contents</h4>
+            </div>
+            <div class="panel-body main-menu">
+                <ul>
+	<li><a href="../../README.html">Home</a></li>
+	<ul>
+		<li>Library home page.</li>
+	</ul>
+</ul>
+            </div>
+        </div>
+
+            </div>
+			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+								<div id="static-content" class="markdown">
+					<pre class="csharp"><code class="csharp"><span class="keyword">using</span> System<span class="punctuation">;</span>
+<span class="keyword">using</span> System<span class="punctuation">.</span>Threading<span class="punctuation">.</span>Tasks<span class="punctuation">;</span>
+<span class="keyword">using</span> LeanTest<span class="punctuation">.</span>Core<span class="punctuation">.</span>ExecutionHandling<span class="punctuation">;</span>
+<span class="keyword">using</span> Microsoft<span class="punctuation">.</span>VisualStudio<span class="punctuation">.</span>TestTools<span class="punctuation">.</span>UnitTesting<span class="punctuation">;</span>
+
+<span class="keyword" id="LeanTest.MSTest">namespace</span> LeanTest<span class="punctuation">.</span>MSTest
+<span class="punctuation">{</span>
+	 &lt;summary&gt;The MS Test adaption to &lt;c&gt;ExceptionAssertTException&lt;/c&gt;.&lt;/summary&gt;
+	<span class="keyword" id="LeanTest.MSTest.ExceptionAssert">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>The MS Test adaption to <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>ExceptionAssertTException<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">class</span> <span class="typename">ExceptionAssert</span>
+	<span class="punctuation">{</span>
+		 &lt;summary&gt;Throws an &lt;c&gt;AssertFailedException&lt;/c&gt; exception unless &lt;c&gt;func&lt;/c&gt; throws a &lt;c&gt;TException&lt;/c&gt;.&lt;/summary&gt;
+		<span class="keyword" id="LeanTest.MSTest.ExceptionAssert.Throws<TException>(System.Func<System.Threading.Tasks.Task>, string)" data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert.Throws<TException>(System.Func<System.Threading.Tasks.Task>, string)">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Throws an <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>AssertFailedException<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> exception unless <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>func<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> throws a <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>TException<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="keyword" data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert.Throws<TException>(System.Func<System.Threading.Tasks.Task>, string)">static</span> <span class="typename" data-toggle="tooltip" title="TException"><a href="../MSTest/ExceptionAssert.html#TException">TException</a></span> <span data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert.Throws<TException>(System.Func<System.Threading.Tasks.Task>, string)">Throws</span><span class="punctuation">&lt;</span><span class="typename"><a href="../MSTest/ExceptionAssert.html#TException">TException</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Func<System.Threading.Tasks.Task>">Func</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="System.Threading.Tasks.Task">Task</span><span class="punctuation">&gt;</span> func<span class="punctuation">,</span> <span class="keyword" data-toggle="tooltip" title="string">string</span> message <span class="punctuation">=</span> <span class="string" data-toggle="tooltip" title="string">&quot;&quot;</span><span class="punctuation">)</span> <span class="keyword">where</span> <span class="typename" data-toggle="tooltip" title="TException"><a href="../MSTest/ExceptionAssert.html#TException">TException</a></span> <span class="punctuation">:</span> <span class="typename" data-toggle="tooltip" title="System.Exception">Exception</span> <span class="punctuation">=&gt;</span>
+			<span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ExceptionAssertTException">ExceptionAssertTException</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ExceptionAssertTException.Adapter<TException, System.Func<System.Threading.Tasks.Task>>(System.Func<System.Threading.Tasks.Task>, string, System.Func<System.Func<System.Threading.Tasks.Task>, string, TException>, System.Func<string, System.Exception>)">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ExceptionAssertTException.Adapter<TException, System.Func<System.Threading.Tasks.Task>>(System.Func<System.Threading.Tasks.Task>, string, System.Func<System.Func<System.Threading.Tasks.Task>, string, TException>, System.Func<string, System.Exception>)">Adapter</span><span class="punctuation">(</span><span data-toggle="tooltip" title="System.Func<System.Threading.Tasks.Task>">func</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="string">message</span><span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ExceptionAssertTException">ExceptionAssertTException</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ExceptionAssertTException.Throws<TException>(System.Func<System.Threading.Tasks.Task>, string)">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ExceptionAssertTException.Throws<TException>(System.Func<System.Threading.Tasks.Task>, string)">Throws</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="TException"><a href="../MSTest/ExceptionAssert.html#TException">TException</a></span><span class="punctuation">&gt;</span><span class="punctuation">,</span> m <span class="punctuation" data-toggle="tooltip" title="lambda expression">=&gt;</span> <span class="keyword" data-toggle="tooltip" title="Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">new</span> <span class="typename">AssertFailedException</span><span class="punctuation">(</span><span data-toggle="tooltip" title="string">m</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert.Throws<TException>(System.Func<System.Threading.Tasks.Task>, string)">;</span>
+		 &lt;summary&gt;Throws an &lt;c&gt;AssertFailedException&lt;/c&gt; exception unless &lt;c&gt;action&lt;/c&gt; throws a &lt;c&gt;TException&lt;/c&gt;.&lt;/summary&gt;
+		<span class="keyword" id="LeanTest.MSTest.ExceptionAssert.Throws<TException>(System.Action, string)" data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert.Throws<TException>(System.Action, string)">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Throws an <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>AssertFailedException<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> exception unless <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>action<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> throws a <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>TException<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="keyword" data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert.Throws<TException>(System.Action, string)">static</span> <span class="typename" data-toggle="tooltip" title="TException"><a href="../MSTest/ExceptionAssert.html#TException">TException</a></span> <span data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert.Throws<TException>(System.Action, string)">Throws</span><span class="punctuation">&lt;</span><span class="typename"><a href="../MSTest/ExceptionAssert.html#TException">TException</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Action">Action</span> action<span class="punctuation">,</span> <span class="keyword" data-toggle="tooltip" title="string">string</span> message <span class="punctuation">=</span> <span class="string" data-toggle="tooltip" title="string">&quot;&quot;</span><span class="punctuation">)</span> <span class="keyword">where</span> <span class="typename" data-toggle="tooltip" title="TException"><a href="../MSTest/ExceptionAssert.html#TException">TException</a></span> <span class="punctuation">:</span> <span class="typename" data-toggle="tooltip" title="System.Exception">Exception</span> <span class="punctuation">=&gt;</span>
+			<span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ExceptionAssertTException">ExceptionAssertTException</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ExceptionAssertTException.Adapter<TException, System.Action>(System.Action, string, System.Func<System.Action, string, TException>, System.Func<string, System.Exception>)">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ExceptionAssertTException.Adapter<TException, System.Action>(System.Action, string, System.Func<System.Action, string, TException>, System.Func<string, System.Exception>)">Adapter</span><span class="punctuation">(</span><span data-toggle="tooltip" title="System.Action">action</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="string">message</span><span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ExceptionAssertTException">ExceptionAssertTException</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ExceptionAssertTException.Throws<TException>(System.Action, string)">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ExceptionAssertTException.Throws<TException>(System.Action, string)">Throws</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="TException"><a href="../MSTest/ExceptionAssert.html#TException">TException</a></span><span class="punctuation">&gt;</span><span class="punctuation">,</span> m <span class="punctuation" data-toggle="tooltip" title="lambda expression">=&gt;</span> <span class="keyword" data-toggle="tooltip" title="Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">new</span> <span class="typename">AssertFailedException</span><span class="punctuation">(</span><span data-toggle="tooltip" title="string">m</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert.Throws<TException>(System.Action, string)">;</span>
+	<span class="punctuation">}</span>
+<span class="punctuation">}</span>
+</code></pre>
+
+				</div>
+							</div>
+        </div>
+    </div>
+    
+    <footer class="panel-footer text-center">
+        <div align="center">Copyright © 2018 John Doe</div>
+		<div align="right">
+			<small>
+				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.
+			</small>
+		</div>
+    </footer>
+
+
+    
+    <script src="../bootstrap/js/jquery.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../sidebar/sidebar.js"></script>
+    <script src="../syntax-highlight/syntax.js"></script>
+
+</body>
+</html>

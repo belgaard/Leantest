@@ -1,0 +1,163 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>TestMyApplicationService - LeanTest</title>
+
+	<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="../bootstrap/css/default/bootstrap.min.css" />
+<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../sidebar/sidebar.min.css" />
+<link rel="stylesheet" href="../css/book.min.css" />
+<link rel="stylesheet" href="../syntax-highlight/monokai.min.css" />
+<link rel="stylesheet" href="../mermaid/mermaid.css" />
+
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#sidebar-toggle" id="sidebar-toggle">
+					<i id="sidebar-toggle-icon" class="hidden-md hidden-lg hidden-xl fa fa-angle-double-right" aria-hidden="true"></i>
+					LeanTest
+				</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					<li><a href="https://github.com/user/project"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-md-3 hidden-sm hidden-xs">
+                
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>On This Page</h4>
+            </div>
+            <div id="header-menu" class="panel-body main-menu">
+                <ul></ul>
+            </div>
+        </div>  
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Table of Contents</h4>
+            </div>
+            <div class="panel-body main-menu">
+                <ul>
+	<li><a href="../../README.html">Home</a></li>
+	<ul>
+		<li>Library home page.</li>
+	</ul>
+</ul>
+            </div>
+        </div>
+
+            </div>
+			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+								<div id="static-content" class="markdown">
+					<pre class="csharp"><code class="csharp"><span class="keyword">using</span> System<span class="punctuation">;</span>
+<span class="keyword">using</span> Core<span class="punctuation">.</span>Examples<span class="punctuation">.</span>MsTest<span class="punctuation">.</span>Application<span class="punctuation">;</span>
+<span class="keyword">using</span> Core<span class="punctuation">.</span>Examples<span class="punctuation">.</span>MsTest<span class="punctuation">.</span>IoC<span class="punctuation">;</span>
+<span class="keyword">using</span> LeanTest<span class="punctuation">.</span>Core<span class="punctuation">.</span>ExecutionHandling<span class="punctuation">;</span>
+<span class="keyword">using</span> LeanTest<span class="punctuation">.</span>MSTest<span class="punctuation">;</span>
+<span class="keyword">using</span> Microsoft<span class="punctuation">.</span>VisualStudio<span class="punctuation">.</span>TestTools<span class="punctuation">.</span>UnitTesting<span class="punctuation">;</span>
+
+<span class="keyword" id="Core.Examples.MsTest">namespace</span> Core<span class="punctuation">.</span>Examples<span class="punctuation">.</span>MsTest
+<span class="punctuation">{</span>
+     &lt;summary&gt;Work-in-progress. 
+    /// Note that in a real-world example we must choose an IoC container - here we have implemented our own for
+    /// this example.
+    /// This container must be initialized in an AssemblyInitializer class - refer to this class to see how it is
+    /// done with our example IoC container.
+    /// For the example to be more complete, there should be two projects, one for test one for what is being tested.&lt;/summary&gt;
+    <span class="punctuation">[</span>/// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Work-in-progress. 
+    /// Note that in a real-world example we must choose an IoC container - here we have implemented our own for
+    /// this example.
+    /// This container must be initialized in an AssemblyInitializer class - refer to this class to see how it is
+    /// done with our example IoC container.
+    /// For the example to be more complete, there should be two projects, one for test one for what is being tested.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="typename" data-toggle="tooltip" title="Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute">TestClass</span><span class="punctuation">]</span>
+    <span class="keyword" id="Core.Examples.MsTest.TestMyApplicationService">public</span> <span class="keyword">class</span> <span class="typename">TestMyApplicationService</span>
+    <span class="punctuation">{</span>
+        <span class="keyword">private</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../Core/Core/ExecutionHandling/ContextBuilder.html#LeanTest.Core.ExecutionHandling.ContextBuilder">ContextBuilder</a></span> <span id="Core.Examples.MsTest.TestMyApplicationService._contextBuilder">_contextBuilder</span><span class="punctuation">;</span>
+        <span class="keyword">private</span> <span class="typename" data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService"><a href="../Core.Examples.MsTest/Application/MyApplicationService.html#Core.Examples.MsTest.Application.MyApplicationService">MyApplicationService</a></span> <span id="Core.Examples.MsTest.TestMyApplicationService._target">_target</span><span class="punctuation">;</span>
+
+        <span class="punctuation">[</span><span class="typename" data-toggle="tooltip" title="Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute">TestInitialize</span><span class="punctuation">]</span>
+        <span class="keyword" id="Core.Examples.MsTest.TestMyApplicationService.TestInitialize()" data-toggle="tooltip" title="Core.Examples.MsTest.TestMyApplicationService.TestInitialize()">public</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="Core.Examples.MsTest.TestMyApplicationService.TestInitialize()">TestInitialize</span><span class="punctuation">(</span><span class="punctuation">)</span>
+        <span class="punctuation">{</span>
+            <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../Core.Examples.MsTest/TestMyApplicationService.html#Core.Examples.MsTest.TestMyApplicationService._contextBuilder">_contextBuilder</a></span> <span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder">=</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory"><a href="../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory">ContextBuilderFactory</a></span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.CreateContextBuilder()">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.CreateContextBuilder()"><a href="../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory.CreateContextBuilder()">CreateContextBuilder</a></span><span class="punctuation">(</span><span class="punctuation">)</span>
+                <span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder.Build()">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder.Build()"><a href="../Core/Core/ExecutionHandling/ContextBuilder.html#LeanTest.Core.ExecutionHandling.ContextBuilder.Build()">Build</a></span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+
+            <span data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService"><a href="../Core.Examples.MsTest/TestMyApplicationService.html#Core.Examples.MsTest.TestMyApplicationService._target">_target</a></span> <span class="punctuation" data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService">=</span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../Core.Examples.MsTest/TestMyApplicationService.html#Core.Examples.MsTest.TestMyApplicationService._contextBuilder">_contextBuilder</a></span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder.GetInstance<Core.Examples.MsTest.Application.MyApplicationService>()">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder.GetInstance<Core.Examples.MsTest.Application.MyApplicationService>()"><a href="../Core/Core/ExecutionHandling/ContextBuilder.html#LeanTest.Core.ExecutionHandling.ContextBuilder.GetInstance<T>()">GetInstance</a></span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService"><a href="../Core.Examples.MsTest/Application/MyApplicationService.html#Core.Examples.MsTest.Application.MyApplicationService">MyApplicationService</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+        <span class="punctuation">}</span>
+
+        <span class="punctuation">[</span><span class="typename" data-toggle="tooltip" title="Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute">TestMethod</span><span class="punctuation">]</span>
+        <span class="keyword" id="Core.Examples.MsTest.TestMyApplicationService.SumMustReturn42When10And32ArePassed()" data-toggle="tooltip" title="Core.Examples.MsTest.TestMyApplicationService.SumMustReturn42When10And32ArePassed()">public</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="Core.Examples.MsTest.TestMyApplicationService.SumMustReturn42When10And32ArePassed()">SumMustReturn42When10And32ArePassed</span><span class="punctuation">(</span><span class="punctuation">)</span>
+        <span class="punctuation">{</span>
+            <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../Core.Examples.MsTest/TestMyApplicationService.html#Core.Examples.MsTest.TestMyApplicationService._contextBuilder">_contextBuilder</a></span>
+                <span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder.WithData<Core.Examples.MsTest.IoC.MyData>(Core.Examples.MsTest.IoC.MyData)">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder.WithData<Core.Examples.MsTest.IoC.MyData>(Core.Examples.MsTest.IoC.MyData)"><a href="../Core/Core/ExecutionHandling/ContextBuilder.html#LeanTest.Core.ExecutionHandling.ContextBuilder.WithData<T>(T)">WithData</a></span><span class="punctuation">(</span><span class="keyword" data-toggle="tooltip" title="Core.Examples.MsTest.IoC.MyData">new</span> <span class="typename"><a href="../Core.Examples.MsTest/IoC/MyData.html#Core.Examples.MsTest.IoC.MyData">MyData</a></span> <span class="punctuation">{</span><span data-toggle="tooltip" title="int"><a href="../Core.Examples.MsTest/IoC/MyData.html#Core.Examples.MsTest.IoC.MyData.First">First</a></span> <span class="punctuation" data-toggle="tooltip" title="int">=</span> <span class="number" data-toggle="tooltip" title="int">10</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="int"><a href="../Core.Examples.MsTest/IoC/MyData.html#Core.Examples.MsTest.IoC.MyData.Second">Second</a></span> <span class="punctuation" data-toggle="tooltip" title="int">=</span> <span class="number" data-toggle="tooltip" title="int">32</span><span class="punctuation">}</span><span class="punctuation">)</span>
+                <span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder.Build()">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder.Build()"><a href="../Core/Core/ExecutionHandling/ContextBuilder.html#LeanTest.Core.ExecutionHandling.ContextBuilder.Build()">Build</a></span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+
+            <span class="keyword" data-toggle="tooltip" title="int">int</span> <span id="actual">actual</span> <span class="punctuation">=</span> <span data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService"><a href="../Core.Examples.MsTest/TestMyApplicationService.html#Core.Examples.MsTest.TestMyApplicationService._target">_target</a></span><span class="punctuation" data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService.Sum(Core.Examples.MsTest.IoC.MyData)">.</span><span data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService.Sum(Core.Examples.MsTest.IoC.MyData)"><a href="../Core.Examples.MsTest/Application/MyApplicationService.html#Core.Examples.MsTest.Application.MyApplicationService.Sum(Core.Examples.MsTest.IoC.MyData)">Sum</a></span><span class="punctuation">(</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../Core.Examples.MsTest/TestMyApplicationService.html#Core.Examples.MsTest.TestMyApplicationService._contextBuilder">_contextBuilder</a></span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder.First<Core.Examples.MsTest.IoC.MyData>()">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder.First<Core.Examples.MsTest.IoC.MyData>()"><a href="../Core/Core/ExecutionHandling/ContextBuilderDataStoreExtensions.html#LeanTest.Core.ExecutionHandling.ContextBuilderDataStoreExtensions.First<T>(LeanTest.Core.ExecutionHandling.ContextBuilder)">First</a></span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="Core.Examples.MsTest.IoC.MyData"><a href="../Core.Examples.MsTest/IoC/MyData.html#Core.Examples.MsTest.IoC.MyData">MyData</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">;</span>
+
+            <span class="typename" data-toggle="tooltip" title="LeanTest.MSTest.MultiAssert"><a href="../MSTest/MultiAssert.html#LeanTest.MSTest.MultiAssert">MultiAssert</a></span><span class="punctuation" data-toggle="tooltip" title="LeanTest.MSTest.MultiAssert.Aggregate(params System.Action[])">.</span><span data-toggle="tooltip" title="LeanTest.MSTest.MultiAssert.Aggregate(params System.Action[])"><a href="../MSTest/MultiAssert.html#LeanTest.MSTest.MultiAssert.Aggregate(System.Action[])">Aggregate</a></span><span class="punctuation">(</span>
+                <span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation" data-toggle="tooltip" title="lambda expression">=&gt;</span> <span class="typename" data-toggle="tooltip" title="Microsoft.VisualStudio.TestTools.UnitTesting.Assert">Assert</span><span class="punctuation" data-toggle="tooltip" title="Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual<int>(int, int)">.</span><span data-toggle="tooltip" title="Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual<int>(int, int)">AreEqual</span><span class="punctuation">(</span><span class="number" data-toggle="tooltip" title="int">42</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="int">actual</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">;</span>
+        <span class="punctuation">}</span>
+
+        <span class="punctuation">[</span><span class="typename" data-toggle="tooltip" title="Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute">TestMethod</span><span class="punctuation">]</span>
+        <span class="keyword" id="Core.Examples.MsTest.TestMyApplicationService.DivideByZeroMustThrow()" data-toggle="tooltip" title="Core.Examples.MsTest.TestMyApplicationService.DivideByZeroMustThrow()">public</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="Core.Examples.MsTest.TestMyApplicationService.DivideByZeroMustThrow()">DivideByZeroMustThrow</span><span class="punctuation">(</span><span class="punctuation">)</span>
+        <span class="punctuation">{</span>
+            <span class="typename" data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert"><a href="../MSTest/ExceptionAssert.html#LeanTest.MSTest.ExceptionAssert">ExceptionAssert</a></span><span class="punctuation" data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert.Throws<System.DivideByZeroException>(System.Action, string)">.</span><span data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert.Throws<System.DivideByZeroException>(System.Action, string)"><a href="../MSTest/ExceptionAssert.html#LeanTest.MSTest.ExceptionAssert.Throws<TException>(System.Action, string)">Throws</a></span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="System.DivideByZeroException">DivideByZeroException</span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation" data-toggle="tooltip" title="lambda expression">=&gt;</span> <span data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService"><a href="../Core.Examples.MsTest/TestMyApplicationService.html#Core.Examples.MsTest.TestMyApplicationService._target">_target</a></span><span class="punctuation" data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService.DivideByZero()">.</span><span data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService.DivideByZero()"><a href="../Core.Examples.MsTest/Application/MyApplicationService.html#Core.Examples.MsTest.Application.MyApplicationService.DivideByZero()">DivideByZero</a></span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">;</span>
+        <span class="punctuation">}</span>
+
+        <span class="punctuation">[</span><span class="typename" data-toggle="tooltip" title="Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute">TestMethod</span><span class="punctuation">]</span>
+        <span class="keyword" id="Core.Examples.MsTest.TestMyApplicationService.DivideByZeroAsyncMustThrow()" data-toggle="tooltip" title="Core.Examples.MsTest.TestMyApplicationService.DivideByZeroAsyncMustThrow()">public</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="Core.Examples.MsTest.TestMyApplicationService.DivideByZeroAsyncMustThrow()">DivideByZeroAsyncMustThrow</span><span class="punctuation">(</span><span class="punctuation">)</span>
+        <span class="punctuation">{</span>
+            <span class="typename" data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert"><a href="../MSTest/ExceptionAssert.html#LeanTest.MSTest.ExceptionAssert">ExceptionAssert</a></span><span class="punctuation" data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert.Throws<System.DivideByZeroException>(System.Func<System.Threading.Tasks.Task>, string)">.</span><span data-toggle="tooltip" title="LeanTest.MSTest.ExceptionAssert.Throws<System.DivideByZeroException>(System.Func<System.Threading.Tasks.Task>, string)"><a href="../MSTest/ExceptionAssert.html#LeanTest.MSTest.ExceptionAssert.Throws<TException>(System.Func<System.Threading.Tasks.Task>, string)">Throws</a></span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="System.DivideByZeroException">DivideByZeroException</span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation" data-toggle="tooltip" title="lambda expression">=&gt;</span> <span data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService"><a href="../Core.Examples.MsTest/TestMyApplicationService.html#Core.Examples.MsTest.TestMyApplicationService._target">_target</a></span><span class="punctuation" data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService.DivideByZeroAsync(int)">.</span><span data-toggle="tooltip" title="Core.Examples.MsTest.Application.MyApplicationService.DivideByZeroAsync(int)"><a href="../Core.Examples.MsTest/Application/MyApplicationService.html#Core.Examples.MsTest.Application.MyApplicationService.DivideByZeroAsync(int)">DivideByZeroAsync</a></span><span class="punctuation">(</span><span class="number" data-toggle="tooltip" title="int">42</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">;</span>
+        <span class="punctuation">}</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+</code></pre>
+
+				</div>
+							</div>
+        </div>
+    </div>
+    
+    <footer class="panel-footer text-center">
+        <div align="center">Copyright © 2018 John Doe</div>
+		<div align="right">
+			<small>
+				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.
+			</small>
+		</div>
+    </footer>
+
+
+    
+    <script src="../bootstrap/js/jquery.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../sidebar/sidebar.js"></script>
+    <script src="../syntax-highlight/syntax.js"></script>
+
+</body>
+</html>

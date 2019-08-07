@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ContextBuilderFactory - LeanTest</title>
+
+	<link rel="icon" type="image/x-icon" href="../../../images/favicon.ico">
+    <link rel="stylesheet" href="../../../bootstrap/css/default/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../../sidebar/sidebar.min.css" />
+<link rel="stylesheet" href="../../../css/book.min.css" />
+<link rel="stylesheet" href="../../../syntax-highlight/monokai.min.css" />
+<link rel="stylesheet" href="../../../mermaid/mermaid.css" />
+
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#sidebar-toggle" id="sidebar-toggle">
+					<i id="sidebar-toggle-icon" class="hidden-md hidden-lg hidden-xl fa fa-angle-double-right" aria-hidden="true"></i>
+					LeanTest
+				</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					<li><a href="https://github.com/user/project"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-md-3 hidden-sm hidden-xs">
+                
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>On This Page</h4>
+            </div>
+            <div id="header-menu" class="panel-body main-menu">
+                <ul></ul>
+            </div>
+        </div>  
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Table of Contents</h4>
+            </div>
+            <div class="panel-body main-menu">
+                <ul>
+	<li><a href="../../../../README.html">Home</a></li>
+	<ul>
+		<li>Library home page.</li>
+	</ul>
+</ul>
+            </div>
+        </div>
+
+            </div>
+			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+								<div id="static-content" class="markdown">
+					<pre class="csharp"><code class="csharp"><span class="keyword">using</span> System<span class="punctuation">;</span>
+<span class="keyword">using</span> System<span class="punctuation">.</span>Collections<span class="punctuation">.</span>Generic<span class="punctuation">;</span>
+<span class="keyword">using</span> System<span class="punctuation">.</span>Linq<span class="punctuation">;</span>
+<span class="keyword">using</span> LeanTest<span class="punctuation">.</span>Mock<span class="punctuation">;</span>
+
+<span class="keyword" id="LeanTest.Core.ExecutionHandling">namespace</span> LeanTest<span class="punctuation">.</span>Core<span class="punctuation">.</span>ExecutionHandling
+<span class="punctuation">{</span>
+     &lt;summary&gt;
+    /// Used to create instances of context builders.
+    /// &lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// Each context builder will reference an IoC container which is created by an IoC container factory method passed in during intialisation.
+    /// Also during initialisation, it is specified if the IoC container must be re-used or re-created per request.
+    /// Eventually, this class will support the ability to isolate tests so that services can run in separate AppDomains.
+    /// &lt;/remarks&gt;
+    <span class="keyword" id="LeanTest.Core.ExecutionHandling.ContextBuilderFactory">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+    /// Used to create instances of context builders.
+    /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+    /// <span class="punctuation">&lt;</span>remarks<span class="punctuation">&gt;</span>
+    /// Each context builder will reference an IoC container which is created by an IoC container factory method passed in during intialisation.
+    /// Also during initialisation, it is specified if the IoC container must be re-used or re-created per request.
+    /// Eventually, this class will support the ability to isolate tests so that services can run in separate AppDomains.
+    /// <span class="punctuation">&lt;/</span>remarks<span class="punctuation">&gt;</span>
+<span class="keyword">static</span> <span class="keyword">class</span> <span class="typename">ContextBuilderFactory</span>
+    <span class="punctuation">{</span>
+         &lt;summary&gt;
+        /// The container instance for the currently running AppDomain.
+        /// &lt;/summary&gt;
+        /// &lt;remarks&gt;
+        /// Depending on the IoC mode, we will either have a single container instance (per AppDomain) which is reused across all test classes 
+        /// of the assembly, or a new instance will be created whenever a context builder is created.
+        /// &lt;/remarks&gt;
+        <span class="keyword">private</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// The container instance for the currently running AppDomain.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+        /// <span class="punctuation">&lt;</span>remarks<span class="punctuation">&gt;</span>
+        /// Depending on the IoC mode, we will either have a single container instance (per AppDomain) which is reused across all test classes 
+        /// of the assembly, or a new instance will be created whenever a context builder is created.
+        /// <span class="punctuation">&lt;/</span>remarks<span class="punctuation">&gt;</span>
+<span class="keyword">static</span> <span class="typename" data-toggle="tooltip" title="System.Lazy<LeanTest.Core.ExecutionHandling.IIocContainer>">Lazy</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer"><a href="../../../Core/Core/ExecutionHandling/IIocContainer.html#LeanTest.Core.ExecutionHandling.IIocContainer">IIocContainer</a></span><span class="punctuation">&gt;</span> <span id="LeanTest.Core.ExecutionHandling.ContextBuilderFactory._lazyIocContainer">_lazyIocContainer</span><span class="punctuation">;</span>
+        <span class="keyword">private</span> <span class="keyword">static</span> <span class="typename" data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>">Func</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer"><a href="../../../Core/Core/ExecutionHandling/IIocContainer.html#LeanTest.Core.ExecutionHandling.IIocContainer">IIocContainer</a></span><span class="punctuation">&gt;</span> <span id="LeanTest.Core.ExecutionHandling.ContextBuilderFactory._iocContainerFactory">_iocContainerFactory</span><span class="punctuation">;</span>
+
+        <span class="keyword">private</span> <span class="keyword">static</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode"><a href="../../../Core/Core/ExecutionHandling/CleanContextMode.html#LeanTest.Core.ExecutionHandling.CleanContextMode">CleanContextMode</a></span> <span id="LeanTest.Core.ExecutionHandling.ContextBuilderFactory._cleanContextMode">_cleanContextMode</span><span class="punctuation">;</span>
+        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">readonly</span> <span class="typename" data-toggle="tooltip" title="System.Collections.Generic.ICollection<System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>>">ICollection</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>">Func</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer"><a href="../../../Core/Core/ExecutionHandling/IIocContainer.html#LeanTest.Core.ExecutionHandling.IIocContainer">IIocContainer</a></span><span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IDataStore"><a href="../../../Core/Core/ExecutionHandling/IDataStore.html#LeanTest.Core.ExecutionHandling.IDataStore">IDataStore</a></span><span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder"><a href="../../../Core/Core/ExecutionHandling/IBuilder.html#LeanTest.Core.ExecutionHandling.IBuilder">IBuilder</a></span><span class="punctuation">&gt;</span><span class="punctuation">&gt;</span> <span id="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.BuilderFactories">BuilderFactories</span> <span class="punctuation">=</span> <span class="keyword" data-toggle="tooltip" title="System.Collections.Generic.List<System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>>">new</span> <span class="typename">List</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>">Func</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer"><a href="../../../Core/Core/ExecutionHandling/IIocContainer.html#LeanTest.Core.ExecutionHandling.IIocContainer">IIocContainer</a></span><span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IDataStore"><a href="../../../Core/Core/ExecutionHandling/IDataStore.html#LeanTest.Core.ExecutionHandling.IDataStore">IDataStore</a></span><span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder"><a href="../../../Core/Core/ExecutionHandling/IBuilder.html#LeanTest.Core.ExecutionHandling.IBuilder">IBuilder</a></span><span class="punctuation">&gt;</span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+
+         &lt;summary&gt;
+        /// The lastly created context builder instance for the currently running AppDomain.
+        /// Use it to reference context builders in any number of AppDomains across TestInitialize, TestCleanup and test methods.
+        /// &lt;/summary&gt;
+        /// &lt;remarks&gt;
+        /// You will create at least one context builder per test class, but never reuse across test classes.
+        /// &lt;/remarks&gt;
+        <span class="keyword" id="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.ContextBuilder">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// The lastly created context builder instance for the currently running AppDomain.
+        /// Use it to reference context builders in any number of AppDomains across TestInitialize, TestCleanup and test methods.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+        /// <span class="punctuation">&lt;</span>remarks<span class="punctuation">&gt;</span>
+        /// You will create at least one context builder per test class, but never reuse across test classes.
+        /// <span class="punctuation">&lt;/</span>remarks<span class="punctuation">&gt;</span>
+<span class="keyword">static</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../../../Core/Core/ExecutionHandling/ContextBuilder.html#LeanTest.Core.ExecutionHandling.ContextBuilder">ContextBuilder</a></span> ContextBuilder <span class="punctuation">{</span> <span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.ContextBuilder.get">get</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.ContextBuilder.get">;</span> <span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.ContextBuilder.set">private</span> <span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.ContextBuilder.set">set</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.ContextBuilder.set">;</span> <span class="punctuation">}</span>
+
+         &lt;summary&gt;
+        /// Creates a context builder with the IoC composition root from the current AppDomain.
+        /// &lt;/summary&gt;
+        <span class="keyword" id="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.CreateContextBuilder()" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.CreateContextBuilder()">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// Creates a context builder with the IoC composition root from the current AppDomain.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.CreateContextBuilder()">static</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../../../Core/Core/ExecutionHandling/ContextBuilder.html#LeanTest.Core.ExecutionHandling.ContextBuilder">ContextBuilder</a></span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.CreateContextBuilder()">CreateContextBuilder</span><span class="punctuation">(</span><span class="punctuation">)</span>
+        <span class="punctuation">{</span>
+            <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer"><a href="../../../Core/Core/ExecutionHandling/IIocContainer.html#LeanTest.Core.ExecutionHandling.IIocContainer">IIocContainer</a></span> <span id="iocContainer">iocContainer</span><span class="punctuation">;</span>
+            <span class="keyword">switch</span> <span class="punctuation">(</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory._cleanContextMode">_cleanContextMode</a></span><span class="punctuation">)</span>
+            <span class="punctuation">{</span>
+                <span class="keyword">case</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode"><a href="../../../Core/Core/ExecutionHandling/CleanContextMode.html#LeanTest.Core.ExecutionHandling.CleanContextMode">CleanContextMode</a></span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode"><a href="../../../Core/Core/ExecutionHandling/CleanContextMode.html#LeanTest.Core.ExecutionHandling.CleanContextMode.ReCreate">ReCreate</a></span><span class="punctuation">:</span>
+					<span class="comment">// TODO: Dispose the old container!</span>
+                    <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer">iocContainer</span> <span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer">=</span> <span data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory._iocContainerFactory">_iocContainerFactory</a></span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+                    <span class="keyword">break</span><span class="punctuation">;</span>
+                <span class="keyword">case</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode"><a href="../../../Core/Core/ExecutionHandling/CleanContextMode.html#LeanTest.Core.ExecutionHandling.CleanContextMode">CleanContextMode</a></span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode"><a href="../../../Core/Core/ExecutionHandling/CleanContextMode.html#LeanTest.Core.ExecutionHandling.CleanContextMode.ReUse">ReUse</a></span><span class="punctuation">:</span>
+                    <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer">iocContainer</span> <span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer">=</span> <span data-toggle="tooltip" title="System.Lazy<LeanTest.Core.ExecutionHandling.IIocContainer>"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory._lazyIocContainer">_lazyIocContainer</a></span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer">Value</span><span class="punctuation">;</span>
+                    <span class="keyword">break</span><span class="punctuation">;</span>
+                <span class="keyword">default</span><span class="punctuation">:</span>
+                    <span class="keyword">throw</span> <span class="keyword" data-toggle="tooltip" title="System.ArgumentOutOfRangeException">new</span> <span class="typename">ArgumentOutOfRangeException</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+            <span class="punctuation">}</span>
+
+            <span class="keyword">return</span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory.ContextBuilder">ContextBuilder</a></span> <span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder">=</span> <span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder">new</span> <span class="typename"><a href="../../../Core/Core/ExecutionHandling/ContextBuilder.html#LeanTest.Core.ExecutionHandling.ContextBuilder">ContextBuilder</a></span><span class="punctuation">(</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer">iocContainer</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="System.Collections.Generic.ICollection<System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>>"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory.BuilderFactories">BuilderFactories</a></span><span class="punctuation" data-toggle="tooltip" title="System.Collections.Generic.IEnumerable<System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>>.ToArray<System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>>()">.</span><span data-toggle="tooltip" title="System.Collections.Generic.IEnumerable<System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>>.ToArray<System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>>()">ToArray</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">;</span>
+        <span class="punctuation">}</span>
+
+         &lt;summary&gt;
+        /// Setup IoC and builders. Eventually, this will initialize app domains.
+        /// &lt;/summary&gt;
+        <span class="keyword" id="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(LeanTest.Core.ExecutionHandling.CleanContextMode, System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>)" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(LeanTest.Core.ExecutionHandling.CleanContextMode, System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>)">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// Setup IoC and builders. Eventually, this will initialize app domains.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(LeanTest.Core.ExecutionHandling.CleanContextMode, System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>)">static</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(LeanTest.Core.ExecutionHandling.CleanContextMode, System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>)">Initialize</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode"><a href="../../../Core/Core/ExecutionHandling/CleanContextMode.html#LeanTest.Core.ExecutionHandling.CleanContextMode">CleanContextMode</a></span> mode<span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>">Func</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer"><a href="../../../Core/Core/ExecutionHandling/IIocContainer.html#LeanTest.Core.ExecutionHandling.IIocContainer">IIocContainer</a></span><span class="punctuation">&gt;</span> iocFactory<span class="punctuation">)</span>
+        <span class="punctuation">{</span>
+            <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory._cleanContextMode">_cleanContextMode</a></span> <span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode">=</span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode">mode</span><span class="punctuation">;</span>
+            <span data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory._iocContainerFactory">_iocContainerFactory</a></span> <span class="punctuation" data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>">=</span> <span data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>">iocFactory</span><span class="punctuation">;</span>
+
+            <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.AddBuilderFactory(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>)"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory.AddBuilderFactory(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>)">AddBuilderFactory</a></span><span class="punctuation">(</span><span class="punctuation">(</span>container<span class="punctuation">,</span> dataStore<span class="punctuation">)</span> <span class="punctuation" data-toggle="tooltip" title="lambda expression">=&gt;</span> <span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.StateBuilder">new</span> <span class="typename"><a href="../../../Core/Core/ExecutionHandling/StateBuilder.html#LeanTest.Core.ExecutionHandling.StateBuilder">StateBuilder</a></span><span class="punctuation">(</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer">container</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IDataStore">dataStore</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">;</span>
+            <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.AddBuilderFactory(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>)"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory.AddBuilderFactory(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>)">AddBuilderFactory</a></span><span class="punctuation">(</span><span class="punctuation">(</span>container<span class="punctuation">,</span> dataStore<span class="punctuation">)</span> <span class="punctuation" data-toggle="tooltip" title="lambda expression">=&gt;</span> <span class="keyword" data-toggle="tooltip" title="LeanTest.Mock.MockingBuilder">new</span> <span class="typename"><a href="../../../Core/Mock/MockingBuilder.html#LeanTest.Mock.MockingBuilder">MockingBuilder</a></span><span class="punctuation">(</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer">container</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IDataStore">dataStore</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">;</span>
+
+            <span data-toggle="tooltip" title="System.Lazy<LeanTest.Core.ExecutionHandling.IIocContainer>"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory._lazyIocContainer">_lazyIocContainer</a></span> <span class="punctuation" data-toggle="tooltip" title="System.Lazy<LeanTest.Core.ExecutionHandling.IIocContainer>">=</span> <span class="keyword" data-toggle="tooltip" title="System.Lazy<LeanTest.Core.ExecutionHandling.IIocContainer>">new</span> <span class="typename">Lazy</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer"><a href="../../../Core/Core/ExecutionHandling/IIocContainer.html#LeanTest.Core.ExecutionHandling.IIocContainer">IIocContainer</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory._iocContainerFactory">_iocContainerFactory</a></span><span class="punctuation">)</span><span class="punctuation">;</span>
+        <span class="punctuation">}</span>
+
+         &lt;summary&gt;
+        /// Setup IoC and builders to create the IoC context before each test. Eventually, this will initialize app domains.
+        /// &lt;/summary&gt;
+        <span class="keyword" id="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>)" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>)">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// Setup IoC and builders to create the IoC context before each test. Eventually, this will initialize app domains.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>)">static</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>)">Initialize</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>">Func</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer"><a href="../../../Core/Core/ExecutionHandling/IIocContainer.html#LeanTest.Core.ExecutionHandling.IIocContainer">IIocContainer</a></span><span class="punctuation">&gt;</span> iocFactory<span class="punctuation">)</span> <span class="punctuation">=&gt;</span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(LeanTest.Core.ExecutionHandling.CleanContextMode, System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>)"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(LeanTest.Core.ExecutionHandling.CleanContextMode, System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>)">Initialize</a></span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode"><a href="../../../Core/Core/ExecutionHandling/CleanContextMode.html#LeanTest.Core.ExecutionHandling.CleanContextMode">CleanContextMode</a></span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.CleanContextMode"><a href="../../../Core/Core/ExecutionHandling/CleanContextMode.html#LeanTest.Core.ExecutionHandling.CleanContextMode.ReCreate">ReCreate</a></span><span class="punctuation">,</span> <span data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>">iocFactory</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Initialize(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer>)">;</span>
+
+         &lt;summary&gt;
+        /// Adds a builder factory for building e.g. &#39;mock&#39; and &#39;state&#39; builders.
+        /// &lt;/summary&gt;
+        <span class="keyword" id="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.AddBuilderFactory(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>)" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.AddBuilderFactory(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>)">internal</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// Adds a builder factory for building e.g. &#39;mock&#39; and &#39;state&#39; builders.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.AddBuilderFactory(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>)">static</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.AddBuilderFactory(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>)">AddBuilderFactory</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>">Func</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer"><a href="../../../Core/Core/ExecutionHandling/IIocContainer.html#LeanTest.Core.ExecutionHandling.IIocContainer">IIocContainer</a></span><span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IDataStore"><a href="../../../Core/Core/ExecutionHandling/IDataStore.html#LeanTest.Core.ExecutionHandling.IDataStore">IDataStore</a></span><span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder"><a href="../../../Core/Core/ExecutionHandling/IBuilder.html#LeanTest.Core.ExecutionHandling.IBuilder">IBuilder</a></span><span class="punctuation">&gt;</span> builderFactory<span class="punctuation">)</span> <span class="punctuation">=&gt;</span> <span data-toggle="tooltip" title="System.Collections.Generic.ICollection<System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>>"><a href="../../../Core/Core/ExecutionHandling/ContextBuilderFactory.html#LeanTest.Core.ExecutionHandling.ContextBuilderFactory.BuilderFactories">BuilderFactories</a></span><span class="punctuation" data-toggle="tooltip" title="System.Collections.Generic.ICollection<System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>>.Add(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>)">.</span><span data-toggle="tooltip" title="System.Collections.Generic.ICollection<System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>>.Add(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>)">Add</span><span class="punctuation">(</span><span data-toggle="tooltip" title="System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>">builderFactory</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.AddBuilderFactory(System.Func<LeanTest.Core.ExecutionHandling.IIocContainer, LeanTest.Core.ExecutionHandling.IDataStore, LeanTest.Core.ExecutionHandling.IBuilder>)">;</span>
+
+         &lt;summary&gt;
+        /// Eventually, this method will unload the separate app domains set up during &lt;c&gt;Initialize&lt;/c&gt;.
+        /// &lt;/summary&gt;
+        <span class="keyword" id="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Cleanup()" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Cleanup()">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// Eventually, this method will unload the separate app domains set up during <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>Initialize<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Cleanup()">static</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilderFactory.Cleanup()">Cleanup</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span><span class="punctuation">}</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+</code></pre>
+
+				</div>
+							</div>
+        </div>
+    </div>
+    
+    <footer class="panel-footer text-center">
+        <div align="center">Copyright © 2018 John Doe</div>
+		<div align="right">
+			<small>
+				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.
+			</small>
+		</div>
+    </footer>
+
+
+    
+    <script src="../../../bootstrap/js/jquery.min.js"></script>
+    <script src="../../../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../sidebar/sidebar.js"></script>
+    <script src="../../../syntax-highlight/syntax.js"></script>
+
+</body>
+</html>
