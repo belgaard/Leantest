@@ -9,7 +9,7 @@ contents:
     file: Introduction.md
     desc: Introduction to Lean Testing.
   - page: License
-    file: License.md
+    file: LicenseApache.md
     desc: Program license and terms of use.
   - page: Readme
     file: README.md
