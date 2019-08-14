@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>IStateHandler - LeanTest</title>
+
+	<link rel="icon" type="image/x-icon" href="../../../../images/favicon.ico">
+    <link rel="stylesheet" href="../../../../bootstrap/css/readable/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../../font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../../../sidebar/sidebar.min.css" />
+<link rel="stylesheet" href="../../../../css/book.min.css" />
+<link rel="stylesheet" href="../../../../syntax-highlight/solarized-light.min.css" />
+<link rel="stylesheet" href="../../../../mermaid/mermaid.css" />
+
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#sidebar-toggle" id="sidebar-toggle">
+					<i id="sidebar-toggle-icon" class="hidden-md hidden-lg hidden-xl fa fa-angle-double-right" aria-hidden="true"></i>
+					LeanTest
+				</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					<li><a href="https://github.com/user/project"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+                    <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-download" aria-hidden="true"></i> Download</a></li>
+                    <li><a href="../../../../LicenseApache.html">License</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-md-3 hidden-sm hidden-xs">
+                
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>On This Page</h4>
+            </div>
+            <div id="header-menu" class="panel-body main-menu">
+                <ul></ul>
+            </div>
+        </div>  
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Table of Contents</h4>
+            </div>
+            <div class="panel-body main-menu">
+                <ul>
+	<li><a href="../../../../index.html">Home</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../../Introduction.html">Introduction</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../../LicenseApache.html">License</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../../README.html">Readme</a></li>
+	<ul>
+	</ul>
+</ul>
+            </div>
+        </div>
+
+            </div>
+			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+								<div id="static-content" class="markdown">
+					<pre class="csharp"><code class="csharp"><span class="keyword">using</span> System<span class="punctuation">;</span>
+
+<span class="keyword" id="LeanTest.Core.ExecutionHandling">namespace</span> LeanTest<span class="punctuation">.</span>Core<span class="punctuation">.</span>ExecutionHandling
+<span class="punctuation">{</span>
+     &lt;summary&gt;
+    /// Interface for state handlers that implement state of type &lt;c&gt;T&lt;/c&gt;.
+    /// &lt;/summary&gt;
+    <span class="keyword" id="LeanTest.Core.ExecutionHandling.IStateHandler<T>">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+    /// Interface for state handlers that implement state of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
+    /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="keyword">interface</span> IStateHandler<span class="punctuation">&lt;</span><span class="keyword">in</span> <span class="typename"><a href="../../../../Source/Core/Core/ExecutionHandling/IStateHandler.html#T">T</a></span><span class="punctuation">&gt;</span>
+    <span class="punctuation">{</span>
+         &lt;summary&gt;
+        /// Declare data of type &lt;c&gt;T&lt;/c&gt;.
+        /// &lt;/summary&gt;
+        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// Declare data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span id="LeanTest.Core.ExecutionHandling.IStateHandler<T>.WithData(T)" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IStateHandler<T>.WithData(T)">WithData</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../../Source/Core/Core/ExecutionHandling/IStateHandler.html#T">T</a></span> data<span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IStateHandler<T>.WithData(T)">;</span>
+         &lt;summary&gt;
+        /// Called before build only once for the state handler instance, allows you to prepare to populate state.
+        /// &lt;/summary&gt;
+        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// Called before build only once for the state handler instance, allows you to prepare to populate state.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span id="LeanTest.Core.ExecutionHandling.IStateHandler<T>.PreBuild()" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IStateHandler<T>.PreBuild()">PreBuild</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IStateHandler<T>.PreBuild()">;</span>
+         &lt;summary&gt;
+        /// Use the declared data to populate state, called after all data of type &lt;c&gt;type&lt;/c&gt; has been put to the state handler instance with &lt;c&gt;WithData&lt;/c&gt;.
+        /// &lt;/summary&gt;
+        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// Use the declared data to populate state, called after all data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>type<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> has been put to the state handler instance with <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>WithData<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span id="LeanTest.Core.ExecutionHandling.IStateHandler<T>.Build(System.Type)" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IStateHandler<T>.Build(System.Type)">Build</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Type">Type</span> type<span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IStateHandler<T>.Build(System.Type)">;</span>
+         &lt;summary&gt;
+        /// Called after build, only once for the state handler instance.
+        /// &lt;/summary&gt;
+        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// Called after build, only once for the state handler instance.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span id="LeanTest.Core.ExecutionHandling.IStateHandler<T>.PostBuild()" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IStateHandler<T>.PostBuild()">PostBuild</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IStateHandler<T>.PostBuild()">;</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+</code></pre>
+
+				</div>
+							</div>
+        </div>
+    </div>
+    
+    <footer class="panel-footer text-center">
+        <div align="center">Copyright © 2019 Brian Elgaard Bennett</div>
+		<div align="right">
+			<small>
+				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.
+			</small>
+		</div>
+    </footer>
+
+
+    
+    <script src="../../../../bootstrap/js/jquery.min.js"></script>
+    <script src="../../../../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../../sidebar/sidebar.js"></script>
+    <script src="../../../../syntax-highlight/syntax.js"></script>
+
+</body>
+</html>

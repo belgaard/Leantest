@@ -3,7 +3,7 @@ using Core.Examples.MsTest.Domain;
 using LeanTest.Core.ExecutionHandling;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Json.Examples.MsTest.TestSetup
+namespace MSTest.Examples.MsTest.TestSetup
 {
     [TestClass]
     public static class AssemblyInitializer

@@ -1,0 +1,147 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>IDataStore - LeanTest</title>
+
+	<link rel="icon" type="image/x-icon" href="../../../../images/favicon.ico">
+    <link rel="stylesheet" href="../../../../bootstrap/css/readable/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../../font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../../../sidebar/sidebar.min.css" />
+<link rel="stylesheet" href="../../../../css/book.min.css" />
+<link rel="stylesheet" href="../../../../syntax-highlight/solarized-light.min.css" />
+<link rel="stylesheet" href="../../../../mermaid/mermaid.css" />
+
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#sidebar-toggle" id="sidebar-toggle">
+					<i id="sidebar-toggle-icon" class="hidden-md hidden-lg hidden-xl fa fa-angle-double-right" aria-hidden="true"></i>
+					LeanTest
+				</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					<li><a href="https://github.com/user/project"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+                    <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-download" aria-hidden="true"></i> Download</a></li>
+                    <li><a href="../../../../LicenseApache.html">License</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-md-3 hidden-sm hidden-xs">
+                
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>On This Page</h4>
+            </div>
+            <div id="header-menu" class="panel-body main-menu">
+                <ul></ul>
+            </div>
+        </div>  
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Table of Contents</h4>
+            </div>
+            <div class="panel-body main-menu">
+                <ul>
+	<li><a href="../../../../index.html">Home</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../../Introduction.html">Introduction</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../../LicenseApache.html">License</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../../README.html">Readme</a></li>
+	<ul>
+	</ul>
+</ul>
+            </div>
+        </div>
+
+            </div>
+			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+								<div id="static-content" class="markdown">
+					<pre class="csharp"><code class="csharp"><span class="keyword">using</span> System<span class="punctuation">;</span>
+<span class="keyword">using</span> System<span class="punctuation">.</span>Collections<span class="punctuation">.</span>Generic<span class="punctuation">;</span>
+
+<span class="keyword" id="LeanTest.Core.ExecutionHandling">namespace</span> LeanTest<span class="punctuation">.</span>Core<span class="punctuation">.</span>ExecutionHandling
+<span class="punctuation">{</span>
+     &lt;summary&gt;
+    /// Interface for a data store that hold all data in the context.
+    /// &lt;/summary&gt;
+    <span class="keyword" id="LeanTest.Core.ExecutionHandling.IDataStore">internal</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+    /// Interface for a data store that hold all data in the context.
+    /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="keyword">interface</span> IDataStore
+    <span class="punctuation">{</span>
+         &lt;summary&gt;
+        /// The data of the store, per &lt;c&gt;Type&lt;/c&gt; of data.
+        /// &lt;/summary&gt;
+        <span class="typename" data-toggle="tooltip" title="System.Collections.Generic.IDictionary<System.Type, System.Collections.Generic.List<object>>">IDictionary</span>/// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// The data of the store, per <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>Type<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> of data.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="System.Type">Type</span><span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="System.Collections.Generic.List<object>">List</span><span class="punctuation">&lt;</span><span class="keyword" data-toggle="tooltip" title="object">object</span><span class="punctuation">&gt;</span><span class="punctuation">&gt;</span> <span id="LeanTest.Core.ExecutionHandling.IDataStore.TypedData">TypedData</span> <span class="punctuation">{</span> <span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IDataStore.TypedData.get">get</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IDataStore.TypedData.get">;</span> <span class="punctuation">}</span>
+         &lt;summary&gt;
+        /// Add data of type &lt;c&gt;T&lt;/c&gt; to the store.
+        /// &lt;/summary&gt;
+        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// Add data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> to the store.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span id="LeanTest.Core.ExecutionHandling.IDataStore.WithData<T>(T)" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IDataStore.WithData<T>(T)">WithData</span><span class="punctuation">&lt;</span><span class="typename"><a href="../../../../Source/Core/Core/ExecutionHandling/IDataStore.html#T">T</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../../Source/Core/Core/ExecutionHandling/IDataStore.html#T">T</a></span> data<span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IDataStore.WithData<T>(T)">;</span>
+         &lt;summary&gt;
+        /// Add an enumerable of data of type &lt;c&gt;T&lt;/c&gt; to the store.
+        /// &lt;/summary&gt;
+        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
+        /// Add an enumerable of data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> to the store.
+        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span id="LeanTest.Core.ExecutionHandling.IDataStore.WithEnumerable<T>(System.Collections.Generic.IEnumerable<T>)" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IDataStore.WithEnumerable<T>(System.Collections.Generic.IEnumerable<T>)">WithEnumerable</span><span class="punctuation">&lt;</span><span class="typename"><a href="../../../../Source/Core/Core/ExecutionHandling/IDataStore.html#T">T</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Collections.Generic.IEnumerable<T>">IEnumerable</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../../Source/Core/Core/ExecutionHandling/IDataStore.html#T">T</a></span><span class="punctuation">&gt;</span> enumerableData<span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IDataStore.WithEnumerable<T>(System.Collections.Generic.IEnumerable<T>)">;</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+</code></pre>
+
+				</div>
+							</div>
+        </div>
+    </div>
+    
+    <footer class="panel-footer text-center">
+        <div align="center">Copyright © 2019 Brian Elgaard Bennett</div>
+		<div align="right">
+			<small>
+				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.
+			</small>
+		</div>
+    </footer>
+
+
+    
+    <script src="../../../../bootstrap/js/jquery.min.js"></script>
+    <script src="../../../../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../../sidebar/sidebar.js"></script>
+    <script src="../../../../syntax-highlight/syntax.js"></script>
+
+</body>
+</html>

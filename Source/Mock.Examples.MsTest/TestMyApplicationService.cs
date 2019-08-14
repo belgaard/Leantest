@@ -25,18 +25,21 @@ namespace Mock.Examples.MsTest
 
 			_target = _contextBuilder.GetInstance<MyApplicationService>();
 		}
-
+#region Example of existing state
 		[TestMethod]
 		public void GetAgeMustReturn10WhenKeyMatchesNewedUpData()
 		{
+			#region Example of using a builder pattern
 			_contextBuilder
 				.WithData(new MyData { Age = 10, Key = "ac_32_576259321" })
 				.WithData(new MyOtherData { OtherAge = 10, OtherKey = "ac_32_576259321" })
 				.Build();
+			#endregion
 
 			int actual = _target.GetAge("FourtyTwo");
 
 			Assert.AreEqual(10, actual);
 		}
+#endregion
 	}
 }

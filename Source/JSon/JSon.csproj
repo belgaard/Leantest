@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
     <AssemblyName>LeanTest.JSon</AssemblyName>
     <RootNamespace>LeanTest.JSon</RootNamespace>
 
@@ -24,8 +24,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LeanTest.Core" Version="0.21.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0" />
+    <PackageReference Include="LeanTest.Core" Version="0.22.1.109" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.0" />
   </ItemGroup>
 
 </Project>

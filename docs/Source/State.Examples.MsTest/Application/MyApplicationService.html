@@ -1,0 +1,127 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>MyApplicationService - LeanTest</title>
+
+	<link rel="icon" type="image/x-icon" href="../../../images/favicon.ico">
+    <link rel="stylesheet" href="../../../bootstrap/css/readable/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../../sidebar/sidebar.min.css" />
+<link rel="stylesheet" href="../../../css/book.min.css" />
+<link rel="stylesheet" href="../../../syntax-highlight/solarized-light.min.css" />
+<link rel="stylesheet" href="../../../mermaid/mermaid.css" />
+
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#sidebar-toggle" id="sidebar-toggle">
+					<i id="sidebar-toggle-icon" class="hidden-md hidden-lg hidden-xl fa fa-angle-double-right" aria-hidden="true"></i>
+					LeanTest
+				</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					<li><a href="https://github.com/user/project"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+                    <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-download" aria-hidden="true"></i> Download</a></li>
+                    <li><a href="../../../LicenseApache.html">License</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-md-3 hidden-sm hidden-xs">
+                
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>On This Page</h4>
+            </div>
+            <div id="header-menu" class="panel-body main-menu">
+                <ul></ul>
+            </div>
+        </div>  
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Table of Contents</h4>
+            </div>
+            <div class="panel-body main-menu">
+                <ul>
+	<li><a href="../../../index.html">Home</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../Introduction.html">Introduction</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../LicenseApache.html">License</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../README.html">Readme</a></li>
+	<ul>
+	</ul>
+</ul>
+            </div>
+        </div>
+
+            </div>
+			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+								<div id="static-content" class="markdown">
+					<pre class="csharp"><code class="csharp"><span class="keyword" id="State.Examples.MsTest.Application">namespace</span> State<span class="punctuation">.</span>Examples<span class="punctuation">.</span>MsTest<span class="punctuation">.</span>Application
+<span class="punctuation">{</span>
+    <span class="keyword" id="State.Examples.MsTest.Application.MyApplicationService">public</span> <span class="keyword">class</span> <span class="typename">MyApplicationService</span>
+    <span class="punctuation">{</span>
+        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="typename" data-toggle="tooltip" title="State.Examples.MsTest.Application.IMyDataLayer"><a href="../../../Source/State.Examples.MsTest/Application/IMyDataLayer.html#State.Examples.MsTest.Application.IMyDataLayer">IMyDataLayer</a></span> <span id="State.Examples.MsTest.Application.MyApplicationService._myDataLayer">_myDataLayer</span><span class="punctuation">;</span>
+
+        <span class="keyword" id="State.Examples.MsTest.Application.MyApplicationService.MyApplicationService(State.Examples.MsTest.Application.IMyDataLayer)" data-toggle="tooltip" title="State.Examples.MsTest.Application.MyApplicationService.MyApplicationService(State.Examples.MsTest.Application.IMyDataLayer)">public</span> <span data-toggle="tooltip" title="State.Examples.MsTest.Application.MyApplicationService.MyApplicationService(State.Examples.MsTest.Application.IMyDataLayer)">MyApplicationService</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="State.Examples.MsTest.Application.IMyDataLayer"><a href="../../../Source/State.Examples.MsTest/Application/IMyDataLayer.html#State.Examples.MsTest.Application.IMyDataLayer">IMyDataLayer</a></span> myDataLayer<span class="punctuation">)</span>
+        <span class="punctuation">{</span>
+            <span data-toggle="tooltip" title="State.Examples.MsTest.Application.IMyDataLayer"><a href="../../../Source/State.Examples.MsTest/Application/MyApplicationService.html#State.Examples.MsTest.Application.MyApplicationService._myDataLayer">_myDataLayer</a></span> <span class="punctuation" data-toggle="tooltip" title="State.Examples.MsTest.Application.IMyDataLayer">=</span> <span data-toggle="tooltip" title="State.Examples.MsTest.Application.IMyDataLayer">myDataLayer</span><span class="punctuation">;</span>
+        <span class="punctuation">}</span>
+        <span class="keyword" id="State.Examples.MsTest.Application.MyApplicationService.GetAge(string)" data-toggle="tooltip" title="State.Examples.MsTest.Application.MyApplicationService.GetAge(string)">public</span> <span class="keyword" data-toggle="tooltip" title="int">int</span> <span data-toggle="tooltip" title="State.Examples.MsTest.Application.MyApplicationService.GetAge(string)">GetAge</span><span class="punctuation">(</span><span class="keyword" data-toggle="tooltip" title="string">string</span> key<span class="punctuation">)</span>
+        <span class="punctuation">{</span>
+            <span class="keyword">return</span> <span data-toggle="tooltip" title="State.Examples.MsTest.Application.IMyDataLayer"><a href="../../../Source/State.Examples.MsTest/Application/MyApplicationService.html#State.Examples.MsTest.Application.MyApplicationService._myDataLayer">_myDataLayer</a></span><span class="punctuation" data-toggle="tooltip" title="State.Examples.MsTest.Application.IMyDataLayer.ReadAgeRecord(string)">.</span><span data-toggle="tooltip" title="State.Examples.MsTest.Application.IMyDataLayer.ReadAgeRecord(string)"><a href="../../../Source/State.Examples.MsTest/Application/IMyDataLayer.html#State.Examples.MsTest.Application.IMyDataLayer.ReadAgeRecord(string)">ReadAgeRecord</a></span><span class="punctuation">(</span><span data-toggle="tooltip" title="string">key</span><span class="punctuation">)</span><span class="punctuation">;</span>
+        <span class="punctuation">}</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+</code></pre>
+
+				</div>
+							</div>
+        </div>
+    </div>
+    
+    <footer class="panel-footer text-center">
+        <div align="center">Copyright © 2019 Brian Elgaard Bennett</div>
+		<div align="right">
+			<small>
+				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.
+			</small>
+		</div>
+    </footer>
+
+
+    
+    <script src="../../../bootstrap/js/jquery.min.js"></script>
+    <script src="../../../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../sidebar/sidebar.js"></script>
+    <script src="../../../syntax-highlight/syntax.js"></script>
+
+</body>
+</html>

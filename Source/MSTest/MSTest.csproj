@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
     <AssemblyName>LeanTest.MSTest</AssemblyName>
     <RootNamespace>LeanTest.MSTest</RootNamespace>
 
@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LeanTest.Core" Version="0.21.0" />
+    <PackageReference Include="LeanTest.Core" Version="0.22.1.109" />
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
   </ItemGroup>
 

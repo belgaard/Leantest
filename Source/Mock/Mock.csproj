@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
     <AssemblyName>LeanTest.Mock</AssemblyName>
     <RootNamespace>LeanTest.Mock</RootNamespace>
 
@@ -24,6 +24,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LeanTest.Core" Version="0.21.0" />
+    <PackageReference Include="LeanTest.Core" Version="0.22.1.109" />
   </ItemGroup>
 </Project>
