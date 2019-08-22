@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using ExampleApp.Domain;
 using LeanTest.Core.ExecutionHandling;
+using LeanTest.Mock;
 using State.Examples.MsTest.Application;
+using State.Examples.MsTest.MockForData;
 using State.Examples.MsTest.StateHandlers;
 
 namespace State.Examples.MsTest.IoC
@@ -18,12 +20,14 @@ namespace State.Examples.MsTest.IoC
         private readonly MyApplicationService _myApplicationService;
         private readonly MyDataLayer _myDataLayer;
         private readonly MyStateHandler _myStateHandler;
+        private readonly MyMock _myMock;
 
         public MyOwnIoC()
         {
-            _myDataLayer = new MyDataLayer();
+	        _myDataLayer = new MyDataLayer();
             _myApplicationService = new MyApplicationService(_myDataLayer);
             _myStateHandler = new MyStateHandler();
+            _myMock = new MyMock();
         }
 
         public T Resolve<T>() where T : class
@@ -54,6 +58,11 @@ namespace State.Examples.MsTest.IoC
                 return from stateHandler in new List<IStateHandler<MyData>> { _myStateHandler } select (T)stateHandler;
             if (typeof(T) == typeof(IStateHandler<MyOtherData>))
                 return from stateHandler in new List<IStateHandler<MyOtherData>> { _myStateHandler } select (T)stateHandler;
+
+            if (typeof(T) == typeof(IMockForData<MyData>))
+                return from stateHandler in new List<IMockForData<MyData>> { _myMock } select (T)stateHandler;
+            if (typeof(T) == typeof(IMockForData<MyOtherData>))
+                return from stateHandler in new List<IMockForData<MyOtherData>> { _myMock } select (T)stateHandler;
 
             return new List<T>();
         }
