@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace LeanTest.Mock
 {
     /// <summary>
-    /// If you find in convenient, you can use this as a base class for classes which implement <c>IMockForData</c> type <c>T</c>.
+    /// If you find it convenient, you can use this as a base class for classes which implement <c>IMockForData</c> type <c>T</c>.
     /// </summary>
     public class TypedData<T>
     {
@@ -31,14 +31,5 @@ namespace LeanTest.Mock
         /// Override this in order to execute post build actions.
         /// </summary>
         public virtual void PostBuild() { }
-        /// <summary>
-        /// Stores data for type <c>type</c>.
-        /// </summary>
-        /// <exception cref="ArgumentException">Thrown if <c>type</c> is not <c>T</c>.</exception>
-        public void WithData(Type type, object data) // TODO: Get rid of this when the state builder has been changed similar to the mock builder!
-        {
-            if (type != typeof(T)) throw new ArgumentException(nameof(type));
-            WithData((T)data);
-        }
     }
 }
