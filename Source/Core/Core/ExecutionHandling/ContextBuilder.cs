@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace LeanTest.Core.ExecutionHandling
 {
@@ -69,8 +70,17 @@ namespace LeanTest.Core.ExecutionHandling
 		/// <summary>Use the declared data to build builders (e.g. 'mocks' and 'state').</summary>
 		public ContextBuilder Build()
 		{
-			foreach (IBuilder builder in _builders)
-				builder.Build();
+			try
+			{
+				foreach (IBuilder builder in _builders)
+					builder.Build();
+			}
+			catch (TargetInvocationException e)
+			{
+				if (e.InnerException != null)
+					throw e.InnerException;
+				throw;
+			}
 
 			return this;
 		}
