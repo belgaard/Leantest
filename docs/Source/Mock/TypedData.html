@@ -39,7 +39,7 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="../../index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-					<li><a href="https://github.com/user/project"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+					<li><a href="https://github.com/SaxoBank/Leantest"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
                     <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-download" aria-hidden="true"></i> Download</a></li>
                     <li><a href="../../LicenseApache.html">License</a></li>
                 </ul>
@@ -90,10 +90,10 @@
 <span class="keyword" id="LeanTest.Mock">namespace</span> LeanTest<span class="punctuation">.</span>Mock
 <span class="punctuation">{</span>
      &lt;summary&gt;
-    /// If you find in convenient, you can use this as a base class for classes which implement &lt;c&gt;IMockForData&lt;/c&gt; type &lt;c&gt;T&lt;/c&gt;.
+    /// If you find it convenient, you can use this as a base class for classes which implement &lt;c&gt;IMockForData&lt;/c&gt; type &lt;c&gt;T&lt;/c&gt;.
     /// &lt;/summary&gt;
     <span class="keyword" id="LeanTest.Mock.TypedData<T>">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-    /// If you find in convenient, you can use this as a base class for classes which implement <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>IMockForData<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
+    /// If you find it convenient, you can use this as a base class for classes which implement <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>IMockForData<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
     /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span class="keyword">class</span> <span class="typename">TypedData</span><span class="punctuation">&lt;</span><span class="typename"><a href="../../Source/Mock/TypedData.html#T">T</a></span><span class="punctuation">&gt;</span>
     <span class="punctuation">{</span>
@@ -135,19 +135,6 @@
         /// Override this in order to execute post build actions.
         /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span class="keyword" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.PostBuild()">virtual</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.PostBuild()">PostBuild</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span> <span class="punctuation">}</span>
-         &lt;summary&gt;
-        /// Stores data for type &lt;c&gt;type&lt;/c&gt;.
-        /// &lt;/summary&gt;
-        /// &lt;exception cref=&quot;ArgumentException&quot;&gt;Thrown if &lt;c&gt;type&lt;/c&gt; is not &lt;c&gt;T&lt;/c&gt;.&lt;/exception&gt;
-        <span class="keyword" id="LeanTest.Mock.TypedData<T>.WithData(System.Type, object)" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.WithData(System.Type, object)">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-        /// Stores data for type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>type<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
-        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
-        /// <span class="punctuation">&lt;</span>exception cref<span class="punctuation">=</span><span class="punctuation">&quot;</span><span class="typename">ArgumentException</span><span class="punctuation">&quot;</span><span class="punctuation">&gt;</span>Thrown if <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>type<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> is not <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>exception<span class="punctuation">&gt;</span>
-<span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.WithData(System.Type, object)">WithData</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Type">Type</span> type<span class="punctuation">,</span> <span class="keyword" data-toggle="tooltip" title="object">object</span> data<span class="punctuation">)</span> <span class="comment">// TODO: Get rid of this when the state builder has been changed similar to the mock builder!</span>
-        <span class="punctuation">{</span>
-            <span class="keyword">if</span> <span class="punctuation">(</span><span data-toggle="tooltip" title="System.Type">type</span> <span class="punctuation" data-toggle="tooltip" title="bool">!=</span> <span class="keyword" data-toggle="tooltip" title="System.Type">typeof</span><span class="punctuation" data-toggle="tooltip" title="System.Type">(</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../Source/Mock/TypedData.html#T">T</a></span><span class="punctuation" data-toggle="tooltip" title="System.Type">)</span><span class="punctuation">)</span> <span class="keyword">throw</span> <span class="keyword" data-toggle="tooltip" title="System.ArgumentException">new</span> <span class="typename">ArgumentException</span><span class="punctuation">(</span><span data-toggle="tooltip" title="?">nameof</span><span class="punctuation">(</span><span data-toggle="tooltip" title="System.Type">type</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">;</span>
-            <span data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.WithData(T)"><a href="../../Source/Mock/TypedData.html#LeanTest.Mock.TypedData<T>.WithData(T)">WithData</a></span><span class="punctuation">(</span><span class="punctuation" data-toggle="tooltip" title="T">(</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../Source/Mock/TypedData.html#T">T</a></span><span class="punctuation" data-toggle="tooltip" title="T">)</span><span data-toggle="tooltip" title="object">data</span><span class="punctuation">)</span><span class="punctuation">;</span>
-        <span class="punctuation">}</span>
     <span class="punctuation">}</span>
 <span class="punctuation">}</span>
 </code></pre>
