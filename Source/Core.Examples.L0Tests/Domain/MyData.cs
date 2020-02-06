@@ -1,4 +1,4 @@
-namespace Core.Examples.MsTest.IoC
+namespace Core.Examples.L0Tests.Domain
 {
     public class MyData
     {

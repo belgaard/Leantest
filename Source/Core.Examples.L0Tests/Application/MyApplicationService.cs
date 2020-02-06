@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Core.Examples.MsTest.IoC;
+using Core.Examples.L0Tests.Domain;
 
-namespace Core.Examples.MsTest.Application
+namespace Core.Examples.L0Tests.Application
 {
     public class MyApplicationService
     {

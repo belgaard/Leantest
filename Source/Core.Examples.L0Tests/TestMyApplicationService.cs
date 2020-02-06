@@ -1,6 +1,6 @@
 using System;
-using Core.Examples.MsTest.Application;
-using Core.Examples.MsTest.IoC;
+using Core.Examples.L0Tests.Application;
+using Core.Examples.L0Tests.Domain;
 using LeanTest.Core.ExecutionHandling;
 using LeanTest.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
