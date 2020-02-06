@@ -8,6 +8,8 @@
     <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="LeanTest.Core" Version="1.1.0.156" />
+    <PackageReference Include="LeanTest.JSon" Version="1.1.0.156" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
@@ -17,6 +19,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Examples.MsTest\Core.Examples.MsTest.csproj" />
-    <ProjectReference Include="..\JSon\JSon.csproj" />
   </ItemGroup>
 </Project>
