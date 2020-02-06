@@ -1,6 +1,7 @@
 using Examples.L0Tests.Application;
 using Examples.L0Tests.Domain;
 using LeanTest.Core.ExecutionHandling;
+using LeanTest.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Examples.L0Tests
@@ -10,18 +11,20 @@ namespace Examples.L0Tests
 	{
 		private ContextBuilder _contextBuilder;
 		private MyApplicationService _target;
+		// Populated by MS Test:
+		public TestContext TestContext { get; set; }
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
 			_contextBuilder = ContextBuilderFactory.CreateContextBuilder()
 				.WithData<MyData>()
-				.Build();
+				.RegisterAttributes(TestContext);
 
 			_target = _contextBuilder.GetInstance<MyApplicationService>();
 		}
 		#region Example of existing state
-		[TestMethod]
+		[TestMethod, TestScenarioId("SimpleExamples")]
 		public void GetAgeMustReturn10WhenKeyMatchesNewUpData()
 		{
 			#region Example of using a builder pattern
