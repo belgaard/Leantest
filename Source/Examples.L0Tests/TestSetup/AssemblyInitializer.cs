@@ -1,10 +1,10 @@
-﻿using Core.Examples.L0Tests.Application;
-using Core.Examples.L0Tests.TestSetup.IoC;
+﻿using Examples.L0Tests.Application;
+using Examples.L0Tests.TestSetup.IoC;
 using LeanTest.Core.ExecutionHandling;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Core.Examples.L0Tests.TestSetup
+namespace Examples.L0Tests.TestSetup
 {
 	[TestClass]
 	public static class AssemblyInitializer

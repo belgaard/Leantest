@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using LeanTest.Core.ExecutionHandling;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Examples.L0Tests.TestSetup.IoC
+namespace Examples.L0Tests.TestSetup.IoC
 {
 	public class IocContainer : IIocContainer
 	{

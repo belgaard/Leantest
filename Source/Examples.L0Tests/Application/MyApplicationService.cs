@@ -1,9 +1,5 @@
-namespace Core.Examples.L0Tests.Application
+namespace Examples.L0Tests.Application
 {
-	public interface IMyExternalService
-	{
-		int GetAge(string key);
-	}
 	public class MyApplicationService
 	{
 		private readonly IMyExternalService _myExternalService;

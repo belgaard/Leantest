@@ -1,15 +1,10 @@
-using Core.Examples.L0Tests.Application;
-using Core.Examples.L0Tests.Domain;
+using Examples.L0Tests.Application;
+using Examples.L0Tests.Domain;
 using LeanTest.Core.ExecutionHandling;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Core.Examples.L0Tests
+namespace Examples.L0Tests
 {
-	/// <summary>Note that in a real-world example we must choose an IoC container - here we have implemented our own for
-	/// this example.
-	/// This container must be initialized in an AssemblyInitializer class - refer to this class to see how it is
-	/// done with our example IoC container.
-	/// For the example to be more complete, there should be two projects, one for test one for what is being tested.</summary>
 	[TestClass]
 	public class TestMyApplicationService
 	{
@@ -27,7 +22,7 @@ namespace Core.Examples.L0Tests
 		}
 		#region Example of existing state
 		[TestMethod]
-		public void GetAgeMustReturn10WhenKeyMatchesNewedUpData()
+		public void GetAgeMustReturn10WhenKeyMatchesNewUpData()
 		{
 			#region Example of using a builder pattern
 			_contextBuilder
@@ -36,7 +31,7 @@ namespace Core.Examples.L0Tests
 				.Build();
 			#endregion
 
-			int actual = _target.GetAge("FourtyTwo");
+			int actual = _target.GetAge("FortyTwo");
 
 			Assert.AreEqual(10, actual);
 		}

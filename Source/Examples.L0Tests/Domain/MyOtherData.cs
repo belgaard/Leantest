@@ -1,4 +1,4 @@
-namespace Core.Examples.L0Tests.Domain
+namespace Examples.L0Tests.Domain
 {
 	public class MyOtherData
 	{
