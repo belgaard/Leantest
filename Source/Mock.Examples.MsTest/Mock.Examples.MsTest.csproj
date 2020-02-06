@@ -16,7 +16,4 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ExampleApp\ExampleApp.csproj" />
-  </ItemGroup>
 </Project>
