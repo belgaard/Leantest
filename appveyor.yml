@@ -3,7 +3,7 @@ configuration: Release
 platform: Any CPU
 build_script:  
   .\Build.cmd
-image: Visual Studio 2017
+image: Visual Studio 2019
 environment:
   matrix:
     - CLI_VERSION: Latest
