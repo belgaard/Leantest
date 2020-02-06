@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Source\Core\Core.csproj", "{A7E92AD6-6696-40AC-904B-4C7FA9509106}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mock", "Source\Mock\Mock.csproj", "{E412F59B-73AF-4071-9275-A341595FCD5B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSon", "Source\JSon\JSon.csproj", "{4D4EC696-9F1E-473F-9A92-06A95E835C59}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{62FABEA8-7550-483D-839C-C0D50444D674}"
@@ -34,7 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LiterateCS", "LiterateCS", 
 		TOC.yml = TOC.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.L0Tests", "Source\Examples.L0Tests\Examples.L0Tests.csproj", "{5641D250-DBDD-41C9-8A08-0E90AE5F3B7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.L0Tests", "Source\Examples.L0Tests\Examples.L0Tests.csproj", "{5641D250-DBDD-41C9-8A08-0E90AE5F3B7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,10 +44,6 @@ Global
 		{A7E92AD6-6696-40AC-904B-4C7FA9509106}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7E92AD6-6696-40AC-904B-4C7FA9509106}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7E92AD6-6696-40AC-904B-4C7FA9509106}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E412F59B-73AF-4071-9275-A341595FCD5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E412F59B-73AF-4071-9275-A341595FCD5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E412F59B-73AF-4071-9275-A341595FCD5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E412F59B-73AF-4071-9275-A341595FCD5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D4EC696-9F1E-473F-9A92-06A95E835C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D4EC696-9F1E-473F-9A92-06A95E835C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D4EC696-9F1E-473F-9A92-06A95E835C59}.Release|Any CPU.ActiveCfg = Release|Any CPU

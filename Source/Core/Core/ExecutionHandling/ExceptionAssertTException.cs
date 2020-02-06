@@ -82,5 +82,10 @@ namespace LeanTest.Core.ExecutionHandling
                 throw new AggregatedMessagesException("ExceptionAssert.DoesNotThrow failed. " /*+ action.Method + " threw unexpected exception: "*/ + ex.GetType() + ". " + message, ex);
             }
         }
-    }
+         public static void Adapter<TFunc>(TFunc action, string message, Action<TFunc, string> throws, Func<string, Exception> assertFailedException)
+        {
+            try { throws(action, message); }
+            catch (AggregatedMessagesException e) { throw assertFailedException(e.Message); }
+        }
+   }
 }
