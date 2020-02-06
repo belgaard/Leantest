@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ExampleApp.Domain;
 using LeanTest.Core.ExecutionHandling;
 using State.Examples.MsTest.Application;
+using State.Examples.MsTest.Domain;
 using State.Examples.MsTest.StateHandlers;
 
 namespace State.Examples.MsTest.IoC

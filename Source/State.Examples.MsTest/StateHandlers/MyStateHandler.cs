@@ -1,6 +1,6 @@
 using System;
-using ExampleApp.Domain;
 using LeanTest.Core.ExecutionHandling;
+using State.Examples.MsTest.Domain;
 
 namespace State.Examples.MsTest.StateHandlers
 {
