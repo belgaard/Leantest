@@ -9,9 +9,11 @@ namespace LeanTest.MSTest
 	public static class ExceptionAssert
 	{
 		/// <summary>Throws an <c>AssertFailedException</c> exception unless <c>func</c> throws a <c>TException</c>.</summary>
+		[Obsolete("Use the MsTest Assert.ThrowsException")]
 		public static TException Throws<TException>(Func<Task> func, string message = "") where TException : Exception =>
 			ExceptionAssertTException.Adapter(func, message, ExceptionAssertTException.Throws<TException>, m => new AssertFailedException(m));
 		/// <summary>Throws an <c>AssertFailedException</c> exception unless <c>action</c> throws a <c>TException</c>.</summary>
+		[Obsolete("Use the MsTest Assert.ThrowsException")]
 		public static TException Throws<TException>(Action action, string message = "") where TException : Exception =>
 			ExceptionAssertTException.Adapter(action, message, ExceptionAssertTException.Throws<TException>, m => new AssertFailedException(m));
 	}
