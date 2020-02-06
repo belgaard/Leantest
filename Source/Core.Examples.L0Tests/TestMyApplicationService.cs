@@ -1,14 +1,11 @@
-using System;
 using Core.Examples.L0Tests.Application;
 using Core.Examples.L0Tests.Domain;
 using LeanTest.Core.ExecutionHandling;
-using LeanTest.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Core.Examples.L0Tests
 {
-	/// <summary>Work-in-progress. 
-	/// Note that in a real-world example we must choose an IoC container - here we have implemented our own for
+	/// <summary>Note that in a real-world example we must choose an IoC container - here we have implemented our own for
 	/// this example.
 	/// This container must be initialized in an AssemblyInitializer class - refer to this class to see how it is
 	/// done with our example IoC container.
@@ -23,34 +20,26 @@ namespace Core.Examples.L0Tests
 		public void TestInitialize()
 		{
 			_contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+				.WithData<MyData>()
 				.Build();
 
 			_target = _contextBuilder.GetInstance<MyApplicationService>();
 		}
-
+		#region Example of existing state
 		[TestMethod]
-		public void SumMustReturn42When10And32ArePassed()
+		public void GetAgeMustReturn10WhenKeyMatchesNewedUpData()
 		{
+			#region Example of using a builder pattern
 			_contextBuilder
-				.WithData(new MyData {First = 10, Second = 32})
+				.WithData(new MyData { Age = 10, Key = "ac_32_576259321" })
+				.WithData(new MyOtherData { OtherAge = 10, OtherKey = "ac_32_576259321" })
 				.Build();
+			#endregion
 
-			int actual = _target.Sum(_contextBuilder.First<MyData>());
+			int actual = _target.GetAge("FourtyTwo");
 
-			MultiAssert.Aggregate(
-				() => Assert.AreEqual(42, actual));
+			Assert.AreEqual(10, actual);
 		}
-
-		[TestMethod]
-		public void DivideByZeroMustThrow()
-		{
-			ExceptionAssert.Throws<DivideByZeroException>(() => _target.DivideByZero());
-		}
-
-		[TestMethod]
-		public void DivideByZeroAsyncMustThrow()
-		{
-			ExceptionAssert.Throws<DivideByZeroException>(() => _target.DivideByZeroAsync(42));
-		}
+		#endregion
 	}
 }

@@ -1,4 +1,4 @@
-﻿namespace Mock.Examples.MsTest.Domain
+namespace Core.Examples.L0Tests.Domain
 {
 	public class MyOtherData
 	{

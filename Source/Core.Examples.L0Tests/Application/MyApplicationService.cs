@@ -1,23 +1,20 @@
-using System.Threading.Tasks;
-using Core.Examples.L0Tests.Domain;
-
 namespace Core.Examples.L0Tests.Application
 {
-    public class MyApplicationService
-    {
-		public int Sum(MyData myData)
-        {
-            return myData.First + myData.Second;
-        }
+	public interface IMyExternalService
+	{
+		int GetAge(string key);
+	}
+	public class MyApplicationService
+	{
+		private readonly IMyExternalService _myExternalService;
 
-		public void DivideByZero()
-        {
-            throw new System.DivideByZeroException();
-        }
-
-        public Task<MyData> DivideByZeroAsync(int theInt)
-        {
-            throw new System.DivideByZeroException();
-        }
-    }
+		public MyApplicationService(IMyExternalService myExternalService)
+		{
+			_myExternalService = myExternalService;
+		}
+		public int GetAge(string key)
+		{
+			return _myExternalService.GetAge(key);
+		}
+	}
 }

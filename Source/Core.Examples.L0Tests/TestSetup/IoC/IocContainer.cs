@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Core.Examples.L0Tests.Application;
+using Core.Examples.L0Tests.Domain;
+using Core.Examples.L0Tests.Mocks;
 using LeanTest.Core.ExecutionHandling;
 using LeanTest.Mock;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,18 +26,19 @@ namespace Core.Examples.L0Tests.TestSetup.IoC
 			// TODO
  
 			// Mock-for-data:
-			// TODO
+			serviceCollection.RegisterMockForData<IMyExternalService, MockMyExternalService, MyData, MyOtherData>();
  
 			return serviceCollection;
 		}
 
-		private static void RegisterMockForData<TInterface, TImplementation, TData>(this IServiceCollection container)
-			where TImplementation: class, TInterface, IMockForData<TData>
+		private static void RegisterMockForData<TInterface, TImplementation, TData1, TData2>(this IServiceCollection container)
+			where TImplementation: class, TInterface, IMockForData<TData1>, IMockForData<TData2>
 			where TInterface: class
 		{
 			container.AddSingleton<TImplementation>();
 			container.AddSingleton<TInterface>(x => x.GetRequiredService<TImplementation>());
-			container.AddSingleton<IMockForData<TData>>(x => x.GetRequiredService<TImplementation>());
+			container.AddSingleton<IMockForData<TData1>>(x => x.GetRequiredService<TImplementation>());
+			container.AddSingleton<IMockForData<TData2>>(x => x.GetRequiredService<TImplementation>());
 		}
 	}
 }
