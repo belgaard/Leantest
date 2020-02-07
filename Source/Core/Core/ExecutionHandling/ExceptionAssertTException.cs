@@ -28,18 +28,9 @@ namespace LeanTest.Core.ExecutionHandling
 		{
 			Exception exception = null;
 
-			try
-			{
-				action.Invoke();
-			}
-			catch (TException ex)
-			{
-				return ex;
-			}
-			catch (Exception ex)
-			{
-				exception = ex;
-			}
+			try { action.Invoke(); }
+			catch (TException ex) { return ex; }
+			catch (Exception ex) { exception = ex; }
 
 			if (exception == null)
 				throw new AggregatedMessagesException("ExceptionAssert.Throws failed. No exception was thrown. Expected: " + typeof(TException) + ". " + message);
