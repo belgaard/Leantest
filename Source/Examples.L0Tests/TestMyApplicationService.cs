@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Examples.L0Tests.Application;
 using Examples.L0Tests.Domain;
 using LeanTest.Core.ExecutionHandling;
@@ -23,6 +24,19 @@ namespace Examples.L0Tests
 
 			_target = _contextBuilder.GetInstance<MyApplicationService>();
 		}
+
+		[TestMethod, TestScenarioId("SimpleExamples")]
+		public async Task GetAgeAsyncMustNotThrow()
+		{
+			_contextBuilder
+				.WithData(new MyData { Age = 10, Key = "ac_32_576259321" })
+				.WithData(new MyOtherData { OtherAge = 10, OtherKey = "ac_32_576259321" })
+				.Build();
+
+			await ExceptionAssert.DoesNotThrowAsync(() => _target.GetAgeAsync("FortyTwo"),
+				$"Expected '{nameof(MyApplicationService.GetAgeAsync)}' not to throw").ConfigureAwait(false);
+		}
+
 		#region Example of existing state
 		[TestMethod, TestScenarioId("SimpleExamples")]
 		public void GetAgeMustReturn10WhenKeyMatchesNewUpData()
