@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LeanTest.Core" Version="2.0.0.174" />
+    <PackageReference Include="LeanTest.Core" Version="2.2.0" />
     <PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
   </ItemGroup>
 
