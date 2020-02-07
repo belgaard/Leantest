@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 using Examples.L0Tests.Application;
 using Examples.L0Tests.Domain;
 using LeanTest.Mock;
@@ -14,6 +15,7 @@ namespace Examples.L0Tests.Mocks
 		private List<MyData> MyData { get; } = new List<MyData>();
 
 		public int GetAge(string key) => MyData.First().Age;
+		public async Task<int> GetAgeAsync(string key) => await Task.FromResult(MyData.First().Age).ConfigureAwait(false);
 		public void WithData(MyOtherData data) { }
 		public void PreBuild() { }
 		public void Build(Type type) { }

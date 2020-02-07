@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace LeanTest.Core.ExecutionHandling
 {
-	/// <summary>
-	/// Exception helper methods for tests.
-	/// </summary>
+	/// <summary>Exception helper methods for tests.</summary>
+	/// <remarks>These are agnostic to unit test frameworks. See the MsTest projects for examples of how to adapt to MsTest. Note that 'throws' is not needed
+	/// for MsTest anymore as that functionality has now been implemented as extension methods on the Assert class.</remarks>
 	public static class ExceptionAssertTException
 	{
 		/// <summary></summary>
@@ -41,29 +41,15 @@ namespace LeanTest.Core.ExecutionHandling
 		/// <exception cref="AggregatedMessagesException">Thrown when the action threw an exception. </exception>
 		public static void DoesNotThrow(Action action, string message = "")
 		{
-			try
-			{
-				action.Invoke();
-			}
-			catch (Exception ex)
-			{
-				throw new AggregatedMessagesException("ExceptionAssert.DoesNotThrow failed. " + ex.GetType() + ". " + message, ex);
-			}
+			try { action.Invoke(); }
+			catch (Exception ex) { throw new AggregatedMessagesException("ExceptionAssert.DoesNotThrow failed. " + ex.GetType() + ". " + message, ex); }
 		}
 
 		/// <exception cref="AggregatedMessagesException">Thrown when the action threw an exception. </exception>
 		public static async Task DoesNotThrowAsync(Func<Task> action, string message = "")
 		{
-			try
-			{
-#pragma warning disable ConfigureAwaitEnforcer // ConfigureAwaitEnforcer
-				await action.Invoke();
-#pragma warning restore ConfigureAwaitEnforcer // ConfigureAwaitEnforcer
-			}
-			catch (Exception ex)
-			{
-				throw new AggregatedMessagesException("ExceptionAssert.DoesNotThrow failed. " + ex.GetType() + ". " + message, ex);
-			}
+			try { await action.Invoke(); }
+			catch (Exception ex) { throw new AggregatedMessagesException("ExceptionAssert.DoesNotThrow failed. " + ex.GetType() + ". " + message, ex); }
 		}
 
 		/// <summary></summary>
@@ -83,13 +69,7 @@ namespace LeanTest.Core.ExecutionHandling
 		/// <summary></summary>
 		public static async Task AdapterAsync(Func<Task> action, string message, Func<Func<Task>, string, Task> throws, Func<string, Exception> assertFailedException)
 		{
-			try
-			{
-				var x = new Func<Func<Task>, string, Task>(DoesNotThrowAsync);
-#pragma warning disable ConfigureAwaitEnforcer // ConfigureAwaitEnforcer
-				await x(action, message);
-#pragma warning restore ConfigureAwaitEnforcer // ConfigureAwaitEnforcer
-			}
+			try { await throws(action, message); }
 			catch (Exception e) { throw assertFailedException(e.Message); }
 		}
 	}
