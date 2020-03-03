@@ -1,4 +1,4 @@
-version: 2.3.3.{build}
+version: 2.4.0.{build}
 configuration: Release
 platform: Any CPU
 build_script:  

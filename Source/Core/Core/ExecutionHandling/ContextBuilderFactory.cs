@@ -59,13 +59,13 @@ namespace LeanTest.Core.ExecutionHandling
             return ContextBuilder = new ContextBuilder(iocContainer, BuilderFactories.ToArray());
         }
 
-        /// <summary>
-        /// Setup IoC and builders. Eventually, this will initialize app domains.
-        /// </summary>
-        public static void Initialize(CleanContextMode mode, Func<IIocContainer> iocFactory)
+        /// <summary>Setup IoC and builders.</summary>
+        /// <param name="mode">Always use 'ReCreate' to recreate the IoC container before each test. If you use 'ReUse' you will need to do any clean-up needed yourself.</param>
+        /// <param name="iocContainerFactory">Creates the IoC container, such as e.g. 'new IocContainer(L0CompositionRootForTest.Initialize(CompositionRoot.Initialize(new ServiceCollection()))'.</param>
+        public static void Initialize(CleanContextMode mode, Func<IIocContainer> iocContainerFactory)
         {
             _cleanContextMode = mode;
-            _iocContainerFactory = iocFactory;
+            _iocContainerFactory = iocContainerFactory;
 
             AddBuilderFactory((container, dataStore) => new StateBuilder(container, dataStore));
             AddBuilderFactory((container, dataStore) => new MockingBuilder(container, dataStore));
@@ -73,10 +73,9 @@ namespace LeanTest.Core.ExecutionHandling
             _lazyIocContainer = new Lazy<IIocContainer>(_iocContainerFactory);
         }
 
-        /// <summary>
-        /// Setup IoC and builders to create the IoC context before each test. Eventually, this will initialize app domains.
-        /// </summary>
-        public static void Initialize(Func<IIocContainer> iocFactory) => Initialize(CleanContextMode.ReCreate, iocFactory);
+        /// <summary>Setup IoC and builders to create the IoC context before each test.</summary>
+        /// <param name="iocContainerFactory">Creates the IoC container, such as e.g. 'new IocContainer(L0CompositionRootForTest.Initialize(CompositionRoot.Initialize(new ServiceCollection()))'.</param>
+        public static void Initialize(Func<IIocContainer> iocContainerFactory) => Initialize(CleanContextMode.ReCreate, iocContainerFactory);
 
         /// <summary>
         /// Adds a builder factory for building e.g. 'mock' and 'state' builders.
