@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using LeanTest.Core.ExecutionHandling;
 using Microsoft.AspNetCore.Hosting;
@@ -10,7 +9,8 @@ namespace LeanTest
 	/// <summary>This is used to integrate the .Net Core web host builder pattern with the Lean Test context builder pattern.</summary>
 	public static class AspNetCoreContextBuilderFactory
 	{
-		private static readonly Dictionary<Type, object> Extras = new Dictionary<Type, object>();
+		private static TestServer _testServer;
+		private static HttpClient _client;
 
 		/// <summary>ASP.NET Core version of setting up IoC and builders.</summary>
 		/// <param name="mode">Always use ReCreate to recreate the IoC container before each test.</param>
@@ -22,15 +22,13 @@ namespace LeanTest
 		public static void Initialize(CleanContextMode mode, Func<IWebHostBuilder> webHostBuilder, Func<IServiceProvider, IIocContainer> iocContainerFactory) =>
 			ContextBuilderFactory.Initialize(mode, () =>
 			{
-				foreach (object extra in Extras.Values) 
-					(extra as IDisposable)?.Dispose();
-				Extras.Clear();
+				_testServer?.Dispose();
+				_testServer = null;
+				_client = null;
 
-				var server = new TestServer(webHostBuilder());
-				AddExtra(server);
-				IServiceProvider serviceProvider = server.Host.Services;
-				HttpClient client = server.CreateClient();
-				AddExtra(client);
+				_testServer = new TestServer(webHostBuilder());
+				IServiceProvider serviceProvider = _testServer.Host.Services;
+				_client = _testServer.CreateClient();
 
 				return iocContainerFactory(serviceProvider);
 			});
@@ -42,11 +40,9 @@ namespace LeanTest
 		Initialize(CleanContextMode.ReCreate, webHostBuilder, iocContainerFactory);
 
 		/// <summary>Get the ASP.NET Core <c>TestServer</c> created in <c>Initialize()</c>.</summary>
-		public static TestServer GetTestServer(this ContextBuilder _) => Extras[typeof(TestServer)] as TestServer;
+		public static TestServer GetTestServer(this ContextBuilder _) => _testServer;
 
 		/// <summary>Get the ASP.NET Core client from the <c>TestServer</c> created in <c>Initialize()</c>.</summary>
-		public static HttpClient GetClient(this ContextBuilder _) => Extras[typeof(HttpClient)] as HttpClient;
-
-		private static void AddExtra<T>(T extra) => Extras[typeof(T)] = extra;
+		public static HttpClient GetClient(this ContextBuilder _) => _client;
 	}
 }
