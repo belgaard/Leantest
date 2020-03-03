@@ -16,10 +16,14 @@ namespace LeanTest
 		/// <param name="mode">Always use ReCreate to recreate the IoC container before each test.</param>
 		/// <param name="webHostBuilder">The ASP.NET Core web host builder from production code, overridden with mocks using .ConfigureTestServices().</param>
 		/// <param name="iocContainerFactory">Creates the IoC container, such as e.g. 'provider => new IocContainer(provider)'.</param>
+		/// <remarks>The passed in web host builder is used to create a <c>TestHost</c>.
+		/// A client is created and can be accessed through <c>GetClient()</c>.
+		/// The test host instance is disposed as the first step of initialisation.</remarks>
 		public static void Initialize(CleanContextMode mode, Func<IWebHostBuilder> webHostBuilder, Func<IServiceProvider, IIocContainer> iocContainerFactory) =>
 			ContextBuilderFactory.Initialize(mode, () =>
 			{
-				foreach (var extra in Extras.Values) (extra as IDisposable)?.Dispose();
+				foreach (object extra in Extras.Values) 
+					(extra as IDisposable)?.Dispose();
 				Extras.Clear();
 
 				var server = new TestServer(webHostBuilder());
@@ -37,7 +41,10 @@ namespace LeanTest
 		public static void Initialize(Func<IWebHostBuilder> webHostBuilder, Func<IServiceProvider, IIocContainer> iocContainerFactory) =>
 		Initialize(CleanContextMode.ReCreate, webHostBuilder, iocContainerFactory);
 
-		/// <summary>Get the ASP.NET Core client from the TestServer created in <c>Initialize()</c>.</summary>
+		/// <summary>Get the ASP.NET Core <c>TestServer</c> created in <c>Initialize()</c>.</summary>
+		public static TestServer GetTestServer(this ContextBuilder _) => Extras[typeof(TestServer)] as TestServer;
+
+		/// <summary>Get the ASP.NET Core client from the <c>TestServer</c> created in <c>Initialize()</c>.</summary>
 		public static HttpClient GetClient(this ContextBuilder _) => Extras[typeof(HttpClient)] as HttpClient;
 
 		private static void AddExtra<T>(T extra) => Extras[typeof(T)] = extra;
