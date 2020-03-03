@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LeanTest.Core" Version="2.3.1.190" />
+    <PackageReference Include="LeanTest.Core" Version="2.4.0.198" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.2" />
   </ItemGroup>
 
