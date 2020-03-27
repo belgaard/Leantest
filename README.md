@@ -34,3 +34,4 @@ Around 850+ developer tests (today 1000+ tests) covered most business functional
 Major refactorings of the code were done with these tests as a safety net.
 
 LeanTest is currently used internally in Saxo Bank's REST based [OpenAPI](https://developer.saxo).
+
