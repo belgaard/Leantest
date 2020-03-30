@@ -48,8 +48,11 @@ namespace LeanTest
 				_testServer = null;
 				_client = null;
 
-				_testServer = hostBuilder().Build().GetTestServer();
-				IServiceProvider serviceProvider = _testServer.Host.Services;
+				var host = hostBuilder().Build();
+				host.Start();
+
+				_testServer = host.GetTestServer();
+				IServiceProvider serviceProvider = _testServer.Services;
 				_client = _testServer.CreateClient();
 
 				return iocContainerFactory(serviceProvider);
