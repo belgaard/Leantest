@@ -1,0 +1,128 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>IocContainer - LeanTest</title>
+
+	<link rel="icon" type="image/x-icon" href="../../../../images/favicon.ico">
+    <link rel="stylesheet" href="../../../../bootstrap/css/readable/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../../font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../../../sidebar/sidebar.min.css" />
+<link rel="stylesheet" href="../../../../css/book.min.css" />
+<link rel="stylesheet" href="../../../../syntax-highlight/solarized-light.min.css" />
+<link rel="stylesheet" href="../../../../mermaid/mermaid.css" />
+
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#sidebar-toggle" id="sidebar-toggle">
+					<i id="sidebar-toggle-icon" class="hidden-md hidden-lg hidden-xl fa fa-angle-double-right" aria-hidden="true"></i>
+					LeanTest
+				</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					<li><a href="https://github.com/SaxoBank/Leantest"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+                    <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-download" aria-hidden="true"></i> Download</a></li>
+                    <li><a href="../../../../LicenseApache.html">License</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-md-3 hidden-sm hidden-xs">
+                
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>On This Page</h4>
+            </div>
+            <div id="header-menu" class="panel-body main-menu">
+                <ul></ul>
+            </div>
+        </div>  
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Table of Contents</h4>
+            </div>
+            <div class="panel-body main-menu">
+                <ul>
+	<li><a href="../../../../index.html">Home</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../../Introduction.html">Introduction</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../../LicenseApache.html">License</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../../README.html">Readme</a></li>
+	<ul>
+	</ul>
+</ul>
+            </div>
+        </div>
+
+            </div>
+			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+								<div id="static-content" class="markdown">
+					<pre class="csharp"><code class="csharp"><span class="keyword">using</span> System<span class="punctuation">;</span>
+<span class="keyword">using</span> System<span class="punctuation">.</span>Collections<span class="punctuation">.</span>Generic<span class="punctuation">;</span>
+<span class="keyword">using</span> LeanTest<span class="punctuation">.</span>Core<span class="punctuation">.</span>ExecutionHandling<span class="punctuation">;</span>
+<span class="keyword">using</span> Microsoft<span class="punctuation">.</span>Extensions<span class="punctuation">.</span>DependencyInjection<span class="punctuation">;</span>
+
+<span class="keyword" id="Examples.L0Tests.TestSetup.IoC">namespace</span> Examples<span class="punctuation">.</span>L0Tests<span class="punctuation">.</span>TestSetup<span class="punctuation">.</span>IoC
+<span class="punctuation">{</span>
+	<span class="keyword" id="Examples.L0Tests.TestSetup.IoC.IocContainer">public</span> <span class="keyword">class</span> <span class="typename">IocContainer</span> <span class="punctuation">:</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IIocContainer">IIocContainer</span>
+	<span class="punctuation">{</span>
+		<span class="keyword">private</span> <span class="keyword">readonly</span> <span class="typename" data-toggle="tooltip" title="System.IServiceProvider">IServiceProvider</span> <span id="Examples.L0Tests.TestSetup.IoC.IocContainer._serviceProvider">_serviceProvider</span><span class="punctuation">;</span>
+		<span class="keyword" id="Examples.L0Tests.TestSetup.IoC.IocContainer.IocContainer(Microsoft.Extensions.DependencyInjection.IServiceCollection)" data-toggle="tooltip" title="Examples.L0Tests.TestSetup.IoC.IocContainer.IocContainer(Microsoft.Extensions.DependencyInjection.IServiceCollection)">public</span> <span data-toggle="tooltip" title="Examples.L0Tests.TestSetup.IoC.IocContainer.IocContainer(Microsoft.Extensions.DependencyInjection.IServiceCollection)">IocContainer</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="Microsoft.Extensions.DependencyInjection.IServiceCollection">IServiceCollection</span> serviceCollection<span class="punctuation">)</span> <span class="punctuation">=&gt;</span> <span data-toggle="tooltip" title="System.IServiceProvider"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#Examples.L0Tests.TestSetup.IoC.IocContainer._serviceProvider">_serviceProvider</a></span> <span class="punctuation" data-toggle="tooltip" title="System.IServiceProvider">=</span> <span data-toggle="tooltip" title="Microsoft.Extensions.DependencyInjection.IServiceCollection">serviceCollection</span><span class="punctuation" data-toggle="tooltip" title="Microsoft.Extensions.DependencyInjection.IServiceCollection.BuildServiceProvider()">.</span><span data-toggle="tooltip" title="Microsoft.Extensions.DependencyInjection.IServiceCollection.BuildServiceProvider()">BuildServiceProvider</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="Examples.L0Tests.TestSetup.IoC.IocContainer.IocContainer(Microsoft.Extensions.DependencyInjection.IServiceCollection)">;</span>
+ 
+		<span class="keyword" id="Examples.L0Tests.TestSetup.IoC.IocContainer.Resolve<T>()" data-toggle="tooltip" title="Examples.L0Tests.TestSetup.IoC.IocContainer.Resolve<T>()">public</span> <span class="typename" data-toggle="tooltip" title="T"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#T">T</a></span> <span data-toggle="tooltip" title="Examples.L0Tests.TestSetup.IoC.IocContainer.Resolve<T>()">Resolve</span><span class="punctuation">&lt;</span><span class="typename"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#T">T</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="keyword">where</span> <span class="typename" data-toggle="tooltip" title="T"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#T">T</a></span> <span class="punctuation">:</span> <span class="keyword">class</span> <span class="punctuation">=&gt;</span> <span data-toggle="tooltip" title="System.IServiceProvider"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#Examples.L0Tests.TestSetup.IoC.IocContainer._serviceProvider">_serviceProvider</a></span><span class="punctuation" data-toggle="tooltip" title="System.IServiceProvider.GetRequiredService<T>()">.</span><span data-toggle="tooltip" title="System.IServiceProvider.GetRequiredService<T>()">GetRequiredService</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#T">T</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="Examples.L0Tests.TestSetup.IoC.IocContainer.Resolve<T>()">;</span>
+		<span class="keyword" id="Examples.L0Tests.TestSetup.IoC.IocContainer.TryResolve<T>()" data-toggle="tooltip" title="Examples.L0Tests.TestSetup.IoC.IocContainer.TryResolve<T>()">public</span> <span class="typename" data-toggle="tooltip" title="T"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#T">T</a></span> <span data-toggle="tooltip" title="Examples.L0Tests.TestSetup.IoC.IocContainer.TryResolve<T>()">TryResolve</span><span class="punctuation">&lt;</span><span class="typename"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#T">T</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="keyword">where</span> <span class="typename" data-toggle="tooltip" title="T"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#T">T</a></span> <span class="punctuation">:</span> <span class="keyword">class</span> <span class="punctuation">=&gt;</span> <span data-toggle="tooltip" title="System.IServiceProvider"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#Examples.L0Tests.TestSetup.IoC.IocContainer._serviceProvider">_serviceProvider</a></span><span class="punctuation" data-toggle="tooltip" title="System.IServiceProvider.GetService<T>()">.</span><span data-toggle="tooltip" title="System.IServiceProvider.GetService<T>()">GetService</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#T">T</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="Examples.L0Tests.TestSetup.IoC.IocContainer.TryResolve<T>()">;</span>
+		<span class="keyword" id="Examples.L0Tests.TestSetup.IoC.IocContainer.TryResolveAll<T>()" data-toggle="tooltip" title="Examples.L0Tests.TestSetup.IoC.IocContainer.TryResolveAll<T>()">public</span> <span class="typename" data-toggle="tooltip" title="System.Collections.Generic.IEnumerable<T>">IEnumerable</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#T">T</a></span><span class="punctuation">&gt;</span> <span data-toggle="tooltip" title="Examples.L0Tests.TestSetup.IoC.IocContainer.TryResolveAll<T>()">TryResolveAll</span><span class="punctuation">&lt;</span><span class="typename"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#T">T</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="keyword">where</span> <span class="typename" data-toggle="tooltip" title="T"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#T">T</a></span> <span class="punctuation">:</span> <span class="keyword">class</span> <span class="punctuation">=&gt;</span> <span data-toggle="tooltip" title="System.IServiceProvider"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#Examples.L0Tests.TestSetup.IoC.IocContainer._serviceProvider">_serviceProvider</a></span><span class="punctuation" data-toggle="tooltip" title="System.IServiceProvider.GetServices<T>()">.</span><span data-toggle="tooltip" title="System.IServiceProvider.GetServices<T>()">GetServices</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../../Source/Examples.L0Tests/TestSetup/IoC/IocContainer.html#T">T</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="Examples.L0Tests.TestSetup.IoC.IocContainer.TryResolveAll<T>()">;</span>
+	<span class="punctuation">}</span>
+<span class="punctuation">}</span>
+</code></pre>
+
+				</div>
+							</div>
+        </div>
+    </div>
+    
+    <footer class="panel-footer text-center">
+        <div align="center">Copyright © 2019 Brian Elgaard Bennett</div>
+		<div align="right">
+			<small>
+				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.
+			</small>
+		</div>
+    </footer>
+
+
+    
+    <script src="../../../../bootstrap/js/jquery.min.js"></script>
+    <script src="../../../../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../../sidebar/sidebar.js"></script>
+    <script src="../../../../syntax-highlight/syntax.js"></script>
+
+</body>
+</html>
