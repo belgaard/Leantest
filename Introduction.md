@@ -1,9 +1,24 @@
 # Introduction
 
-## The Concept
-The concept of _Lean Testing_ (formerly _developer testing_) is not very well understood. I hope in the following to shed a little light on the subject. Also, watch [my blog](https://blog.elgaard.com), I may eventually explain the concept in great detail there.
+The need for a library like LeanTest.Net became obvious when we noticed that a set of mocks for a non-trivial set of automated tests tended to not be designed as a set. Also, there was no consistency in the way that test data was passed to mock instances. The consequence of this was more often than not that it was difficult to maintain the set of tests and it was very difficult to reason about functional coverage.
 
-In short, this is about developers writing tests while developing code. And I mean tests that testers would call _real_ tests, not simply unit tests. Tests which are simple to write initially, then simple to maintain going forward. Tests which cover actual functionality which is recognisable by and valuable to the business. In fact, tests which are conceptually and syntactically identical to the tests that automation testers write.
+We found that the Builder pattern could serve as a suitable abstraction for passing data in a consistent manner to a set of consistently designed mocks.
+
+On top of this Builder pattern implementation we added a number of guiding principles which gave us an even higher level of consistency. One of the guiding principles is that we want to *put as much code under test as possible*. As a consequence of that *we mock as little as possible*. Also, when we do mock, we try to do it in a way which mocks away as little production code as possible. We call these and a few more guiding principles the *Lean Testing methodology*.
+
+Funnily enough, it turned out that using our Builder pattern and following our guiding principles, our tests not only became more easy to maintain, but it was also much easier to reason about functional coverage. What started as a *better way of unit testing* for developers, was now what testers call *real tests*. In fact, the gap between developers and (automation) testers has been reduced significantly, which is a very important outcome.
+
+We get all of that, and still we have fast and 100% deterministic test, as we would expect for unit tests.
+
+At the time of writing, we write such tests at *all levels*, ranging from tests which are similar to traditional unit tests, middle-ground tests which cover e.g. database stored procedures, and all the way to full-fledged system integration tests. All of these with a consistent syntax and design of test code and mocks.
+
+Covering all levels required that we expanded the concept of mocks. Essentially, to us a mock is something that substitutes, or *mocks away*, some production code, whereas a *state handler* is something that handles data for the test target without mocking away production code. Low levels of test, those that are similar to traditional unit tests, will do some mocking. High levels of tests, those that are similar to integration tests, will, at least ideally, not mock at all but will probably use state handlers. The middle ground tests will use a mix. State handlers need to interact wit a test environment, but LeanTest.Net is not concerned with the details of that.
+
+## The Concept
+
+The _Lean Testing methodology_ (formerly known as _developer testing_) is not very well understood. I hope in the following to shed a little light on the subject. Also, watch [my blog](https://blog.elgaard.com), I may eventually explain the concept in great detail there.
+
+In short, this is about developers writing tests while developing code. And I mean tests that testers would call _real_ tests, not simply unit tests. Tests which are simple to write initially, then simple to maintain going forward. Tests which cover actual functionality which is recognizable by and valuable to the business. In fact, tests which are conceptually and syntactically identical to the tests that automation testers write.
 
 The way we achieve all this is by _maximizing code under test_ but _minimizing data_.
 
