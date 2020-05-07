@@ -12,7 +12,7 @@ We get all of that, and still we have fast and 100% deterministic test, as we wo
 
 At the time of writing, we write such tests at *all levels*, ranging from tests which are similar to traditional unit tests, middle-ground tests which cover e.g. database stored procedures, and all the way to full-fledged system integration tests. All of these with a consistent syntax and design of test code and mocks.
 
-Covering all levels required that we expanded the concept of mocks. Essentially, to us a mock is something that substitutes, or *mocks away*, some production code, whereas a *state handler* is something that handles data for the test target without mocking away production code. Low levels of test, those that are similar to traditional unit tests, will do some mocking. High levels of tests, those that are similar to integration tests, will, at least ideally, not mock at all but will probably use state handlers. The middle ground tests will use a mix. State handlers need to interact wit a test environment, but LeanTest.Net is not concerned with the details of that.
+Covering all levels required that we expanded the concept of mocks. Essentially, to us a mock is something that substitutes, or *mocks away*, some production code, whereas a *state handler* is something that handles data for the test target without mocking away production code. Low levels of test, those that are similar to traditional unit tests, will do some mocking. High levels of tests, those that are similar to integration tests, will, at least ideally, not mock at all but will probably use state handlers. The middle ground tests will use a mix. State handlers need infrastructure support in order to interact with a test environment, but LeanTest.Net is not concerned with the details of that.
 
 ## The Concept
 
@@ -40,8 +40,8 @@ The effect of this is that for a traditional unit tests, it is not clear of what
 
 We have a single concept for the equivalent of a test database in Lean Testing - we call it _existing state_. We simply insist that each test must declare what data it needs in order to succeed. For this we have a _test context_ to which we declare the data needed per test. Something like the following,
 
-<<Example of existing state>>
-
+<<Example of existing state>>*
+*
 In the above example, we have declared that our test must succeed if the only test data available is one specific instance of MyData. By the magic of dependency injection and a builder pattern (which will be described below), the data will be available to our test target.
 
 Our test target can potentially be part of a huge and tangled code base, but by minimizing the data per test, we can handle that with very few and simple mocks. Which is what the next section is about.

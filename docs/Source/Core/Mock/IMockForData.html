@@ -88,41 +88,21 @@
 
 <span class="keyword" id="LeanTest.Mock">namespace</span> LeanTest<span class="punctuation">.</span>Mock
 <span class="punctuation">{</span>
-     &lt;summary&gt;
-    /// Interface for mocks for data of type &lt;c&gt;T&lt;/c&gt;.
-    /// &lt;/summary&gt;
-    <span class="keyword" id="LeanTest.Mock.IMockForData<T>">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-    /// Interface for mocks for data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
-    /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+     &lt;summary&gt;Interface for mocks for data of type &lt;c&gt;T&lt;/c&gt;.&lt;/summary&gt;
+    <span class="keyword" id="LeanTest.Mock.IMockForData<T>">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Interface for mocks for data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span class="keyword">interface</span> IMockForData<span class="punctuation">&lt;</span><span class="keyword">in</span> <span class="typename"><a href="../../../Source/Core/Mock/IMockForData.html#T">T</a></span><span class="punctuation">&gt;</span>
     <span class="punctuation">{</span>
-         &lt;summary&gt;
-        /// Declare data of type &lt;c&gt;T&lt;/c&gt;.
-        /// &lt;/summary&gt;
-        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-        /// Declare data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
-        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+         &lt;summary&gt;Declare data of type &lt;c&gt;T&lt;/c&gt;.&lt;/summary&gt;
+        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Declare data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span id="LeanTest.Mock.IMockForData<T>.WithData(T)" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.WithData(T)">WithData</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../Source/Core/Mock/IMockForData.html#T">T</a></span> data<span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.WithData(T)">;</span>
-         &lt;summary&gt;
-        /// Called before build only once for the state handler instance, allows you to prepare to populate state.
-        /// &lt;/summary&gt;
-        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-        /// Called before build only once for the state handler instance, allows you to prepare to populate state.
-        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+         &lt;summary&gt;Called before build only once for the instance, allows you to prepare to populate state.&lt;/summary&gt;
+        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Called before build only once for the instance, allows you to prepare to populate state.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span id="LeanTest.Mock.IMockForData<T>.PreBuild()" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.PreBuild()">PreBuild</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.PreBuild()">;</span>
-         &lt;summary&gt;
-        /// Use the declared data to populate state, called after all data of type &lt;c&gt;type&lt;/c&gt; has been put to the state handler instance with &lt;c&gt;WithData&lt;/c&gt;.
-        /// &lt;/summary&gt;
-        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-        /// Use the declared data to populate state, called after all data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>type<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> has been put to the state handler instance with <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>WithData<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
-        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+         &lt;summary&gt;Use the declared data to populate state, called after all data of type &lt;c&gt;type&lt;/c&gt; has been put to the instance with &lt;c&gt;WithData&lt;/c&gt;.&lt;/summary&gt;
+        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Use the declared data to populate state, called after all data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>type<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> has been put to the instance with <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>WithData<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span id="LeanTest.Mock.IMockForData<T>.Build(System.Type)" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.Build(System.Type)">Build</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Type">Type</span> type<span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.Build(System.Type)">;</span>
-         &lt;summary&gt;
-        /// Called after build, only once for the state handler instance.
-        /// &lt;/summary&gt;
-        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-        /// Called after build, only once for the state handler instance.
-        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+         &lt;summary&gt;Called after build, only once for the instance.&lt;/summary&gt;
+        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Called after build, only once for the instance.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span id="LeanTest.Mock.IMockForData<T>.PostBuild()" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.PostBuild()">PostBuild</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.PostBuild()">;</span>
     <span class="punctuation">}</span>
 <span class="punctuation">}</span>

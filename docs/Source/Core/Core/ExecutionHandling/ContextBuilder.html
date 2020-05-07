@@ -87,6 +87,7 @@
 					<pre class="csharp"><code class="csharp"><span class="keyword">using</span> System<span class="punctuation">;</span>
 <span class="keyword">using</span> System<span class="punctuation">.</span>Collections<span class="punctuation">.</span>Generic<span class="punctuation">;</span>
 <span class="keyword">using</span> System<span class="punctuation">.</span>Linq<span class="punctuation">;</span>
+<span class="keyword">using</span> System<span class="punctuation">.</span>Reflection<span class="punctuation">;</span>
 
 <span class="keyword" id="LeanTest.Core.ExecutionHandling">namespace</span> LeanTest<span class="punctuation">.</span>Core<span class="punctuation">.</span>ExecutionHandling
 <span class="punctuation">{</span>
@@ -166,8 +167,17 @@
 		<span class="keyword" id="LeanTest.Core.ExecutionHandling.ContextBuilder.Build()" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder.Build()">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Use the declared data to build builders (e.g. &#39;mocks&#39; and &#39;state&#39;).<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../../../../Source/Core/Core/ExecutionHandling/ContextBuilder.html#LeanTest.Core.ExecutionHandling.ContextBuilder">ContextBuilder</a></span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder.Build()">Build</span><span class="punctuation">(</span><span class="punctuation">)</span>
 		<span class="punctuation">{</span>
-			<span class="keyword">foreach</span> <span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder"><a href="../../../../Source/Core/Core/ExecutionHandling/IBuilder.html#LeanTest.Core.ExecutionHandling.IBuilder">IBuilder</a></span> builder <span class="keyword">in</span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder[]"><a href="../../../../Source/Core/Core/ExecutionHandling/ContextBuilder.html#LeanTest.Core.ExecutionHandling.ContextBuilder._builders">_builders</a></span><span class="punctuation">)</span>
-				<span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder">builder</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder.Build()">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder.Build()"><a href="../../../../Source/Core/Core/ExecutionHandling/IBuilder.html#LeanTest.Core.ExecutionHandling.IBuilder.Build()">Build</a></span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+			<span class="keyword">try</span>
+			<span class="punctuation">{</span>
+				<span class="keyword">foreach</span> <span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder"><a href="../../../../Source/Core/Core/ExecutionHandling/IBuilder.html#LeanTest.Core.ExecutionHandling.IBuilder">IBuilder</a></span> builder <span class="keyword">in</span> <span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder[]"><a href="../../../../Source/Core/Core/ExecutionHandling/ContextBuilder.html#LeanTest.Core.ExecutionHandling.ContextBuilder._builders">_builders</a></span><span class="punctuation">)</span>
+					<span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder">builder</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder.Build()">.</span><span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder.Build()"><a href="../../../../Source/Core/Core/ExecutionHandling/IBuilder.html#LeanTest.Core.ExecutionHandling.IBuilder.Build()">Build</a></span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+			<span class="punctuation">}</span>
+			<span class="keyword">catch</span> <span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Reflection.TargetInvocationException">TargetInvocationException</span> e<span class="punctuation">)</span>
+			<span class="punctuation">{</span>
+				<span class="keyword">if</span> <span class="punctuation">(</span><span data-toggle="tooltip" title="System.Reflection.TargetInvocationException">e</span><span class="punctuation" data-toggle="tooltip" title="System.Exception">.</span><span data-toggle="tooltip" title="System.Exception">InnerException</span> <span class="punctuation" data-toggle="tooltip" title="bool">!=</span> <span class="keyword">null</span><span class="punctuation">)</span>
+					<span class="keyword">throw</span> <span data-toggle="tooltip" title="System.Reflection.TargetInvocationException">e</span><span class="punctuation" data-toggle="tooltip" title="System.Exception">.</span><span data-toggle="tooltip" title="System.Exception">InnerException</span><span class="punctuation">;</span>
+				<span class="keyword">throw</span><span class="punctuation">;</span>
+			<span class="punctuation">}</span>
 
 			<span class="keyword">return</span> <span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder">this</span><span class="punctuation">;</span>
 		<span class="punctuation">}</span>
