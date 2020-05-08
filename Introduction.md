@@ -40,8 +40,8 @@ The effect of this is that for a traditional unit tests, it is not clear of what
 
 We have a single concept for the equivalent of a test database in Lean Testing - we call it _existing state_. We simply insist that each test must declare what data it needs in order to succeed. For this we have a _test context_ to which we declare the data needed per test. Something like the following,
 
-<<Example of existing state>>*
-*
+<<Example of existing state>>
+
 In the above example, we have declared that our test must succeed if the only test data available is one specific instance of MyData. By the magic of dependency injection and a builder pattern (which will be described below), the data will be available to our test target.
 
 Our test target can potentially be part of a huge and tangled code base, but by minimizing the data per test, we can handle that with very few and simple mocks. Which is what the next section is about.
