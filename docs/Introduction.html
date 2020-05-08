@@ -89,7 +89,6 @@
 </ul>
 				<div id="static-content" class="markdown">
 					<h1 id="introduction">Introduction</h1>
-<p>[TOC]</p>
 <p>The need for a library like LeanTest.Net became obvious when we noticed that a set of mocks for a non-trivial set of automated tests tended to not be designed as a set. Also, there was no consistency in the way that test data was passed to mock instances. The consequence of this was more often than not that it was difficult to maintain the set of tests and it was very difficult to reason about functional coverage.</p>
 <p>We found that the Builder pattern could serve as a suitable abstraction for passing data in a consistent manner to a set of consistently designed mocks.</p>
 <p>On top of this Builder pattern implementation we added a number of guiding principles which gave us an even higher level of consistency. One of the guiding principles is that we want to <em>put as much code under test as possible</em>. As a consequence of that <em>we mock as little as possible</em>. Also, when we do mock, we try to do it in a way which mocks away as little production code as possible. We call these and a few more guiding principles the <em>Lean Testing methodology</em>.</p>
