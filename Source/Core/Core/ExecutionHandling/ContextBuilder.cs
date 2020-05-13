@@ -29,10 +29,8 @@ namespace LeanTest.Core.ExecutionHandling
 	    /// <summary>Declare data of type <c>T</c> to be stored, then used to fill in builders (e.g. 'mocks' and 'state') during <c>Build</c>.</summary>
 		public ContextBuilder WithData<T>(T data)
 		{
+			WithData<T>();
 			DataStore.WithData(data);
-			foreach (IBuilder builder in _builders)
-				builder.WithBuilderForData<T>();
-			// TODO: Throw if no builder was found for this piece of data!
 
 			return this;
 		}
@@ -41,9 +39,16 @@ namespace LeanTest.Core.ExecutionHandling
 		/// support data of type <c>T</c>, even for tests which do not declare data of type <c>T</c>.</summary>
 		public ContextBuilder WithData<T>()
 		{
-			foreach (IBuilder builder in _builders)
-				builder.WithBuilderForData<T>();
-			// TODO: Throw if no builder was found for this piece of data!
+			bool foundBuilderForT = _builders
+				.Select(builder =>
+				{
+					Func<IEnumerable<object>> mocks = builder.WithBuilderForData<T>();
+					return mocks != null && mocks().ToArray().Any();
+				})
+				.Aggregate(false, (current, foundThisBuilder) => current || foundThisBuilder);
+
+			if (!foundBuilderForT)
+				throw new ArgumentException($"No builder was found for the type '{typeof(T)}'.");
 
 			return this;
 		}
@@ -51,10 +56,8 @@ namespace LeanTest.Core.ExecutionHandling
 		/// <summary>Declare an enumeration of data of type <c>T</c> to be stored, then used to fill builders (e.g. 'mocks' and 'state') during <c>Build</c>.</summary>
 		public ContextBuilder WithEnumerableData<T>(IEnumerable<T> ts)
 		{
+			WithData<T>();
 			DataStore.WithEnumerable(ts);
-			foreach (IBuilder builder in _builders)
-				builder.WithBuilderForData<T>();
-			// TODO: Throw if no builder was found for this piece of data!
 
 			return this;
 		}

@@ -56,7 +56,7 @@ namespace LeanTest.Core.ExecutionHandling
                 postBuildMethod();
         }
 
-        public void WithBuilderForData<T>() =>
+        public Func<IEnumerable<object>> WithBuilderForData<T>() =>
             _typedStateEnumsDelegates[typeof(T)] = () => from stateHandler in _container.TryResolveAll<IStateHandler<T>>() select stateHandler as object;
     }
 }

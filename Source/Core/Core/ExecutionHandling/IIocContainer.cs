@@ -26,7 +26,7 @@ namespace LeanTest.Core.ExecutionHandling
         /// Resolve all instances of type <c>T</c>.
         /// </summary>
         /// <returns>The resolved instances, or empty if the container cannot resolve.</returns>
-        /// <remarks>Note that different IoC containers have different requirements fo rregistration in order to make such 
+        /// <remarks>Note that different IoC containers have different requirements for registration in order to make such 
         /// an operation work as expected.
         /// It is common to implement this with a call to <c>TryResolve&lt;T&gt;</c>, thus allowing only a single mock or state handler per <c>T</c>.</remarks>
         IEnumerable<T> TryResolveAll<T>() where T : class;

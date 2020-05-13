@@ -14,7 +14,8 @@ namespace LeanTest.Mock
         private const string BuildMethod = nameof(IStateHandler<StateBuilder>.Build);
         private readonly IIocContainer _container;
         private readonly IDataStore _dataStore;
-        private readonly IDictionary<Type, Func<IEnumerable<object>>> _typedMockEnumsDelegates = new Dictionary<Type, Func<IEnumerable<object>>>();
+        private readonly IDictionary<Type, Func<IEnumerable<object>>> _typedMockEnumsDelegates = 
+			new Dictionary<Type, Func<IEnumerable<object>>>();
 
         public MockingBuilder(IIocContainer container, IDataStore dataStore)
         {
@@ -57,7 +58,7 @@ namespace LeanTest.Mock
                 postBuildMethod();
         }
 
-        public void WithBuilderForData<T>() => 
+        public Func<IEnumerable<object>> WithBuilderForData<T>() => 
             _typedMockEnumsDelegates[typeof(T)] = () => from mock in _container.TryResolveAll<IMockForData<T>>() select mock as object;
     }
 }
