@@ -1,5 +1,6 @@
 ﻿using LeanTest.L0Tests.ExternalDependencies;
 using LeanTest.L0Tests.Mocks;
+using LeanTest.L0Tests.Readers;
 using LeanTest.L0Tests.TestData;
 using LeanTest.Mock;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,9 @@ namespace LeanTest.L0Tests.TestSetup.IoC
 		{
 			// Mock-for-data:
 			serviceCollection.RegisterMockForData<IExternalDependency, MockForDataExternalDependency, RegisteredData>();
+
+			// Readers:
+			serviceCollection.AddSingleton<RegisteredDataReader>();
 
 			return serviceCollection;
 		}

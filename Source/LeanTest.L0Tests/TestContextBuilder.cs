@@ -1,5 +1,6 @@
 using System;
 using LeanTest.Core.ExecutionHandling;
+using LeanTest.L0Tests.Readers;
 using LeanTest.L0Tests.TestData;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -34,11 +35,13 @@ namespace LeanTest.L0Tests
 	    }
 
 	    [TestMethod]
-	    public void BuildMustCallWithDataOnMockWhenRegistered()
+	    public void BuildMustPassTheDataToTheMockWhenRegistered()
 	    {
 		    _contextBuilder
-			    .WithData(new RegisteredData())
+			    .WithData(new RegisteredData {SomeData = "TheData"})
 			    .Build();
+
+		    Assert.AreEqual("TheData", _contextBuilder.GetInstance<RegisteredDataReader>().Query().SomeData);
 	    }
     }
 }
