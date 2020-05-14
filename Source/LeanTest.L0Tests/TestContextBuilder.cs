@@ -149,5 +149,24 @@ namespace LeanTest.L0Tests
 				    .WithData(new DataForStateHandlerWhichThrowsInBuild())
 				    .Build());
 	    }
+
+	    [TestMethod]
+	    public void WithClearDataStoreMustClearAllDataWhenCalled()
+	    {
+		    ContextBuilderFactory.ContextBuilder
+			    .WithData(new DataWithOneMock {SomeData = "TheData"});
+		    DataWithOneMock firstPre = _contextBuilder.First<DataWithOneMock>();
+		    DataWithOneMock lastPre = _contextBuilder.Last<DataWithOneMock>();
+		    List<DataWithOneMock> allPre = _contextBuilder.All<DataWithOneMock>().ToList();
+
+		    _contextBuilder.WithClearDataStore();
+
+		    MultiAssertForTException.Aggregate<AssertFailedException>(
+				() => Assert.IsTrue(allPre.Single() == firstPre, "Expected a single piece of data in the data store initially."),
+				() => Assert.IsTrue(firstPre == lastPre, "Expected the first to be the last in the data store initially."),
+				() => Assert.ThrowsException<KeyNotFoundException>(() => _contextBuilder.All<DataWithOneMock>(), 
+					"Expected an empty data store after WithClearDataStore.")
+		    );
+	    }
     }
 }

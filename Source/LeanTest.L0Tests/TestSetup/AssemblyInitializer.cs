@@ -12,7 +12,7 @@ namespace LeanTest.L0Tests.TestSetup
 		public static void AssemblyInitialize(TestContext _)
 		{
 			static IIocContainer IocFactory() => new IocContainer(L0CompositionRootForTest.Initialize(new ServiceCollection()));
-			ContextBuilderFactory.Initialize(CleanContextMode.ReCreate, IocFactory);
+			ContextBuilderFactory.Initialize(IocFactory);
 		}
  
 		[AssemblyCleanup]
