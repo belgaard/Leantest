@@ -27,28 +27,21 @@ namespace LeanTest.Core.ExecutionHandling
 		public T GetInstance<T>() where T : class => _container.Resolve<T>();
 
 	    /// <summary>Declare data of type <c>T</c> to be stored, then used to fill in builders (e.g. 'mocks' and 'state') during <c>Build</c>.</summary>
-		public ContextBuilder WithData<T>(T data)
-		{
-			WithData<T>();
-			DataStore.WithData(data);
+	    public ContextBuilder WithData<T>(T data)
+	    {
+		    DataStore.WithData(data);
+		    foreach (IBuilder builder in _builders)
+			    builder.WithBuilderForData<T>();
 
-			return this;
-		}
+		    return this;
+	    }
 
 		/// <summary>Pre-declare the intent to handle data of type <c>T</c>. The effect will be to have <c>PreBuild</c>, <c>Build</c> and <c>PostBuild</c> run for builders that
 		/// support data of type <c>T</c>, even for tests which do not declare data of type <c>T</c>.</summary>
 		public ContextBuilder WithData<T>()
 		{
-			bool foundBuilderForT = _builders
-				.Select(builder =>
-				{
-					Func<IEnumerable<object>> mocks = builder.WithBuilderForData<T>();
-					return mocks != null && mocks().ToArray().Any();
-				})
-				.Aggregate(false, (current, foundThisBuilder) => current || foundThisBuilder);
-
-			if (!foundBuilderForT)
-				throw new ArgumentException($"No builder was found for the type '{typeof(T)}'.");
+			foreach (IBuilder builder in _builders)
+				builder.WithBuilderForData<T>();
 
 			return this;
 		}
@@ -56,8 +49,9 @@ namespace LeanTest.Core.ExecutionHandling
 		/// <summary>Declare an enumeration of data of type <c>T</c> to be stored, then used to fill builders (e.g. 'mocks' and 'state') during <c>Build</c>.</summary>
 		public ContextBuilder WithEnumerableData<T>(IEnumerable<T> ts)
 		{
-			WithData<T>();
 			DataStore.WithEnumerable(ts);
+			foreach (IBuilder builder in _builders)
+				builder.WithBuilderForData<T>();
 
 			return this;
 		}
@@ -75,8 +69,13 @@ namespace LeanTest.Core.ExecutionHandling
 		{
 			try
 			{
+				var typesWithNoHandler = new HashSet<Type>(DataStore.TypedData.Keys);
 				foreach (IBuilder builder in _builders)
-					builder.Build();
+					typesWithNoHandler.IntersectWith(builder.Build());
+
+				if (typesWithNoHandler.Any())
+					throw new ArgumentException(
+						$"Cannot handle declared data of type '{string.Join(", ", typesWithNoHandler)}'. No state-handler or mock-for-data was found.");
 			}
 			catch (TargetInvocationException e)
 			{

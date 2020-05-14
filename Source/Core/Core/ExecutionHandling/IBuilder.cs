@@ -16,6 +16,6 @@ namespace LeanTest.Core.ExecutionHandling
         /// <summary>
         /// Do the build.
         /// </summary>
-        void Build();
+        HashSet<Type> Build();
     }
 }

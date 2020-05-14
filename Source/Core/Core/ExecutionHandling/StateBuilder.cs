@@ -21,15 +21,19 @@ namespace LeanTest.Core.ExecutionHandling
             _dataStore = dataStore ?? throw new ArgumentNullException(nameof(dataStore));
         }
 
-        public void Build()
+        public HashSet<Type> Build()
         {
             var preBuildHandlers = new List<object>();
             var postBuildMethods = new List<Action>();
+			var typesWithNoHandler = new HashSet<Type>();
 
             foreach (KeyValuePair<Type, Func<IEnumerable<object>>> stateKeyValuePair in _typedStateEnumsDelegates)
             {
                 IEnumerable<object> handlers = stateKeyValuePair.Value().ToArray();
-                
+
+                if (!handlers.Any())
+	                typesWithNoHandler.Add(stateKeyValuePair.Key);
+
                 foreach (object handler in handlers)
                 {
                     Type theClass = typeof(IStateHandler<>).MakeGenericType(stateKeyValuePair.Key);
@@ -54,6 +58,8 @@ namespace LeanTest.Core.ExecutionHandling
 
             foreach (Action postBuildMethod in postBuildMethods)
                 postBuildMethod();
+
+            return typesWithNoHandler;
         }
 
         public Func<IEnumerable<object>> WithBuilderForData<T>() =>

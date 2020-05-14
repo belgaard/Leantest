@@ -10,20 +10,27 @@ namespace LeanTest.L0Tests
     public class TestContextBuilder
     {
 	    private ContextBuilder _contextBuilder;
+	    private RegisteredDataReader _registeredDataReader;
 
 	    [TestInitialize]
 	    public void TestInitialize()
 	    {
 		    _contextBuilder = ContextBuilderFactory.CreateContextBuilder();
+		    _registeredDataReader = _contextBuilder.GetInstance<RegisteredDataReader>();
 	    }
 
 	    [TestMethod]
-	    public void WithDataMustThrowArgumentExceptionWhenNoBuilderHasBeenRegisteredForString()
+	    public void WithDataMustThrowArgumentExceptionWhenNoBuilderHasBeenRegistered()
 	    {
-			Assert.ThrowsException<ArgumentException>(() =>
+			ArgumentException actual = Assert.ThrowsException<ArgumentException>(() =>
 			    _contextBuilder
-				    .WithData("hey")
+				    .WithData(new NonRegisteredData())
+				    .WithData(new AlsoNonRegisteredData())
 				    .Build());
+
+			MultiAssertForTException.Aggregate<AssertFailedException>(
+				() => Assert.IsTrue(actual.Message.Contains("NonRegisteredData"), "Expected the exception to mention the type 'NonRegisteredData' as not registered."),
+				() => Assert.IsTrue(actual.Message.Contains("AlsoNonRegisteredData"), "Expected the exception to mention the type 'AlsoNonRegisteredData' as not registered."));
 	    }
 
 	    [TestMethod]
@@ -41,7 +48,7 @@ namespace LeanTest.L0Tests
 			    .WithData(new RegisteredData {SomeData = "TheData"})
 			    .Build();
 
-		    Assert.AreEqual("TheData", _contextBuilder.GetInstance<RegisteredDataReader>().Query().SomeData);
+		    Assert.AreEqual("TheData", _registeredDataReader.Query().SomeData, "Expected the data to be passed to the registered mock-for-data.");
 	    }
     }
 }

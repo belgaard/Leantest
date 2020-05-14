@@ -23,14 +23,18 @@ namespace LeanTest.Mock
             _dataStore = dataStore ?? throw new ArgumentNullException(nameof(dataStore));
         }
 
-        public void Build()
+        public HashSet<Type> Build()
         {
             var preBuildMocks = new List<object>();
             var postBuildMethods = new List<Action>();
+            var typesWithNoMock = new HashSet<Type>();
 
             foreach (KeyValuePair<Type, Func<IEnumerable<object>>> mockDelegatesForType in _typedMockEnumsDelegates)
             {
                 IEnumerable<object> mocks = mockDelegatesForType.Value().ToArray();
+
+                if (!mocks.Any())
+	                typesWithNoMock.Add(mockDelegatesForType.Key);
 
                 foreach (object mock in mocks)
                 {
@@ -56,6 +60,8 @@ namespace LeanTest.Mock
 
             foreach (Action postBuildMethod in postBuildMethods)
                 postBuildMethod();
+
+            return typesWithNoMock;
         }
 
         public Func<IEnumerable<object>> WithBuilderForData<T>() => 
