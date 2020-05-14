@@ -1,4 +1,7 @@
-﻿namespace LeanTest.Core.ExecutionHandling
+﻿using System;
+using System.Collections.Generic;
+
+namespace LeanTest.Core.ExecutionHandling
 {
     /// <summary>
     /// Interface for all builders (for building stuff like e.g. 'mock' and 'state').
@@ -13,6 +16,6 @@
         /// <summary>
         /// Do the build.
         /// </summary>
-        void Build();
+        HashSet<Type> Build();
     }
 }
