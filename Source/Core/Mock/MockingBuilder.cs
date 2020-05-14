@@ -44,17 +44,17 @@ namespace LeanTest.Mock
                     if (mustPreAndPostBuild)
                     {
                         preBuildMocks.Add(mock);
-                        theClass.GetTypeInfo().GetDeclaredMethod(PreBuildMethod).Invoke(mock, null);
+                        theClass.GetTypeInfo().GetDeclaredMethod(PreBuildMethod)?.Invoke(mock, null);
                     }
 
                     if (_dataStore.TypedData.ContainsKey(mockDelegatesForType.Key))
                         foreach (object data in _dataStore.TypedData[mockDelegatesForType.Key])
-                            theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod).Invoke(mock, new[] { data });
+                            theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod)?.Invoke(mock, new[] { data });
 
-                    theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod).Invoke(mock, new object[] { mockDelegatesForType.Key });
+                    theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod)?.Invoke(mock, new object[] { mockDelegatesForType.Key });
 
                     if (mustPreAndPostBuild)
-                        postBuildMethods.Add(() => theClass.GetTypeInfo().GetDeclaredMethod(PostBuildMethod).Invoke(mock, null));
+                        postBuildMethods.Add(() => theClass.GetTypeInfo().GetDeclaredMethod(PostBuildMethod)?.Invoke(mock, null));
                 }
             }
 

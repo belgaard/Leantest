@@ -15,7 +15,7 @@ namespace LeanTest.MSTest
 		/// <remarks>This causes LeanTest scenario IDs to be written to the test log (.trx-file).</remarks>
 		public static ContextBuilder RegisterScenarioId(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
 	    {
-	        assembly = assembly ?? Assembly.GetCallingAssembly();
+	        assembly ??= Assembly.GetCallingAssembly();
 		    MethodInfo[] methods = assembly.GetTypes()
 			    .SelectMany(t => t.GetMethods())
 			    .Where(m => m.GetCustomAttributes(typeof(TestScenarioIdAttribute), false).Length > 0)
@@ -24,7 +24,7 @@ namespace LeanTest.MSTest
 
 		    foreach (MethodInfo methodInfo in methods)
 		        foreach (TestScenarioIdAttribute testScenarioIdAttribute in methodInfo.GetCustomAttributes(typeof(TestScenarioIdAttribute), false))
-			        Console.WriteLine($@"{TestScenarioIdAttribute.Prefix}{testScenarioIdAttribute?.Value}{TestScenarioIdAttribute.Postfix}");
+			        Console.WriteLine($@"{TestScenarioIdAttribute.Prefix}{testScenarioIdAttribute.Value}{TestScenarioIdAttribute.Postfix}");
 
 		    return theContextBuilder;
 	    }
@@ -32,7 +32,7 @@ namespace LeanTest.MSTest
 		/// <remarks>This causes LeanTest tags to be written to the test log (.trx-file).</remarks>
 		public static ContextBuilder RegisterTags(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
 	    {
-		    assembly = assembly ?? Assembly.GetCallingAssembly();
+		    assembly ??= Assembly.GetCallingAssembly();
 		    MethodInfo[] methods = assembly.GetTypes()
 			    .SelectMany(t => t.GetMethods())
 			    .Where(m => m.GetCustomAttributes(typeof(TestTagAttribute), false).Length > 0)
@@ -41,7 +41,7 @@ namespace LeanTest.MSTest
 
 		    foreach (MethodInfo methodInfo in methods)
 		        foreach (TestTagAttribute testTagAttribute in methodInfo.GetCustomAttributes(typeof(TestTagAttribute), false))
-			        Console.WriteLine($@"{TestTagAttribute.Prefix}{testTagAttribute?.Value}{TestTagAttribute.Postfix}");
+			        Console.WriteLine($@"{TestTagAttribute.Prefix}{testTagAttribute.Value}{TestTagAttribute.Postfix}");
 
 		    return theContextBuilder;
 	    }
@@ -49,7 +49,7 @@ namespace LeanTest.MSTest
 		/// <remarks>This causes MsTest descriptions to be written to the test log (.trx-file).</remarks>
 		public static ContextBuilder RegisterDescription(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
 	    {
-		    assembly = assembly ?? Assembly.GetCallingAssembly();
+		    assembly ??= Assembly.GetCallingAssembly();
 		    MethodInfo[] methods = assembly.GetTypes()
 			    .SelectMany(t => t.GetMethods())
 			    .Where(m => m.GetCustomAttributes(typeof(DescriptionAttribute), false).Length > 0)
@@ -58,7 +58,7 @@ namespace LeanTest.MSTest
 
 		    foreach (MethodInfo methodInfo in methods)
 		        foreach (DescriptionAttribute descriptionAttribute in methodInfo.GetCustomAttributes(typeof(DescriptionAttribute), false))
-			        Console.WriteLine($@"{DescriptionAttributeFix.Prefix}{descriptionAttribute?.Description}{DescriptionAttributeFix.Postfix}");
+			        Console.WriteLine($@"{DescriptionAttributeFix.Prefix}{descriptionAttribute.Description}{DescriptionAttributeFix.Postfix}");
 
 		    return theContextBuilder;
 	    }
@@ -66,7 +66,7 @@ namespace LeanTest.MSTest
 		/// <remarks>This causes LeanTest scenario IDs and tags as well as MsTest descriptions to be written to the test log (.trx-file).</remarks>
 		public static ContextBuilder RegisterAttributes(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
         {
-            assembly = assembly ?? Assembly.GetCallingAssembly();
+            assembly ??= Assembly.GetCallingAssembly();
             return theContextBuilder
                 .RegisterDescription(testContext, assembly)
                 .RegisterScenarioId(testContext, assembly)

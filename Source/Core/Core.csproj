@@ -22,5 +22,6 @@
 
     <!-- Generate XML doc for consumers -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 </Project>
