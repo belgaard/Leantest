@@ -7,6 +7,12 @@ namespace LeanTest.Core.ExecutionHandling
     {
         public IDictionary<Type, List<object>> TypedData { get; } = new Dictionary<Type, List<object>>();
 
+        public void WithData<T>()
+        {
+            if (!TypedData.ContainsKey(typeof(T)))
+                TypedData[typeof(T)] = new List<object>();
+        }
+
         public void WithData<T>(T data)
         {
             if (!TypedData.ContainsKey(typeof(T)))

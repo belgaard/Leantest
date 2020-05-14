@@ -46,6 +46,22 @@ namespace LeanTest.L0Tests
 	    }
 
 	    [TestMethod]
+	    public void WithDataPreRegistrationMustThrowArgumentExceptionWhenNoBuilderHasBeenRegistered()
+	    {
+			ArgumentException actual = Assert.ThrowsException<ArgumentException>(() =>
+			    _contextBuilder
+				    .WithData<DataWithNoHandler>()
+				    .WithData<AlsoDataWithNoHandler>()
+				    .Build());
+
+			MultiAssertForTException.Aggregate<AssertFailedException>(
+				() => Assert.IsTrue(actual.Message.Contains(nameof(DataWithNoHandler)), 
+					$"Expected the exception to mention the type '{nameof(DataWithNoHandler)}' as not registered."),
+				() => Assert.IsTrue(actual.Message.Contains(nameof(AlsoDataWithNoHandler)), 
+					$"Expected the exception to mention the type '{nameof(AlsoDataWithNoHandler)}' as not registered."));
+	    }
+
+	    [TestMethod]
 	    public void WithDataMustNotThrowWhenABuilderHasBeenRegistered()
 	    {
 		    _contextBuilder
@@ -123,6 +139,15 @@ namespace LeanTest.L0Tests
 			    () => Assert.AreEqual("TheData", allDataInStateHandlers[1].SomeData, "Expected the data to be passed to the second registered state handler.")
 		    };
 		    MultiAssertForTException.Aggregate<AssertFailedException>(actions.ToArray());
+	    }
+
+	    [TestMethod]
+	    public void BuildMustThrowExceptionFromStateHandlerWhenItThrowsInBuild()
+	    {
+		    Assert.ThrowsException<Exception>(() =>
+			    _contextBuilder
+				    .WithData(new DataForStateHandlerWhichThrowsInBuild())
+				    .Build());
 	    }
     }
 }

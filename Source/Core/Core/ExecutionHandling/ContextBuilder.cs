@@ -40,6 +40,7 @@ namespace LeanTest.Core.ExecutionHandling
 		/// support data of type <c>T</c>, even for tests which do not declare data of type <c>T</c>.</summary>
 		public ContextBuilder WithData<T>()
 		{
+			DataStore.WithData<T>();
 			foreach (IBuilder builder in _builders)
 				builder.WithBuilderForData<T>();
 

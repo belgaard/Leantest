@@ -24,6 +24,8 @@ namespace LeanTest.L0Tests.TestSetup.IoC
 				DataWithOneStateHandler, DataWithTwoStateHandlers, DataWithOneMockAndOneStateHandler>();
 			serviceCollection.RegisterStateHandler<AnotherStateHandlerExternalDependency, 
 				DataWithTwoStateHandlers>();
+			serviceCollection.RegisterStateHandler<StateHandlerWhichThrowsInBuild, 
+				DataForStateHandlerWhichThrowsInBuild>();
 
 			// Readers:
 			serviceCollection.AddSingleton<DataWithOneMockReader>();
