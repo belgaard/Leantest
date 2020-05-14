@@ -14,6 +14,9 @@ namespace LeanTest.L0Tests
 	    private ContextBuilder _contextBuilder;
 	    private DataWithOneMockReader _dataWithOneMockReader;
 	    private DataWithTwoMocksReader _dataWithTwoMocksReader;
+	    private DataWithOneStateHandlerReader _dataWithOneStateHandlerReader;
+	    private DataWithTwoStateHandlersReader _dataWithTwoStateHandlersReader;
+	    private DataWithOneMockAndOneStateHandlerReader _dataWithOneMockAndStateHandlersReader;
 
 	    [TestInitialize]
 	    public void TestInitialize()
@@ -21,6 +24,9 @@ namespace LeanTest.L0Tests
 		    _contextBuilder = ContextBuilderFactory.CreateContextBuilder();
 		    _dataWithOneMockReader = _contextBuilder.GetInstance<DataWithOneMockReader>();
 		    _dataWithTwoMocksReader = _contextBuilder.GetInstance<DataWithTwoMocksReader>();
+		    _dataWithOneStateHandlerReader = _contextBuilder.GetInstance<DataWithOneStateHandlerReader>();
+		    _dataWithTwoStateHandlersReader = _contextBuilder.GetInstance<DataWithTwoStateHandlersReader>();
+		    _dataWithOneMockAndStateHandlersReader = _contextBuilder.GetInstance<DataWithOneMockAndOneStateHandlerReader>();
 	    }
 
 	    [TestMethod]
@@ -65,10 +71,56 @@ namespace LeanTest.L0Tests
 			    .Build();
 
 		    DataWithTwoMocks[] allDataInMocks = _dataWithTwoMocksReader.Query().ToArray();
-		    var actions = new List<Action> {() => 
-			    Assert.AreEqual(2, allDataInMocks.Length)};
-			actions.AddRange(allDataInMocks.Select<DataWithTwoMocks, Action>(data => () => 
-				Assert.AreEqual("TheData", data.SomeData, "Expected the data to be passed to the registered mock-for-data.")));
+		    var actions = new List<Action> 
+		    {
+			    () => Assert.AreEqual(2, allDataInMocks.Length, "Expected exactly two mocks."),
+			    () => Assert.AreEqual("TheData", allDataInMocks[0].SomeData, "Expected the data to be passed to the first registered mock-for-data."),
+			    () => Assert.AreEqual("TheData", allDataInMocks[1].SomeData, "Expected the data to be passed to the second registered mock-for-data.")
+		    };
+		    MultiAssertForTException.Aggregate<AssertFailedException>(actions.ToArray());
+	    }
+
+	    [TestMethod]
+	    public void BuildMustPassTheDataToTheSingleStateHandlerWhenRegistered()
+	    {
+		    _contextBuilder
+			    .WithData(new DataWithOneStateHandler {SomeData = "TheData"})
+			    .Build();
+
+		    Assert.AreEqual("TheData", _dataWithOneStateHandlerReader.Query().SomeData, "Expected the data to be passed to the registered state handler.");
+	    }
+
+	    [TestMethod]
+	    public void BuildMustPassTheDataToTwoStateHandlersWhenRegistered()
+	    {
+		    _contextBuilder
+			    .WithData(new DataWithTwoStateHandlers {SomeData = "TheData"})
+			    .Build();
+
+		    DataWithTwoStateHandlers[] allDataInStateHandlers = _dataWithTwoStateHandlersReader.Query().ToArray();
+		    var actions = new List<Action> 
+		    {
+			    () => Assert.AreEqual(2, allDataInStateHandlers.Length, "Expected exactly two state handlers."),
+			    () => Assert.AreEqual("TheData", allDataInStateHandlers[0].SomeData, "Expected the data to be passed to the first registered state handler."),
+			    () => Assert.AreEqual("TheData", allDataInStateHandlers[1].SomeData, "Expected the data to be passed to the second registered state handler.")
+		    };
+		    MultiAssertForTException.Aggregate<AssertFailedException>(actions.ToArray());
+	    }
+
+	    [TestMethod]
+	    public void BuildMustPassTheDataToBothStateHandlerAndMockForDataWhenRegistered()
+	    {
+		    _contextBuilder
+			    .WithData(new DataWithOneMockAndOneStateHandler {SomeData = "TheData"})
+			    .Build();
+
+		    DataWithOneMockAndOneStateHandler[] allDataInStateHandlers = _dataWithOneMockAndStateHandlersReader.Query().ToArray();
+		    var actions = new List<Action> 
+		    {
+			    () => Assert.AreEqual(2, allDataInStateHandlers.Length, "Expected exactly two state handlers."),
+			    () => Assert.AreEqual("TheData", allDataInStateHandlers[0].SomeData, "Expected the data to be passed to the first registered state handler."),
+			    () => Assert.AreEqual("TheData", allDataInStateHandlers[1].SomeData, "Expected the data to be passed to the second registered state handler.")
+		    };
 		    MultiAssertForTException.Aggregate<AssertFailedException>(actions.ToArray());
 	    }
     }

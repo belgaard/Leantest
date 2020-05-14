@@ -8,16 +8,12 @@ namespace LeanTest.L0Tests.Mocks
 {
 	[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "Instantiated by the IoC container.")]
 	internal class MockForDataExternalDependency : TypedData<DataWithOneMock>, IExternalDependency, 
-		IMockForData<DataWithOneMock>, IMockForData<DataWithTwoMocks>
+		IMockForData<DataWithOneMock>, IMockForData<DataWithTwoMocks>, IMockForData<DataWithOneMockAndOneStateHandler>
 	{
 		internal DataWithOneMock DataWithOneMock => Data.First();
 		internal DataWithTwoMocks DataWithTwoMocks { get; private set; }
+		internal DataWithOneMockAndOneStateHandler DataWithOneMockAndOneStateHandler { get; private set; }
 		public void WithData(DataWithTwoMocks data) => DataWithTwoMocks = data;
-	}
-	[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "Instantiated by the IoC container.")]
-	internal class AnotherMockForDataExternalDependency : TypedData<DataWithTwoMocks>, IExternalDependency, 
-		IMockForData<DataWithTwoMocks>
-	{
-		internal DataWithTwoMocks DataWithTwoMocks => Data.First();
+		public void WithData(DataWithOneMockAndOneStateHandler data) => DataWithOneMockAndOneStateHandler = data;
 	}
 }
