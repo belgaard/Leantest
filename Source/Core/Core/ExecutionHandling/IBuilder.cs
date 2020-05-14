@@ -12,7 +12,7 @@ namespace LeanTest.Core.ExecutionHandling
         /// Register a builder for data of type <c>TData</c>
         /// </summary>
         /// <typeparam name="TData"></typeparam>
-        Func<IEnumerable<object>> WithBuilderForData<TData>();
+        void WithBuilderForData<TData>();
         /// <summary>
         /// Do the build.
         /// </summary>

@@ -64,7 +64,7 @@ namespace LeanTest.Mock
             return typesWithNoMock;
         }
 
-        public Func<IEnumerable<object>> WithBuilderForData<T>() => 
+        public void WithBuilderForData<T>() => 
             _typedMockEnumsDelegates[typeof(T)] = () => from mock in _container.TryResolveAll<IMockForData<T>>() select mock as object;
     }
 }
