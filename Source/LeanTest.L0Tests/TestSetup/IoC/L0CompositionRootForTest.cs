@@ -12,10 +12,12 @@ namespace LeanTest.L0Tests.TestSetup.IoC
 		public static IServiceCollection Initialize(IServiceCollection serviceCollection)
 		{
 			// Mock-for-data:
-			serviceCollection.RegisterMockForData<IExternalDependency, MockForDataExternalDependency, RegisteredData>();
+			serviceCollection.RegisterMockForData<IExternalDependency, MockForDataExternalDependency, DataWithOneMock, DataWithTwoMocks>();
+			serviceCollection.RegisterMockForData<IExternalDependency, AnotherMockForDataExternalDependency, DataWithTwoMocks>();
 
 			// Readers:
-			serviceCollection.AddSingleton<RegisteredDataReader>();
+			serviceCollection.AddSingleton<DataWithOneMockReader>();
+			serviceCollection.AddSingleton<DataWithTwoMocksReader>();
 
 			return serviceCollection;
 		}
@@ -27,6 +29,16 @@ namespace LeanTest.L0Tests.TestSetup.IoC
 			container.AddSingleton<TImplementation>();
 			container.AddSingleton<TInterface>(x => x.GetRequiredService<TImplementation>());
 			container.AddSingleton<IMockForData<TData1>>(x => x.GetRequiredService<TImplementation>());
+		}
+
+		private static void RegisterMockForData<TInterface, TImplementation, TData1, TData2>(this IServiceCollection container)
+			where TImplementation: class, TInterface, IMockForData<TData1>, IMockForData<TData2>
+			where TInterface: class
+		{
+			container.AddSingleton<TImplementation>();
+			container.AddSingleton<TInterface>(x => x.GetRequiredService<TImplementation>());
+			container.AddSingleton<IMockForData<TData1>>(x => x.GetRequiredService<TImplementation>());
+			container.AddSingleton<IMockForData<TData2>>(x => x.GetRequiredService<TImplementation>());
 		}
 	}
 }
