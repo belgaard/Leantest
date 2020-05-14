@@ -111,7 +111,8 @@ namespace LeanTest.L0Tests
 	    public void BuildMustPassTheDataToBothStateHandlerAndMockForDataWhenRegistered()
 	    {
 		    _contextBuilder
-			    .WithData(new DataWithOneMockAndOneStateHandler {SomeData = "TheData"})
+			    .WithEnumerableData(new List<DataWithOneMockAndOneStateHandler>
+				    { new DataWithOneMockAndOneStateHandler {SomeData = "TheData"}})
 			    .Build();
 
 		    DataWithOneMockAndOneStateHandler[] allDataInStateHandlers = _dataWithOneMockAndStateHandlersReader.Query().ToArray();
