@@ -42,17 +42,17 @@ namespace LeanTest.Core.ExecutionHandling
                     if (mustPreAndPostBuild)
                     {
                         preBuildHandlers.Add(handler);
-                        theClass.GetTypeInfo().GetDeclaredMethod(PreBuildMethod).Invoke(handler, null);
+                        theClass.GetTypeInfo().GetDeclaredMethod(PreBuildMethod)?.Invoke(handler, null);
                     }
 
                     if (_dataStore.TypedData.ContainsKey(stateKeyValuePair.Key))
                         foreach (object data in _dataStore.TypedData[stateKeyValuePair.Key])
-                            theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod).Invoke(handler, new[] { data });
+                            theClass.GetTypeInfo().GetDeclaredMethod(WithDataMethod)?.Invoke(handler, new[] { data });
 
-                    theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod).Invoke(handler, new object[] { stateKeyValuePair.Key });
+                    theClass.GetTypeInfo().GetDeclaredMethod(BuildMethod)?.Invoke(handler, new object[] { stateKeyValuePair.Key });
 
                     if (mustPreAndPostBuild)
-                        postBuildMethods.Add(() => theClass.GetTypeInfo().GetDeclaredMethod(PostBuildMethod).Invoke(handler, null));
+                        postBuildMethods.Add(() => theClass.GetTypeInfo().GetDeclaredMethod(PostBuildMethod)?.Invoke(handler, null));
                 }
             }
 

@@ -65,10 +65,10 @@ namespace LeanTest.MSTest
 
 		private static IEnumerable<TAttributeType> GetAttributesForTestMethod<TAttributeType>(TestContext testContext, Assembly assemblyContainingTest)
 		{
-			var testClassType = assemblyContainingTest.GetType(testContext.FullyQualifiedTestClassName);
+			var testClassType = assemblyContainingTest.GetType(testContext.FullyQualifiedTestClassName) ?? throw new ArgumentNullException(nameof(assemblyContainingTest));
 			
 			var testMethod = testClassType.GetMethod(testContext.TestName) ?? throw new Exception($"Unable to find test method {testContext.TestName} on type {testContext.FullyQualifiedTestClassName}");
-			return testMethod.GetCustomAttributes(typeof(TAttributeType), inherit: false).Cast<TAttributeType>();
+			return testMethod.GetCustomAttributes(typeof(TAttributeType), false).Cast<TAttributeType>();
 		}
 	}
 }
