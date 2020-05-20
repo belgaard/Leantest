@@ -67,8 +67,8 @@ namespace LeanTest.Core.ExecutionHandling
             _cleanContextMode = mode;
             _iocContainerFactory = iocContainerFactory;
 
-            AddBuilderFactory((container, dataStore) => new StateBuilder(container, dataStore));
-            AddBuilderFactory((container, dataStore) => new MockingBuilder(container, dataStore));
+            AddBuilderFactory((container, dataStore) => new GenericBuilder(container, dataStore, typeof(IStateHandler<>)));
+            AddBuilderFactory((container, dataStore) => new GenericBuilder(container, dataStore, typeof(IMockForData<>)));
 
             _lazyIocContainer = new Lazy<IIocContainer>(_iocContainerFactory);
         }

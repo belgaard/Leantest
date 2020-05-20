@@ -6,21 +6,25 @@ using LeanTest.Core.ExecutionHandling;
 
 namespace LeanTest.Mock
 {
-    internal class MockingBuilder : IBuilder
+    internal class GenericBuilder : IBuilder
     {
-        private const string WithDataMethod = nameof(IMockForData<MockingBuilder>.WithData);
-        private const string PreBuildMethod = nameof(IMockForData<MockingBuilder>.PreBuild);
-        private const string PostBuildMethod = nameof(IMockForData<MockingBuilder>.PostBuild);
-        private const string BuildMethod = nameof(IStateHandler<StateBuilder>.Build);
+        private const string WithDataMethod = nameof(TypedData<GenericBuilder>.WithData);
+        private const string PreBuildMethod = nameof(TypedData<GenericBuilder>.PreBuild);
+        private const string PostBuildMethod = nameof(TypedData<GenericBuilder>.PostBuild);
+        private const string BuildMethod = nameof(TypedData<GenericBuilder>.Build);
+        private const string TryResolveAllMethod = nameof(IIocContainer.TryResolveAll);
         private readonly IIocContainer _container;
         private readonly IDataStore _dataStore;
+        private readonly Type _specificInterface;
+
         private readonly IDictionary<Type, Func<IEnumerable<object>>> _typedMockEnumsDelegates = 
 			new Dictionary<Type, Func<IEnumerable<object>>>();
 
-        public MockingBuilder(IIocContainer container, IDataStore dataStore)
+        public GenericBuilder(IIocContainer container, IDataStore dataStore, Type specificInterface)
         {
             _container = container ?? throw new ArgumentNullException(nameof(container));
             _dataStore = dataStore ?? throw new ArgumentNullException(nameof(dataStore));
+            _specificInterface = specificInterface;
         }
 
         public HashSet<Type> Build()
@@ -38,7 +42,7 @@ namespace LeanTest.Mock
 
                 foreach (object mock in mocks)
                 {
-                    Type theClass = typeof(IMockForData<>).MakeGenericType(mockDelegatesForType.Key);
+                    Type theClass = _specificInterface.MakeGenericType(mockDelegatesForType.Key);
 
                     bool mustPreAndPostBuild = !preBuildMocks.Contains(mock);
                     if (mustPreAndPostBuild)
@@ -65,6 +69,14 @@ namespace LeanTest.Mock
         }
 
         public void WithBuilderForData<T>() => 
-            _typedMockEnumsDelegates[typeof(T)] = () => from mock in _container.TryResolveAll<IMockForData<T>>() select mock as object;
+            _typedMockEnumsDelegates[typeof(T)] = () => from mock in TryResolveAll<T>() select mock;
+
+        private IEnumerable<object> TryResolveAll<T>()
+        {
+	        MethodInfo mi = typeof(IIocContainer).GetMethod(TryResolveAllMethod);
+	        MethodInfo miConstructed = mi?.MakeGenericMethod(_specificInterface.MakeGenericType(typeof(T)));
+
+	        return miConstructed?.Invoke(_container, new object[] {}) as IEnumerable<object>;
+        }
     }
 }
