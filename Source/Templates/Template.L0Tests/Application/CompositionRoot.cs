@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Examples.L0Tests.Application
+namespace Template.L0Tests.Application
 {
 	internal static class CompositionRoot
 	{

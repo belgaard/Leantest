@@ -1,12 +1,12 @@
-using Examples.L0Tests.Application;
-using Examples.L0Tests.Domain;
-using Examples.L0Tests.Mocks;
-using Examples.L0Tests.StateHandlers;
 using LeanTest.Core.ExecutionHandling;
 using LeanTest.Mock;
 using Microsoft.Extensions.DependencyInjection;
+using Template.L0Tests.Application;
+using Template.L0Tests.Domain;
+using Template.L0Tests.Mocks;
+using Template.L0Tests.StateHandlers;
 
-namespace Examples.L0Tests.TestSetup.IoC
+namespace Template.L0Tests.TestSetup.IoC
 {
 	public static class L0CompositionRootForTest
 	{

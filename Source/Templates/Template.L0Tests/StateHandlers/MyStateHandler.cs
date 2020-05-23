@@ -1,8 +1,8 @@
 using System;
-using Examples.L0Tests.Domain;
 using LeanTest.Core.ExecutionHandling;
+using Template.L0Tests.Domain;
 
-namespace Examples.L0Tests.StateHandlers
+namespace Template.L0Tests.StateHandlers
 {
 	public class MyStateHandler : IStateHandler<MyData>, IStateHandler<MyOtherData>
 	{

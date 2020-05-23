@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using Examples.L0Tests.Application;
-using Examples.L0Tests.Domain;
 using LeanTest.Core.ExecutionHandling;
 using LeanTest.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Template.L0Tests.Application;
+using Template.L0Tests.Domain;
 
-namespace Examples.L0Tests
+namespace Template.L0Tests
 {
 	[TestClass]
 	public class TestMyApplicationService

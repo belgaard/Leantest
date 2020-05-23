@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Examples.L0Tests.Application
+namespace Template.L0Tests.Application
 {
 	public class MyApplicationService
 	{

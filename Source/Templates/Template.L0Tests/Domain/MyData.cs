@@ -1,4 +1,4 @@
-namespace Examples.L0Tests.Domain
+namespace Template.L0Tests.Domain
 {
 	public class MyData
 	{

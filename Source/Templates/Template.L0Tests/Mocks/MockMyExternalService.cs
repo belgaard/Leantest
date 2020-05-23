@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Examples.L0Tests.Application;
-using Examples.L0Tests.Domain;
 using LeanTest.Mock;
+using Template.L0Tests.Application;
+using Template.L0Tests.Domain;
 
-namespace Examples.L0Tests.Mocks
+namespace Template.L0Tests.Mocks
 {
 	[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "Instantiated by the IoC container")]
 	internal class MockMyExternalService : IMockForData<MyData>, IMockForData<MyOtherData>, IMyExternalService
