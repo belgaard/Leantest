@@ -18,7 +18,7 @@ namespace LeanTest.Mock
         private readonly Type _specificInterface;
 
         private readonly IDictionary<Type, Func<IEnumerable<object>>> _typedMockEnumsDelegates = 
-			new Dictionary<Type, Func<IEnumerable<object>>>();
+            new Dictionary<Type, Func<IEnumerable<object>>>();
 
         public GenericBuilder(IIocContainer container, IDataStore dataStore, Type specificInterface)
         {
@@ -38,7 +38,7 @@ namespace LeanTest.Mock
                 IEnumerable<object> mocks = mockDelegatesForType.Value().ToArray();
 
                 if (!mocks.Any())
-	                typesWithNoMock.Add(mockDelegatesForType.Key);
+                    typesWithNoMock.Add(mockDelegatesForType.Key);
 
                 foreach (object mock in mocks)
                 {
@@ -73,10 +73,10 @@ namespace LeanTest.Mock
 
         private IEnumerable<object> TryResolveAll<T>()
         {
-	        MethodInfo mi = typeof(IIocContainer).GetMethod(TryResolveAllMethod);
-	        MethodInfo miConstructed = mi?.MakeGenericMethod(_specificInterface.MakeGenericType(typeof(T)));
+            MethodInfo mi = typeof(IIocContainer).GetMethod(TryResolveAllMethod);
+            MethodInfo miConstructed = mi?.MakeGenericMethod(_specificInterface.MakeGenericType(typeof(T)));
 
-	        return miConstructed?.Invoke(_container, new object[] {}) as IEnumerable<object>;
+            return miConstructed?.Invoke(_container, new object[] {}) as IEnumerable<object>;
         }
     }
 }

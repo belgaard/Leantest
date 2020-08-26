@@ -13,7 +13,7 @@ namespace LeanTest.MSTest
     {
 		/// <summary>Registers an intend to use the <c>TestScenarioId</c> attribute on test methods.</summary>
 		/// <remarks>This causes LeanTest scenario IDs to be written to the test log (.trx-file).</remarks>
-		public static ContextBuilder RegisterScenarioId(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
+		public static IContextBuilder RegisterScenarioId(this IContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
 	    {
 	        assembly ??= Assembly.GetCallingAssembly();
 		    MethodInfo[] methods = assembly.GetTypes()
@@ -30,7 +30,7 @@ namespace LeanTest.MSTest
 	    }
 		/// <summary>Registers an intend to use the <c>TestTag</c> attribute on test methods.</summary>
 		/// <remarks>This causes LeanTest tags to be written to the test log (.trx-file).</remarks>
-		public static ContextBuilder RegisterTags(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
+		public static IContextBuilder RegisterTags(this IContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
 	    {
 		    assembly ??= Assembly.GetCallingAssembly();
 		    MethodInfo[] methods = assembly.GetTypes()
@@ -47,7 +47,7 @@ namespace LeanTest.MSTest
 	    }
 		/// <summary>Registers an intend to use the <c>Description</c> attribute on test methods.</summary>
 		/// <remarks>This causes MsTest descriptions to be written to the test log (.trx-file).</remarks>
-		public static ContextBuilder RegisterDescription(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
+		public static IContextBuilder RegisterDescription(this IContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
 	    {
 		    assembly ??= Assembly.GetCallingAssembly();
 		    MethodInfo[] methods = assembly.GetTypes()
@@ -64,7 +64,7 @@ namespace LeanTest.MSTest
 	    }
 		/// <summary>Registers an intend to use the LeanTest attribute on test methods.</summary>
 		/// <remarks>This causes LeanTest scenario IDs and tags as well as MsTest descriptions to be written to the test log (.trx-file).</remarks>
-		public static ContextBuilder RegisterAttributes(this ContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
+		public static IContextBuilder RegisterAttributes(this IContextBuilder theContextBuilder, TestContext testContext, Assembly assembly = null)
         {
             assembly ??= Assembly.GetCallingAssembly();
             return theContextBuilder

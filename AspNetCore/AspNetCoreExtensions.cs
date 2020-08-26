@@ -92,12 +92,12 @@ namespace LeanTest
             Initialize(CleanContextMode.ReCreate, hostBuilder, iocContainerFactory);
 
         /// <summary>Get the ASP.NET Core <c>TestServer</c> created in <c>Initialize()</c>.</summary>
-        public static TestServer GetTestServer(this ContextBuilder _) => _wrapped?.GetTestServer();
+        public static TestServer GetTestServer(this IContextBuilder _) => _wrapped?.GetTestServer();
         /// <summary>Get the ASP.NET Core client from the <c>TestServer</c> created in <c>Initialize()</c>.</summary>
-        public static HttpClient GetHttpClient(this ContextBuilder _) => _wrapped?.GetHttpClient();
+        public static HttpClient GetHttpClient(this IContextBuilder _) => _wrapped?.GetHttpClient();
         /// <summary>Get the ASP.NET Core client from the factory created in <c>Initialize()</c>.</summary>
         /// <remarks>Returns null if a Func&lt;WebApplicationFactory&lt;T&gt;&gt; was not passed in <c>Initialize()</c></remarks>
-        public static WebApplicationFactory<T> GetFactory<T>(this ContextBuilder _) where T: class => (_wrapped as FactoryWrapper<T>)?.GetFactory();
+        public static WebApplicationFactory<T> GetFactory<T>(this IContextBuilder _) where T: class => (_wrapped as FactoryWrapper<T>)?.GetFactory();
 
         private interface IWrapper : IDisposable
         {
