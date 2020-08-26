@@ -35,7 +35,6 @@ namespace LeanTest.Core.ExecutionHandling
         /// <remarks>
         /// You will create at least one context builder per test class, but never reuse across test classes.
         /// </remarks>
-        [Obsolete("Don't rely on a global instance")]
         public static ContextBuilder ContextBuilder { get; private set; }
 
         /// <summary>
@@ -47,7 +46,7 @@ namespace LeanTest.Core.ExecutionHandling
             switch (_cleanContextMode)
             {
                 case CleanContextMode.ReCreate:
-                    // TODO: Dispose the old container!
+					// TODO: Dispose the old container!
                     iocContainer = _iocContainerFactory();
                     break;
                 case CleanContextMode.ReUse:
