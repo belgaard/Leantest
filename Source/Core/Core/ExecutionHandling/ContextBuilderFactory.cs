@@ -46,7 +46,7 @@ namespace LeanTest.Core.ExecutionHandling
             switch (_cleanContextMode)
             {
                 case CleanContextMode.ReCreate:
-					// TODO: Dispose the old container!
+                    // TODO: Dispose the old container!
                     iocContainer = _iocContainerFactory();
                     break;
                 case CleanContextMode.ReUse:
@@ -56,6 +56,11 @@ namespace LeanTest.Core.ExecutionHandling
                     throw new ArgumentOutOfRangeException();
             }
 
+            return ContextBuilder = new ContextBuilder(iocContainer, BuilderFactories.ToArray());
+        }
+
+        public static ContextBuilder CreateContextBuilder(IIocContainer iocContainer)
+        {
             return ContextBuilder = new ContextBuilder(iocContainer, BuilderFactories.ToArray());
         }
 
@@ -71,6 +76,16 @@ namespace LeanTest.Core.ExecutionHandling
             AddBuilderFactory((container, dataStore) => new GenericBuilder(container, dataStore, typeof(IMockForData<>)));
 
             _lazyIocContainer = new Lazy<IIocContainer>(_iocContainerFactory);
+        }
+        public static void Initialize(CleanContextMode mode)
+        {
+            _cleanContextMode = mode;
+            _iocContainerFactory = default;
+
+            AddBuilderFactory((container, dataStore) => new GenericBuilder(container, dataStore, typeof(IStateHandler<>)));
+            AddBuilderFactory((container, dataStore) => new GenericBuilder(container, dataStore, typeof(IMockForData<>)));
+
+            _lazyIocContainer = default;
         }
 
         /// <summary>Setup IoC and builders to create the IoC context before each test.</summary>
