@@ -35,6 +35,7 @@ namespace LeanTest.Core.ExecutionHandling
         /// <remarks>
         /// You will create at least one context builder per test class, but never reuse across test classes.
         /// </remarks>
+        [Obsolete("Don't reference a global instance")]
         public static ContextBuilder ContextBuilder { get; private set; }
 
         /// <summary>

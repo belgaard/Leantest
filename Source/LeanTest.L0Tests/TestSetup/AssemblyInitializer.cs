@@ -3,6 +3,8 @@ using LeanTest.Core.ExecutionHandling;
 using LeanTest.L0Tests.TestSetup.IoC;
 using Microsoft.Extensions.DependencyInjection;
 
+[assembly: Parallelize(Workers = 0, Scope = ExecutionScope.MethodLevel)]
+
 namespace LeanTest.L0Tests.TestSetup
 {
 	[TestClass]

@@ -11,162 +11,145 @@ namespace LeanTest.L0Tests
     [TestClass]
     public class TestContextBuilder
     {
-	    private ContextBuilder _contextBuilder;
-	    private DataWithOneMockReader _dataWithOneMockReader;
-	    private DataWithTwoMocksReader _dataWithTwoMocksReader;
-	    private DataWithOneStateHandlerReader _dataWithOneStateHandlerReader;
-	    private DataWithTwoStateHandlersReader _dataWithTwoStateHandlersReader;
-	    private DataWithOneMockAndOneStateHandlerReader _dataWithOneMockAndStateHandlersReader;
+        [TestMethod]
+        public void WithDataMustThrowArgumentExceptionWhenNoBuilderHasBeenRegistered()
+        {
+            ArgumentException actual = Assert.ThrowsException<ArgumentException>(() =>
+                ContextBuilderFactory.CreateContextBuilder()
+                    .WithData(new DataWithNoHandler())
+                    .WithData(new AlsoDataWithNoHandler())
+                    .Build());
 
-	    [TestInitialize]
-	    public void TestInitialize()
-	    {
-		    _contextBuilder = ContextBuilderFactory.CreateContextBuilder();
-		    _dataWithOneMockReader = _contextBuilder.GetInstance<DataWithOneMockReader>();
-		    _dataWithTwoMocksReader = _contextBuilder.GetInstance<DataWithTwoMocksReader>();
-		    _dataWithOneStateHandlerReader = _contextBuilder.GetInstance<DataWithOneStateHandlerReader>();
-		    _dataWithTwoStateHandlersReader = _contextBuilder.GetInstance<DataWithTwoStateHandlersReader>();
-		    _dataWithOneMockAndStateHandlersReader = _contextBuilder.GetInstance<DataWithOneMockAndOneStateHandlerReader>();
-	    }
+            MultiAssertForTException.Aggregate<AssertFailedException>(
+                () => Assert.IsTrue(actual.Message.Contains(nameof(DataWithNoHandler)), 
+                    $"Expected the exception to mention the type '{nameof(DataWithNoHandler)}' as not registered."),
+                () => Assert.IsTrue(actual.Message.Contains(nameof(AlsoDataWithNoHandler)), 
+                    $"Expected the exception to mention the type '{nameof(AlsoDataWithNoHandler)}' as not registered."));
+        }
 
-	    [TestMethod]
-	    public void WithDataMustThrowArgumentExceptionWhenNoBuilderHasBeenRegistered()
-	    {
-			ArgumentException actual = Assert.ThrowsException<ArgumentException>(() =>
-			    _contextBuilder
-				    .WithData(new DataWithNoHandler())
-				    .WithData(new AlsoDataWithNoHandler())
-				    .Build());
+        [TestMethod]
+        public void WithDataPreRegistrationMustThrowArgumentExceptionWhenNoBuilderHasBeenRegistered()
+        {
+            ArgumentException actual = Assert.ThrowsException<ArgumentException>(() =>
+                ContextBuilderFactory.CreateContextBuilder()
+                    .WithData<DataWithNoHandler>()
+                    .WithData<AlsoDataWithNoHandler>()
+                    .Build());
 
-			MultiAssertForTException.Aggregate<AssertFailedException>(
-				() => Assert.IsTrue(actual.Message.Contains(nameof(DataWithNoHandler)), 
-					$"Expected the exception to mention the type '{nameof(DataWithNoHandler)}' as not registered."),
-				() => Assert.IsTrue(actual.Message.Contains(nameof(AlsoDataWithNoHandler)), 
-					$"Expected the exception to mention the type '{nameof(AlsoDataWithNoHandler)}' as not registered."));
-	    }
+            MultiAssertForTException.Aggregate<AssertFailedException>(
+                () => Assert.IsTrue(actual.Message.Contains(nameof(DataWithNoHandler)), 
+                    $"Expected the exception to mention the type '{nameof(DataWithNoHandler)}' as not registered."),
+                () => Assert.IsTrue(actual.Message.Contains(nameof(AlsoDataWithNoHandler)), 
+                    $"Expected the exception to mention the type '{nameof(AlsoDataWithNoHandler)}' as not registered."));
+        }
 
-	    [TestMethod]
-	    public void WithDataPreRegistrationMustThrowArgumentExceptionWhenNoBuilderHasBeenRegistered()
-	    {
-			ArgumentException actual = Assert.ThrowsException<ArgumentException>(() =>
-			    _contextBuilder
-				    .WithData<DataWithNoHandler>()
-				    .WithData<AlsoDataWithNoHandler>()
-				    .Build());
+        [TestMethod]
+        public void WithDataMustNotThrowWhenABuilderHasBeenRegistered()
+        {
+            ContextBuilderFactory.CreateContextBuilder()
+                .WithData(new DataWithOneMock())
+                .Build();
+        }
 
-			MultiAssertForTException.Aggregate<AssertFailedException>(
-				() => Assert.IsTrue(actual.Message.Contains(nameof(DataWithNoHandler)), 
-					$"Expected the exception to mention the type '{nameof(DataWithNoHandler)}' as not registered."),
-				() => Assert.IsTrue(actual.Message.Contains(nameof(AlsoDataWithNoHandler)), 
-					$"Expected the exception to mention the type '{nameof(AlsoDataWithNoHandler)}' as not registered."));
-	    }
+        [TestMethod]
+        public void BuildMustPassTheDataToTheSingleMockWhenRegistered()
+        {
+            var contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+                .WithData(new DataWithOneMock {SomeData = "TheData"})
+                .Build();
 
-	    [TestMethod]
-	    public void WithDataMustNotThrowWhenABuilderHasBeenRegistered()
-	    {
-		    _contextBuilder
-			    .WithData(new DataWithOneMock())
-			    .Build();
-	    }
+            Assert.AreEqual("TheData", contextBuilder.GetInstance<DataWithOneMockReader>().Query().SomeData, "Expected the data to be passed to the registered mock-for-data.");
+        }
 
-	    [TestMethod]
-	    public void BuildMustPassTheDataToTheSingleMockWhenRegistered()
-	    {
-		    _contextBuilder
-			    .WithData(new DataWithOneMock {SomeData = "TheData"})
-			    .Build();
+        [TestMethod]
+        public void BuildMustPassTheDataToTwoMocksWhenRegistered()
+        {
+            var contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+                .WithData(new DataWithTwoMocks {SomeData = "TheData"})
+                .Build();
 
-		    Assert.AreEqual("TheData", _dataWithOneMockReader.Query().SomeData, "Expected the data to be passed to the registered mock-for-data.");
-	    }
+            DataWithTwoMocks[] allDataInMocks = contextBuilder.GetInstance<DataWithTwoMocksReader>().Query().ToArray();
+            var actions = new List<Action> 
+            {
+                () => Assert.AreEqual(2, allDataInMocks.Length, "Expected exactly two mocks."),
+                () => Assert.AreEqual("TheData", allDataInMocks[0].SomeData, "Expected the data to be passed to the first registered mock-for-data."),
+                () => Assert.AreEqual("TheData", allDataInMocks[1].SomeData, "Expected the data to be passed to the second registered mock-for-data.")
+            };
+            MultiAssertForTException.Aggregate<AssertFailedException>(actions.ToArray());
+        }
 
-	    [TestMethod]
-	    public void BuildMustPassTheDataToTwoMocksWhenRegistered()
-	    {
-		    _contextBuilder
-			    .WithData(new DataWithTwoMocks {SomeData = "TheData"})
-			    .Build();
+        [TestMethod]
+        public void BuildMustPassTheDataToTheSingleStateHandlerWhenRegistered()
+        {
+            var contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+                .WithData(new DataWithOneStateHandler {SomeData = "TheData"})
+                .Build();
 
-		    DataWithTwoMocks[] allDataInMocks = _dataWithTwoMocksReader.Query().ToArray();
-		    var actions = new List<Action> 
-		    {
-			    () => Assert.AreEqual(2, allDataInMocks.Length, "Expected exactly two mocks."),
-			    () => Assert.AreEqual("TheData", allDataInMocks[0].SomeData, "Expected the data to be passed to the first registered mock-for-data."),
-			    () => Assert.AreEqual("TheData", allDataInMocks[1].SomeData, "Expected the data to be passed to the second registered mock-for-data.")
-		    };
-		    MultiAssertForTException.Aggregate<AssertFailedException>(actions.ToArray());
-	    }
+            Assert.AreEqual("TheData", contextBuilder.GetInstance<DataWithOneStateHandlerReader>().Query().SomeData, "Expected the data to be passed to the registered state handler.");
+        }
 
-	    [TestMethod]
-	    public void BuildMustPassTheDataToTheSingleStateHandlerWhenRegistered()
-	    {
-		    _contextBuilder
-			    .WithData(new DataWithOneStateHandler {SomeData = "TheData"})
-			    .Build();
+        [TestMethod]
+        public void BuildMustPassTheDataToTwoStateHandlersWhenRegistered()
+        {
+            var contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+                .WithData(new DataWithTwoStateHandlers {SomeData = "TheData"})
+                .Build();
 
-		    Assert.AreEqual("TheData", _dataWithOneStateHandlerReader.Query().SomeData, "Expected the data to be passed to the registered state handler.");
-	    }
+            DataWithTwoStateHandlers[] allDataInStateHandlers = contextBuilder.GetInstance<DataWithTwoStateHandlersReader>().Query().ToArray();
+            var actions = new List<Action> 
+            {
+                () => Assert.AreEqual(2, allDataInStateHandlers.Length, "Expected exactly two state handlers."),
+                () => Assert.AreEqual("TheData", allDataInStateHandlers[0].SomeData, "Expected the data to be passed to the first registered state handler."),
+                () => Assert.AreEqual("TheData", allDataInStateHandlers[1].SomeData, "Expected the data to be passed to the second registered state handler.")
+            };
+            MultiAssertForTException.Aggregate<AssertFailedException>(actions.ToArray());
+        }
 
-	    [TestMethod]
-	    public void BuildMustPassTheDataToTwoStateHandlersWhenRegistered()
-	    {
-		    _contextBuilder
-			    .WithData(new DataWithTwoStateHandlers {SomeData = "TheData"})
-			    .Build();
+        [TestMethod]
+        public void BuildMustPassTheDataToBothStateHandlerAndMockForDataWhenRegistered()
+        {
+            var contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+                .WithEnumerableData(new List<DataWithOneMockAndOneStateHandler>
+                    { new DataWithOneMockAndOneStateHandler {SomeData = "TheData"}})
+                .Build();
 
-		    DataWithTwoStateHandlers[] allDataInStateHandlers = _dataWithTwoStateHandlersReader.Query().ToArray();
-		    var actions = new List<Action> 
-		    {
-			    () => Assert.AreEqual(2, allDataInStateHandlers.Length, "Expected exactly two state handlers."),
-			    () => Assert.AreEqual("TheData", allDataInStateHandlers[0].SomeData, "Expected the data to be passed to the first registered state handler."),
-			    () => Assert.AreEqual("TheData", allDataInStateHandlers[1].SomeData, "Expected the data to be passed to the second registered state handler.")
-		    };
-		    MultiAssertForTException.Aggregate<AssertFailedException>(actions.ToArray());
-	    }
+            DataWithOneMockAndOneStateHandler[] allDataInStateHandlers = contextBuilder.GetInstance<DataWithOneMockAndOneStateHandlerReader>().Query().ToArray();
+            var actions = new List<Action> 
+            {
+                () => Assert.AreEqual(2, allDataInStateHandlers.Length, "Expected exactly two state handlers."),
+                () => Assert.AreEqual("TheData", allDataInStateHandlers[0].SomeData, "Expected the data to be passed to the first registered state handler."),
+                () => Assert.AreEqual("TheData", allDataInStateHandlers[1].SomeData, "Expected the data to be passed to the second registered state handler.")
+            };
+            MultiAssertForTException.Aggregate<AssertFailedException>(actions.ToArray());
+        }
 
-	    [TestMethod]
-	    public void BuildMustPassTheDataToBothStateHandlerAndMockForDataWhenRegistered()
-	    {
-		    _contextBuilder
-			    .WithEnumerableData(new List<DataWithOneMockAndOneStateHandler>
-				    { new DataWithOneMockAndOneStateHandler {SomeData = "TheData"}})
-			    .Build();
+        [TestMethod]
+        public void BuildMustThrowExceptionFromStateHandlerWhenItThrowsInBuild()
+        {
+            Assert.ThrowsException<Exception>(() =>
+                ContextBuilderFactory.CreateContextBuilder()
+                    .WithData(new DataForStateHandlerWhichThrowsInBuild())
+                    .Build());
+        }
 
-		    DataWithOneMockAndOneStateHandler[] allDataInStateHandlers = _dataWithOneMockAndStateHandlersReader.Query().ToArray();
-		    var actions = new List<Action> 
-		    {
-			    () => Assert.AreEqual(2, allDataInStateHandlers.Length, "Expected exactly two state handlers."),
-			    () => Assert.AreEqual("TheData", allDataInStateHandlers[0].SomeData, "Expected the data to be passed to the first registered state handler."),
-			    () => Assert.AreEqual("TheData", allDataInStateHandlers[1].SomeData, "Expected the data to be passed to the second registered state handler.")
-		    };
-		    MultiAssertForTException.Aggregate<AssertFailedException>(actions.ToArray());
-	    }
+        [TestMethod]
+        public void WithClearDataStoreMustClearAllDataWhenCalled()
+        {
+            var contextBuilder = ContextBuilderFactory.CreateContextBuilder();
+            contextBuilder
+                .WithData(new DataWithOneMock {SomeData = "TheData"});
+            DataWithOneMock firstPre = contextBuilder.First<DataWithOneMock>();
+            DataWithOneMock lastPre = contextBuilder.Last<DataWithOneMock>();
+            List<DataWithOneMock> allPre = contextBuilder.All<DataWithOneMock>().ToList();
 
-	    [TestMethod]
-	    public void BuildMustThrowExceptionFromStateHandlerWhenItThrowsInBuild()
-	    {
-		    Assert.ThrowsException<Exception>(() =>
-			    _contextBuilder
-				    .WithData(new DataForStateHandlerWhichThrowsInBuild())
-				    .Build());
-	    }
+            contextBuilder.WithClearDataStore();
 
-	    [TestMethod]
-	    public void WithClearDataStoreMustClearAllDataWhenCalled()
-	    {
-		    ContextBuilderFactory.ContextBuilder
-			    .WithData(new DataWithOneMock {SomeData = "TheData"});
-		    DataWithOneMock firstPre = _contextBuilder.First<DataWithOneMock>();
-		    DataWithOneMock lastPre = _contextBuilder.Last<DataWithOneMock>();
-		    List<DataWithOneMock> allPre = _contextBuilder.All<DataWithOneMock>().ToList();
-
-		    _contextBuilder.WithClearDataStore();
-
-		    MultiAssertForTException.Aggregate<AssertFailedException>(
-				() => Assert.IsTrue(allPre.Single() == firstPre, "Expected a single piece of data in the data store initially."),
-				() => Assert.IsTrue(firstPre == lastPre, "Expected the first to be the last in the data store initially."),
-				() => Assert.ThrowsException<KeyNotFoundException>(() => _contextBuilder.All<DataWithOneMock>(), 
-					"Expected an empty data store after WithClearDataStore.")
-		    );
-	    }
+            MultiAssertForTException.Aggregate<AssertFailedException>(
+                () => Assert.IsTrue(allPre.Single() == firstPre, "Expected a single piece of data in the data store initially."),
+                () => Assert.IsTrue(firstPre == lastPre, "Expected the first to be the last in the data store initially."),
+                () => Assert.ThrowsException<KeyNotFoundException>(() => contextBuilder.All<DataWithOneMock>(), 
+                    "Expected an empty data store after WithClearDataStore.")
+            );
+        }
     }
 }
