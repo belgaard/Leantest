@@ -8,6 +8,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LeanTest.L0Tests
 {
+    /// <summary>
+    /// In this test class, we create a new context per test so that we can run each method in parallel.
+    /// </summary>
     [TestClass]
     public class TestContextBuilder
     {

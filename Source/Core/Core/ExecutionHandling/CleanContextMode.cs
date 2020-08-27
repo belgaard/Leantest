@@ -1,4 +1,6 @@
-﻿namespace LeanTest.Core.ExecutionHandling
+﻿using System;
+
+namespace LeanTest.Core.ExecutionHandling
 {
     /// <summary>
     /// Determines how the context builder factory creates a 'clean' context.
@@ -12,6 +14,7 @@
         /// <summary>
         /// Re-use requires more work, as e.g. an IoC container must have caches (and other singletons) cleared.
         /// </summary>
+        [Obsolete("Don't reuse an IoC container across tests")]
         ReUse
     }
 }
