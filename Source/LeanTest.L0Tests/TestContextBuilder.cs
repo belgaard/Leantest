@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using LeanTest.Core.ExecutionHandling;
 using LeanTest.L0Tests.Readers;
 using LeanTest.L0Tests.TestData;
@@ -8,17 +9,39 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LeanTest.L0Tests
 {
-    /// <summary>
-    /// In this test class, we create a new context per test so that we can run each method in parallel.
-    /// </summary>
     [TestClass]
     public class TestContextBuilder
     {
+        private ContextBuilder ContextBuilder { get => _contextBuilder.Value; set => _contextBuilder.Value = value; }
+        private DataWithOneMockReader WithOneMockReader { get => _dataWithOneMockReader.Value; set => _dataWithOneMockReader.Value = value; }
+        private DataWithOneStateHandlerReader WithOneStateHandlerReader { get => _dataWithOneStateHandlerReader.Value; set => _dataWithOneStateHandlerReader.Value = value; }
+        private DataWithTwoMocksReader DataWithTwoMocksReader { get => _dataWithTwoMocksReader.Value; set => _dataWithTwoMocksReader.Value = value; }
+        private DataWithTwoStateHandlersReader WithTwoStateHandlersReader { get => _dataWithTwoStateHandlersReader.Value; set => _dataWithTwoStateHandlersReader.Value = value; }
+        private DataWithOneMockAndOneStateHandlerReader DataWithOneMockAndStateHandlersReader { get => _dataWithOneMockAndStateHandlersReader.Value; set => _dataWithOneMockAndStateHandlersReader.Value = value; }
+
+        private readonly ThreadLocal<DataWithOneMockReader> _dataWithOneMockReader = new ThreadLocal<DataWithOneMockReader>();
+        private readonly ThreadLocal<DataWithTwoMocksReader> _dataWithTwoMocksReader = new ThreadLocal<DataWithTwoMocksReader>();
+        private readonly ThreadLocal<DataWithOneStateHandlerReader> _dataWithOneStateHandlerReader = new ThreadLocal<DataWithOneStateHandlerReader>();
+        private readonly ThreadLocal<DataWithTwoStateHandlersReader> _dataWithTwoStateHandlersReader = new ThreadLocal<DataWithTwoStateHandlersReader>();
+        private readonly ThreadLocal<DataWithOneMockAndOneStateHandlerReader> _dataWithOneMockAndStateHandlersReader = new ThreadLocal<DataWithOneMockAndOneStateHandlerReader>();
+        private readonly ThreadLocal<ContextBuilder> _contextBuilder = new ThreadLocal<ContextBuilder>();
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            ContextBuilder = ContextBuilderFactory.CreateContextBuilder();
+            WithOneMockReader = ContextBuilder.GetInstance<DataWithOneMockReader>();
+            DataWithTwoMocksReader = ContextBuilder.GetInstance<DataWithTwoMocksReader>();
+            WithOneStateHandlerReader = ContextBuilder.GetInstance<DataWithOneStateHandlerReader>();
+            WithTwoStateHandlersReader = ContextBuilder.GetInstance<DataWithTwoStateHandlersReader>();
+            DataWithOneMockAndStateHandlersReader = ContextBuilder.GetInstance<DataWithOneMockAndOneStateHandlerReader>();
+        }
+
         [TestMethod]
         public void WithDataMustThrowArgumentExceptionWhenNoBuilderHasBeenRegistered()
         {
             ArgumentException actual = Assert.ThrowsException<ArgumentException>(() =>
-                ContextBuilderFactory.CreateContextBuilder()
+                ContextBuilder
                     .WithData(new DataWithNoHandler())
                     .WithData(new AlsoDataWithNoHandler())
                     .Build());
@@ -34,7 +57,7 @@ namespace LeanTest.L0Tests
         public void WithDataPreRegistrationMustThrowArgumentExceptionWhenNoBuilderHasBeenRegistered()
         {
             ArgumentException actual = Assert.ThrowsException<ArgumentException>(() =>
-                ContextBuilderFactory.CreateContextBuilder()
+                ContextBuilder
                     .WithData<DataWithNoHandler>()
                     .WithData<AlsoDataWithNoHandler>()
                     .Build());
@@ -49,7 +72,7 @@ namespace LeanTest.L0Tests
         [TestMethod]
         public void WithDataMustNotThrowWhenABuilderHasBeenRegistered()
         {
-            ContextBuilderFactory.CreateContextBuilder()
+            ContextBuilder
                 .WithData(new DataWithOneMock())
                 .Build();
         }
@@ -57,21 +80,21 @@ namespace LeanTest.L0Tests
         [TestMethod]
         public void BuildMustPassTheDataToTheSingleMockWhenRegistered()
         {
-            var contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+            ContextBuilder
                 .WithData(new DataWithOneMock {SomeData = "TheData"})
                 .Build();
 
-            Assert.AreEqual("TheData", contextBuilder.GetInstance<DataWithOneMockReader>().Query().SomeData, "Expected the data to be passed to the registered mock-for-data.");
+            Assert.AreEqual("TheData", WithOneMockReader.Query().SomeData, "Expected the data to be passed to the registered mock-for-data.");
         }
 
         [TestMethod]
         public void BuildMustPassTheDataToTwoMocksWhenRegistered()
         {
-            var contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+            ContextBuilder
                 .WithData(new DataWithTwoMocks {SomeData = "TheData"})
                 .Build();
 
-            DataWithTwoMocks[] allDataInMocks = contextBuilder.GetInstance<DataWithTwoMocksReader>().Query().ToArray();
+            DataWithTwoMocks[] allDataInMocks = DataWithTwoMocksReader.Query().ToArray();
             var actions = new List<Action> 
             {
                 () => Assert.AreEqual(2, allDataInMocks.Length, "Expected exactly two mocks."),
@@ -84,21 +107,21 @@ namespace LeanTest.L0Tests
         [TestMethod]
         public void BuildMustPassTheDataToTheSingleStateHandlerWhenRegistered()
         {
-            var contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+            ContextBuilder
                 .WithData(new DataWithOneStateHandler {SomeData = "TheData"})
                 .Build();
 
-            Assert.AreEqual("TheData", contextBuilder.GetInstance<DataWithOneStateHandlerReader>().Query().SomeData, "Expected the data to be passed to the registered state handler.");
+            Assert.AreEqual("TheData", WithOneStateHandlerReader.Query().SomeData, "Expected the data to be passed to the registered state handler.");
         }
 
         [TestMethod]
         public void BuildMustPassTheDataToTwoStateHandlersWhenRegistered()
         {
-            var contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+            ContextBuilder
                 .WithData(new DataWithTwoStateHandlers {SomeData = "TheData"})
                 .Build();
 
-            DataWithTwoStateHandlers[] allDataInStateHandlers = contextBuilder.GetInstance<DataWithTwoStateHandlersReader>().Query().ToArray();
+            DataWithTwoStateHandlers[] allDataInStateHandlers = WithTwoStateHandlersReader.Query().ToArray();
             var actions = new List<Action> 
             {
                 () => Assert.AreEqual(2, allDataInStateHandlers.Length, "Expected exactly two state handlers."),
@@ -111,12 +134,12 @@ namespace LeanTest.L0Tests
         [TestMethod]
         public void BuildMustPassTheDataToBothStateHandlerAndMockForDataWhenRegistered()
         {
-            var contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+            ContextBuilder
                 .WithEnumerableData(new List<DataWithOneMockAndOneStateHandler>
                     { new DataWithOneMockAndOneStateHandler {SomeData = "TheData"}})
                 .Build();
 
-            DataWithOneMockAndOneStateHandler[] allDataInStateHandlers = contextBuilder.GetInstance<DataWithOneMockAndOneStateHandlerReader>().Query().ToArray();
+            DataWithOneMockAndOneStateHandler[] allDataInStateHandlers = DataWithOneMockAndStateHandlersReader.Query().ToArray();
             var actions = new List<Action> 
             {
                 () => Assert.AreEqual(2, allDataInStateHandlers.Length, "Expected exactly two state handlers."),
@@ -130,7 +153,7 @@ namespace LeanTest.L0Tests
         public void BuildMustThrowExceptionFromStateHandlerWhenItThrowsInBuild()
         {
             Assert.ThrowsException<Exception>(() =>
-                ContextBuilderFactory.CreateContextBuilder()
+                ContextBuilder
                     .WithData(new DataForStateHandlerWhichThrowsInBuild())
                     .Build());
         }
@@ -138,19 +161,18 @@ namespace LeanTest.L0Tests
         [TestMethod]
         public void WithClearDataStoreMustClearAllDataWhenCalled()
         {
-            var contextBuilder = ContextBuilderFactory.CreateContextBuilder();
-            contextBuilder
+            ContextBuilder
                 .WithData(new DataWithOneMock {SomeData = "TheData"});
-            DataWithOneMock firstPre = contextBuilder.First<DataWithOneMock>();
-            DataWithOneMock lastPre = contextBuilder.Last<DataWithOneMock>();
-            List<DataWithOneMock> allPre = contextBuilder.All<DataWithOneMock>().ToList();
+            DataWithOneMock firstPre = ContextBuilder.First<DataWithOneMock>();
+            DataWithOneMock lastPre = ContextBuilder.Last<DataWithOneMock>();
+            List<DataWithOneMock> allPre = ContextBuilder.All<DataWithOneMock>().ToList();
 
-            contextBuilder.WithClearDataStore();
+            ContextBuilder.WithClearDataStore();
 
             MultiAssertForTException.Aggregate<AssertFailedException>(
                 () => Assert.IsTrue(allPre.Single() == firstPre, "Expected a single piece of data in the data store initially."),
                 () => Assert.IsTrue(firstPre == lastPre, "Expected the first to be the last in the data store initially."),
-                () => Assert.ThrowsException<KeyNotFoundException>(() => contextBuilder.All<DataWithOneMock>(), 
+                () => Assert.ThrowsException<KeyNotFoundException>(() => ContextBuilder.All<DataWithOneMock>(), 
                     "Expected an empty data store after WithClearDataStore.")
             );
         }
