@@ -5,16 +5,10 @@ using System.Reflection;
 
 namespace LeanTest.Core.ExecutionHandling
 {
-	public interface IContextBuilder : IDisposable // TODO: Introduce in LeanTest? Implement all extension methods on interface!
-	{
-		T GetInstance<T>() where T : class;
-		ContextBuilder WithData<T>(T data);
-	}
-
 	/// <summary>
 	/// Encapsulates the IoC container and builds the data and execution context for a test, including 'state' and 'mocks'.
 	/// </summary>
-	public class ContextBuilder : IContextBuilder
+	public class ContextBuilder
 	{
 		private readonly IIocContainer _container;
 		private readonly IBuilder[] _builders;
@@ -92,19 +86,6 @@ namespace LeanTest.Core.ExecutionHandling
 			}
 
 			return this;
-		}
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-			}
-		}
-
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
 		}
 	}
 }
