@@ -121,6 +121,7 @@ namespace LeanTest
 
             public void Dispose()
             {
+                (_testServer?.Host?.Services as IDisposable)?.Dispose();
                 _testServer?.Dispose();
                 _testServer = null;
                 _client?.Dispose();
@@ -143,6 +144,7 @@ namespace LeanTest
             public WebApplicationFactory<T> GetFactory() => _factory;
             public void Dispose()
             {
+                (_factory?.Services as IDisposable)?.Dispose();
                 _factory?.Dispose();
                 _factory = null;
             }
