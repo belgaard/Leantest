@@ -69,16 +69,24 @@ namespace LeanTest.Core.ExecutionHandling
             _cleanContextMode = mode;
             _iocContainerFactory = iocContainerFactory;
 
-            AddBuilderFactory((container, dataStore) => new GenericBuilder(container, dataStore, typeof(IStateHandler<>)));
-            AddBuilderFactory((container, dataStore) => new GenericBuilder(container, dataStore, typeof(IMockForData<>)));
+            InitializeBuilders();
 
             _lazyIocContainer = new Lazy<IIocContainer>(_iocContainerFactory);
         }
 
+        /// <summary>Setup via a context builder factory.</summary>
+        /// <param name="createContextBuilder">The context builder factory.</param>
+        /// <remarks>Note that it is the responsibility of the caller to dispose of any objects that may be created along with the context builder.</remarks>
         public static void Initialize(Func<ICreateContextBuilder> createContextBuilder)
         {
             _createContextBuilderFactory = createContextBuilder;
 
+            InitializeBuilders();
+        }
+
+        /// <summary>Setup builders only.</summary>
+        public static void InitializeBuilders()
+        {
             AddBuilderFactory((container, dataStore) => new GenericBuilder(container, dataStore, typeof(IStateHandler<>)));
             AddBuilderFactory((container, dataStore) => new GenericBuilder(container, dataStore, typeof(IMockForData<>)));
         }
