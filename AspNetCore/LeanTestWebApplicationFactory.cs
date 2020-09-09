@@ -14,8 +14,12 @@ namespace LeanTest
 	/// https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.testing.webapplicationfactory-1?view=aspnetcore-3.0&viewFallbackFrom=aspnetcore-3.1
 	/// </summary>
 	/// <typeparam name="TEntryPoint">The entry point, typically the <c>Startup</c> class.</typeparam>
-	/// <remarks>Note that lean testing encourages that a context builder, and thus the IoC container, is created from scratch before each test.
-	/// This class makes it easy to follow this principle.</remarks>
+	/// <remarks>
+	///  - Note that lean testing encourages that a context builder, and thus the IoC container, is created from scratch before each test.
+	///    This class makes it easy to follow this principle.
+	///  - This web application factory has been designed to be used with the ContextBuilderFactory.Initialize which takes an ICreateContextBuilder interface
+	///    as a parameter. Note that unlike the initialisation methods of AspNetCoreContextBuilderFactory, there is no automatic disposing of the factory -
+	///    you have to do that yourself in in each test class through the IFactoryAccess interface on the context builder.</remarks>
 	public class LeanTestWebApplicationFactory<TEntryPoint> : WebApplicationFactory<TEntryPoint>, IFactoryAccess, ICreateContextBuilder where TEntryPoint : class
 	{
 		private readonly Action<IServiceCollection> _initializeCompositionRoot;
