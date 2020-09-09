@@ -92,12 +92,15 @@ namespace LeanTest
             Initialize(CleanContextMode.ReCreate, hostBuilder, iocContainerFactory);
 
         /// <summary>Get the ASP.NET Core <c>TestServer</c> created in <c>Initialize()</c>.</summary>
-        public static TestServer GetTestServer(this ContextBuilder _) => _wrapped?.GetTestServer();
+        public static TestServer GetTestServer(this ContextBuilder contextBuilder) => (contextBuilder as IFactoryAccess)?.Server ?? _wrapped?.GetTestServer();
         /// <summary>Get the ASP.NET Core client from the <c>TestServer</c> created in <c>Initialize()</c>.</summary>
-        public static HttpClient GetHttpClient(this ContextBuilder _) => _wrapped?.GetHttpClient();
+        public static HttpClient GetHttpClient(this ContextBuilder contextBuilder) => (contextBuilder as IFactoryAccess)?.CreateClient() ?? _wrapped?.GetHttpClient();
         /// <summary>Get the ASP.NET Core client from the factory created in <c>Initialize()</c>.</summary>
         /// <remarks>Returns null if a Func&lt;WebApplicationFactory&lt;T&gt;&gt; was not passed in <c>Initialize()</c></remarks>
-        public static WebApplicationFactory<T> GetFactory<T>(this ContextBuilder _) where T: class => (_wrapped as FactoryWrapper<T>)?.GetFactory();
+        public static WebApplicationFactory<T> GetFactory<T>(this ContextBuilder contextBuilder) where T: class => 
+            WebApplicationFactoryFromContextBuilder<T>(contextBuilder) ?? (_wrapped as FactoryWrapper<T>)?.GetFactory();
+        private static WebApplicationFactory<T> WebApplicationFactoryFromContextBuilder<T>(ContextBuilder contextBuilder) where T: class => 
+            (contextBuilder as WebApplicationFactoryContextBuilder<T>)?.GetFactory();
 
         private interface IWrapper : IDisposable
         {
