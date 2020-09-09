@@ -11,7 +11,7 @@ namespace LeanTest
 	/// This web application factory encapsulates factories for initializing a composition root and an IoC container, respectively.
 	/// These factories are used to create a context builder in the implementation of the <c>ICreateContextBuilder</c> interface.
 	/// The .NET Core web application factory is documented here
-	/// https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.testing.webapplicationfactory-1?view=aspnetcore-3.0&viewFallbackFrom=aspnetcore-3.1
+	/// https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.testing.webapplicationfactory-1?view=aspnetcore-3.0
 	/// </summary>
 	/// <typeparam name="TEntryPoint">The entry point, typically the <c>Startup</c> class.</typeparam>
 	/// <remarks>
