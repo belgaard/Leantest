@@ -5,9 +5,7 @@ using LeanTest.Mock;
 
 namespace LeanTest.Core.ExecutionHandling
 {
-    /// <summary>
-    /// Used to create instances of context builders.
-    /// </summary>
+    /// <summary>Used to create instances of context builders.</summary>
     /// <remarks>
     /// Each context builder will reference an IoC container which is created by an IoC container factory method passed in during intialisation.
     /// Also during initialisation, it is specified if the IoC container must be re-used or re-created per request.
@@ -26,7 +24,8 @@ namespace LeanTest.Core.ExecutionHandling
         private static Func<IIocContainer> _iocContainerFactory;
 
         private static CleanContextMode _cleanContextMode;
-        private static readonly ICollection<Func<IIocContainer, IDataStore, IBuilder>> BuilderFactories = new List<Func<IIocContainer, IDataStore, IBuilder>>();
+        internal static readonly ICollection<Func<IIocContainer, IDataStore, IBuilder>> BuilderFactories = new List<Func<IIocContainer, IDataStore, IBuilder>>();
+        private static Func<ICreateContextBuilder> _createContextBuilderFactory;
 
         /// <summary>
         /// The lastly created context builder instance for the currently running AppDomain.
@@ -42,11 +41,14 @@ namespace LeanTest.Core.ExecutionHandling
         /// </summary>
         public static ContextBuilder CreateContextBuilder()
         {
+            if (_createContextBuilderFactory != null)
+                return _createContextBuilderFactory().CreateContextBuilder;
+
             IIocContainer iocContainer;
             switch (_cleanContextMode)
             {
                 case CleanContextMode.ReCreate:
-					// TODO: Dispose the old container!
+                    // TODO: Dispose the old container!
                     iocContainer = _iocContainerFactory();
                     break;
                 case CleanContextMode.ReUse:
@@ -71,6 +73,14 @@ namespace LeanTest.Core.ExecutionHandling
             AddBuilderFactory((container, dataStore) => new GenericBuilder(container, dataStore, typeof(IMockForData<>)));
 
             _lazyIocContainer = new Lazy<IIocContainer>(_iocContainerFactory);
+        }
+
+        public static void Initialize(Func<ICreateContextBuilder> createContextBuilder)
+        {
+            _createContextBuilderFactory = createContextBuilder;
+
+            AddBuilderFactory((container, dataStore) => new GenericBuilder(container, dataStore, typeof(IStateHandler<>)));
+            AddBuilderFactory((container, dataStore) => new GenericBuilder(container, dataStore, typeof(IMockForData<>)));
         }
 
         /// <summary>Setup IoC and builders to create the IoC context before each test.</summary>
