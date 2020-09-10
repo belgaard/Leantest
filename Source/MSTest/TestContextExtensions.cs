@@ -9,7 +9,7 @@ namespace LeanTest.MSTest
 	/// <summary>
 	/// Extension methods for MS Tests TestContext.
 	/// </summary>
-	[Obsolete("Don't use!")]
+	[Obsolete("Use the ContextBuilder extensions instead!")]
 	public static class TestContextExtensions
 	{
 		/// <summary>Registers an intend to use the <c>TestScenarioId</c> attribute on test methods.</summary>
