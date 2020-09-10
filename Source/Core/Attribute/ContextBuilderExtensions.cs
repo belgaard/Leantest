@@ -72,7 +72,7 @@ namespace LeanTest.Attribute
         }
  
         private static Type[] BothTypes(Type extraType, Type thisType)
-        {
+        {		
             Type[] types = extraType == null
                 ? new[] {thisType}
                 : new[] {thisType, extraType};
