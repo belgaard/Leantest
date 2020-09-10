@@ -25,7 +25,7 @@ namespace Examples.L0Tests
 			_target = _contextBuilder.GetInstance<MyApplicationService>();
 		}
 
-		[TestMethod, LeanTest.MSTest.TestScenarioId("SimpleExamples - Obsolete"), LeanTest.Attribute.TestScenarioId("SimpleExamples")]
+		[TestMethod, TestScenarioId("SimpleExamples - Obsolete"), LeanTest.Attribute.TestScenarioId("SimpleExamples")]
 		public async Task GetAgeAsyncMustNotThrow()
 		{
 			_contextBuilder
@@ -33,12 +33,12 @@ namespace Examples.L0Tests
 				.WithData(new MyOtherData { OtherAge = 10, OtherKey = "ac_32_576259321" })
 				.Build();
 
-			await LeanTest.MSTest.ExceptionAssert.DoesNotThrowAsync(() => _target.GetAgeAsync("FortyTwo"),
+			await ExceptionAssert.DoesNotThrowAsync(() => _target.GetAgeAsync("FortyTwo"),
 				$"Expected '{nameof(MyApplicationService.GetAgeAsync)}' not to throw").ConfigureAwait(false);
 		}
 
 		#region Example of existing state
-		[TestMethod, LeanTest.Attribute.TestScenarioId("SimpleExamples")]
+		[TestMethod, TestScenarioId("SimpleExamples")]
 		public void GetAgeMustReturn10WhenKeyMatchesNewUpData()
 		{
 			#region Example of using a builder pattern
