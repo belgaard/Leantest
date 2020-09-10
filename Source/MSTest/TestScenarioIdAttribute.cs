@@ -1,11 +1,12 @@
 ﻿using System;
+using LeanTest.Attribute;
 
 namespace LeanTest.MSTest
 {
-	/// <inheritdoc />
 	/// <summary>The test scenario ID attribute.</summary>
+	[Obsolete("Use tags from the LeanTest.Attribute namespace instead")]
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-	public class TestScenarioIdAttribute : Attribute
+	public class TestScenarioIdAttribute : System.Attribute, IAttributeValue
 	{
 		/// <summary>A prefix put in a .trx-file before each scenario ID value.</summary>
 		public const string Prefix = @"TestScenarioId = ###---";
