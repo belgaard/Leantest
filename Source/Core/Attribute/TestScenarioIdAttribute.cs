@@ -1,10 +1,8 @@
 ﻿using System;
-using LeanTest.Attribute;
 
-namespace LeanTest.MSTest
+namespace LeanTest.Attribute
 {
 	/// <summary>The test scenario ID attribute.</summary>
-	[Obsolete("Use tags from the LeanTest.Attribute namespace instead")]
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 	public class TestScenarioIdAttribute : System.Attribute, IAttributeValue
 	{

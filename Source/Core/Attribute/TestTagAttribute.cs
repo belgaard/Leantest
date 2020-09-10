@@ -1,10 +1,8 @@
 ﻿using System;
-using LeanTest.Attribute;
 
-namespace LeanTest.MSTest
+namespace LeanTest.Attribute
 {
     /// <summary>The test tag attribute.</summary>
-    [Obsolete("Use tags from the LeanTest.Attribute namespace instead")]
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class TestTagAttribute : System.Attribute, IAttributeValue
     {
