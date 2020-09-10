@@ -1,14 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;net472;netcoreapp3.1</TargetFrameworks>
-    <AssemblyName>LeanTest.MSTest</AssemblyName>
-    <RootNamespace>LeanTest.MSTest</RootNamespace>
-
-    <PackageId>LeanTest.MSTest</PackageId>
+    <AssemblyName>LeanTest.Xunit</AssemblyName>
+    <RootNamespace>LeanTest.Xunit</RootNamespace>
+    
+    <IsPackable>true</IsPackable>
+    <PackageId>LeanTest.xUnit</PackageId>
     <PackageVersion>$(appveyor_build_version)</PackageVersion>
     <Authors>Brian Elgaard Bennett</Authors>
     <Description>
-      Features that depend on MS Test.
+      Features that depend on Xunit.
     </Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Copyright>LeanTest is licensed under the Apache License 2.0</Copyright>
@@ -16,21 +17,21 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyVersion>$(appveyor_build_version)</AssemblyVersion>
     <FileVersion>$(appveyor_build_version)</FileVersion>
-    
+
     <!-- Embed PDB inside dll -->
     <DebugType>embedded</DebugType>
-    
+
     <!-- Generate XML doc for consumers -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
+    <PackageReference Include="xunit" Version="2.4.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
-  </ItemGroup>
+  </ItemGroup>  
 
 </Project>

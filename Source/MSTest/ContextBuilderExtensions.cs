@@ -7,9 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LeanTest.MSTest
 {
-    /// <summary>
-    /// Adds support for adding test data in Json format.
-    /// </summary>
+	/// <summary>Adds support for adding information on tests to test run results.</summary>
     public static class ContextBuilderExtensions
     {
         /// <summary>Registers an intent to use the <c>TestScenarioId</c> attribute on test methods.</summary>
