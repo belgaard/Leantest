@@ -1,10 +1,12 @@
 ﻿using System;
+using LeanTest.Attribute;
 
 namespace LeanTest.MSTest
 {
     /// <summary>The test tag attribute.</summary>
+    [Obsolete("Use tags from the LeanTest.Attribute namespace instead")]
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public class TestTagAttribute : Attribute
+    public class TestTagAttribute : System.Attribute, IAttributeValue
     {
         /// <summary>A prefix put in a .trx-file before each tag value.</summary>
         public const string Prefix = @"TestTag = ###---";
