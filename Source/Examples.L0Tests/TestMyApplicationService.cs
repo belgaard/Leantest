@@ -25,7 +25,7 @@ namespace Examples.L0Tests
 			_target = _contextBuilder.GetInstance<MyApplicationService>();
 		}
 
-		[TestMethod, TestScenarioId("SimpleExamples")]
+		[TestMethod, TestScenarioId("SimpleExamples - Obsolete"), LeanTest.Attribute.TestScenarioId("SimpleExamples")]
 		public async Task GetAgeAsyncMustNotThrow()
 		{
 			_contextBuilder
