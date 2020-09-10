@@ -1,5 +1,5 @@
 # Inspired by https://andrewlock.net/publishing-your-first-nuget-package-with-appveyor-and-myget
-version: 3.7.0.{build}
+version: 3.7.1.{build}
 configuration: Release
 platform: Any CPU
 build_script:  
