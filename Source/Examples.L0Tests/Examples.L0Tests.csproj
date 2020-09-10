@@ -9,7 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LeanTest.MSTest" Version="3.5.0.270" />
+    <Compile Remove="TestResults\**" />
+    <EmbeddedResource Remove="TestResults\**" />
+    <None Remove="TestResults\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LeanTest.Core" Version="3.7.1.282" />
+    <PackageReference Include="LeanTest.MSTest" Version="3.7.1.282" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
