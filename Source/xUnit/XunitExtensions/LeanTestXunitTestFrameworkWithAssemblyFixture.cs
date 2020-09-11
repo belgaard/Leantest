@@ -5,10 +5,10 @@ using Xunit.Sdk;
 namespace LeanTest.Xunit.XunitExtensions
 {
     /// <inheritdoc />
-    public class LeanTestXunitTestFrameworkWithAssemblyFixture : XunitTestFramework
+    public class XunitTestFrameworkWithAssemblyFixture : XunitTestFramework
     {
         /// <inheritdoc />
-        public LeanTestXunitTestFrameworkWithAssemblyFixture(IMessageSink messageSink)
+        public XunitTestFrameworkWithAssemblyFixture(IMessageSink messageSink)
             : base(messageSink) { }
 
         /// <inheritdoc />
