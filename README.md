@@ -3,6 +3,8 @@
 LeanTest.Net is a shared library which is used to simplify the process of creating and maintaining 
 simple, consistent and lean developer tests across projects.
 
+You can find a blog post which described a core principle behind Lean Testing at [medium.com](https://belgaard.medium.com/why-dont-you-take-given-in-bdd-seriously-f168da29f1c).
+
 You can find the documentation in [GitHub Pages](https://belgaard.github.io/Leantest/).
 
 ## Deployment
