@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>LeanTest.NetCore</AssemblyName>
+    <RootNamespace>LeanTest</RootNamespace>
+
+    <PackageId>LeanTest.NetCore</PackageId>
+    <PackageVersion>$(appveyor_build_version)</PackageVersion>
+    <Authors>Remy Hansen</Authors>
+    <Product>LeanTest.NetCore</Product>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright>LeanTest is licensed under the Apache License 2.0</Copyright>
+    <PackageTags>Unit Test UnitTest DeveloperTest Developer</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <AssemblyVersion>$(appveyor_build_version)</AssemblyVersion>
+    <FileVersion>$(appveyor_build_version)</FileVersion>
+
+    <!-- Embed PDB inside dll -->
+    <DebugType>embedded</DebugType>
+
+    <!-- Generate XML doc for consumers -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>8.0</LangVersion>
+    
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LeanTest.Core" Version="3.7.1.282" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.10" />
+  </ItemGroup>
+
+</Project>

@@ -40,6 +40,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeanTest.L0Tests", "Source\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xunit", "Source\xUnit\Xunit.csproj", "{ED4CC4A5-6304-49A8-8113-A763A3F06A9F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore", "NetCore\NetCore.csproj", "{843C7AEC-E15F-48B6-A78A-037C660D909B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{ED4CC4A5-6304-49A8-8113-A763A3F06A9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED4CC4A5-6304-49A8-8113-A763A3F06A9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED4CC4A5-6304-49A8-8113-A763A3F06A9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{843C7AEC-E15F-48B6-A78A-037C660D909B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{843C7AEC-E15F-48B6-A78A-037C660D909B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{843C7AEC-E15F-48B6-A78A-037C660D909B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{843C7AEC-E15F-48B6-A78A-037C660D909B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
