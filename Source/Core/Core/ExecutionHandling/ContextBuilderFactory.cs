@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using LeanTest.Mock;
@@ -26,6 +27,8 @@ namespace LeanTest.Core.ExecutionHandling
         private static CleanContextMode _cleanContextMode;
         internal static readonly ICollection<Func<IIocContainer, IDataStore, IBuilder>> BuilderFactories = new List<Func<IIocContainer, IDataStore, IBuilder>>();
         private static Func<ICreateContextBuilder> _createContextBuilderFactory;
+
+		private static readonly LockedDisposeList DisposablesForCleanup = new LockedDisposeList();
 
         /// <summary>
         /// The lastly created context builder instance for the currently running AppDomain.
@@ -100,9 +103,45 @@ namespace LeanTest.Core.ExecutionHandling
         /// </summary>
         internal static void AddBuilderFactory(Func<IIocContainer, IDataStore, IBuilder> builderFactory) => BuilderFactories.Add(builderFactory);
 
-        /// <summary>
-        /// Eventually, this method will unload the separate app domains set up during <c>Initialize</c>.
-        /// </summary>
-        public static void Cleanup() {}
+        /// <summary>Cleanup by disposing registered disposables.</summary>
+        public static void Cleanup() => DisposablesForCleanup.Clear();
+
+        /// <summary>Register to be disposed at cleanup.</summary>
+        public static void AddForCleanup(IDisposable disposable) => DisposablesForCleanup.Add(disposable);
+        /// <summary>Remove from the list of registered to be disposed at cleanup.</summary>
+        public static void RemoveFromCleanup(IDisposable disposable) => DisposablesForCleanup.Remove(disposable);
+
+        private class LockedDisposeList : ICollection<IDisposable>
+        {
+			private List<IDisposable> _disposables = new List<IDisposable>();
+			private readonly object _theLock = new object(); // Lock for any access, not only the current list instance.
+
+			public void Clear()
+	        {
+		        lock (_theLock)
+		        {
+			        foreach (var disposable in DisposablesForCleanup)
+				        try { disposable?.Dispose(); }
+				        catch { /* ignored */ }
+
+			        _disposables = new List<IDisposable>();
+		        }
+	        }
+			public void Add(IDisposable item)
+			{
+				lock (_theLock) _disposables.Add(item);
+			}
+			public bool Remove(IDisposable item)
+			{
+				lock (_theLock) return _disposables.Remove(item);
+			}
+
+	        IEnumerator<IDisposable> IEnumerable<IDisposable>.GetEnumerator() { throw new NotImplementedException(); }
+	        IEnumerator IEnumerable.GetEnumerator() { throw new NotImplementedException(); }
+	        bool ICollection<IDisposable>.Contains(IDisposable item) { throw new NotImplementedException(); }
+	        void ICollection<IDisposable>.CopyTo(IDisposable[] array, int arrayIndex) { throw new NotImplementedException(); }
+			int ICollection<IDisposable>.Count => throw new NotImplementedException();
+			bool ICollection<IDisposable>.IsReadOnly => throw new NotImplementedException();
+        }
     }
 }
