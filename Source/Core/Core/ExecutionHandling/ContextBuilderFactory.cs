@@ -120,7 +120,7 @@ namespace LeanTest.Core.ExecutionHandling
 	        {
 		        lock (_theLock)
 		        {
-			        foreach (var disposable in DisposablesForCleanup)
+			        foreach (var disposable in _disposables)
 				        try { disposable?.Dispose(); }
 				        catch { /* ignored */ }
 
