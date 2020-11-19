@@ -27,7 +27,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LeanTest.Core" Version="3.7.1.282" />
+    <PackageReference Include="LeanTest.Core" Version="3.9.0.302" />
     <PackageReference Include="xunit" Version="2.4.1" />
   </ItemGroup>
 

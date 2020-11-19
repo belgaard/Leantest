@@ -107,8 +107,10 @@ namespace LeanTest.Core.ExecutionHandling
         public static void Cleanup() => DisposablesForCleanup.Clear();
 
         /// <summary>Register to be disposed at cleanup.</summary>
+        /// <remarks>Don't call from Dispose methods, that would cause a deadlock.</remarks>
         public static void AddForCleanup(IDisposable disposable) => DisposablesForCleanup.Add(disposable);
         /// <summary>Remove from the list of registered to be disposed at cleanup.</summary>
+        /// <remarks>Don't call from Dispose methods, that would cause a deadlock.</remarks>
         public static void RemoveFromCleanup(IDisposable disposable) => DisposablesForCleanup.Remove(disposable);
 
         private class LockedDisposeList : ICollection<IDisposable>
