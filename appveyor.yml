@@ -1,5 +1,5 @@
 # Inspired by https://andrewlock.net/publishing-your-first-nuget-package-with-appveyor-and-myget
-version: 3.9.0.{build}
+version: 3.9.1.{build}
 configuration: Release
 platform: Any CPU
 build_script:  
@@ -20,7 +20,7 @@ deploy:
     secure: whdEZ/zZL09ILdI18RLIeGgL71etbLNJpiIY4hNBhHMbZVZ82ziU6tSyMR4gw1mt
   skip_symbols: true
   on:
-    branch: master	
+    branch: master
 - provider: NuGet
   name: production
   api_key:

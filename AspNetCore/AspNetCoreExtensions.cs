@@ -28,7 +28,7 @@ namespace LeanTest
         public static void Initialize<T>(CleanContextMode mode, Func<WebApplicationFactory<T>> factoryFactory, Func<IServiceProvider, IIocContainer> iocContainerFactory) where T: class =>
             ContextBuilderFactory.Initialize(mode, () =>
             {
-                _wrapped?.Dispose();
+                _wrapped?.DisposeAndRemove();
 
                 var factory = new FactoryWrapper<T>(factoryFactory);
                 _wrapped = factory;
@@ -47,7 +47,7 @@ namespace LeanTest
         public static void Initialize(CleanContextMode mode, Func<IWebHostBuilder> webHostBuilder, Func<IServiceProvider, IIocContainer> iocContainerFactory) =>
             ContextBuilderFactory.Initialize(mode, () =>
             {
-                _wrapped?.Dispose();
+                _wrapped?.DisposeAndRemove();
 
                 var testServer = new TestServer(webHostBuilder());
                 _wrapped = new Wrapper(testServer, testServer.CreateClient());
@@ -66,7 +66,7 @@ namespace LeanTest
         public static void Initialize(CleanContextMode mode, Func<IHostBuilder> hostBuilder, Func<IServiceProvider, IIocContainer> iocContainerFactory) =>
             ContextBuilderFactory.Initialize(mode, () =>
             {
-                _wrapped?.Dispose();
+                _wrapped?.DisposeAndRemove();
 
                 var host = hostBuilder().Build();
                 host.Start();
@@ -106,6 +106,11 @@ namespace LeanTest
         {
             TestServer GetTestServer();
             HttpClient GetHttpClient();
+            void DisposeAndRemove()
+            {
+	            Dispose();
+	            ContextBuilderFactory.RemoveFromCleanup(this);
+            }
         }
 
         /// <summary>Get client and test server from ctor.</summary>
@@ -118,6 +123,7 @@ namespace LeanTest
             {
                 _testServer = testServer;
                 _client = client;
+                ContextBuilderFactory.AddForCleanup(this);
             }
             public TestServer GetTestServer() => _testServer;
             public HttpClient GetHttpClient() => _client;
@@ -140,11 +146,16 @@ namespace LeanTest
             private TestServer _testServer;
             private HttpClient _client;
 
-            public FactoryWrapper(Func<WebApplicationFactory<T>> factoryFactory) => _factory = factoryFactory();
+            public FactoryWrapper(Func<WebApplicationFactory<T>> factoryFactory)
+            {
+	            _factory = factoryFactory();
+	            ContextBuilderFactory.AddForCleanup(this);
+            }
 
             public TestServer GetTestServer() => _testServer ??= _factory?.Server;
             public HttpClient GetHttpClient() => _client ??= _factory?.CreateClient();
             public WebApplicationFactory<T> GetFactory() => _factory;
+
             public void Dispose()
             {
                 (_factory?.Services as IDisposable)?.Dispose();
