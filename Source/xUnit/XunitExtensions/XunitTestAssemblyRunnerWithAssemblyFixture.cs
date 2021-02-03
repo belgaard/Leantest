@@ -38,7 +38,18 @@ namespace LeanTest.Xunit.XunitExtensions
 
                 // Instantiate all the fixtures
                 foreach (var fixtureAttr in fixturesAttrs)
-                    _assemblyFixtureMappings[fixtureAttr.FixtureType] = Activator.CreateInstance(fixtureAttr.FixtureType);
+	                try
+	                {
+		                _assemblyFixtureMappings[fixtureAttr.FixtureType] =
+			                Activator.CreateInstance(fixtureAttr.FixtureType);
+	                }
+	                catch (Exception e)
+	                {
+		                if (fixtureAttr.FixtureType.Name.Contains("AssemblyInitializer"))
+			                throw new MissingMethodException(
+				                "It must be possible to instantiate the AssemblyInitializer class, it must not be static.", e);
+		                throw;
+	                }
             });
         }
 
