@@ -35,6 +35,16 @@ namespace LeanTest.Core.ExecutionHandling
 
 		    return this;
 	    }
+	    /// <summary>Declare data of type <c>Type</c> to be stored, then used to fill in builders (e.g. 'mocks' and 'state') during <c>Build</c>.</summary>
+	    public ContextBuilder WithData(Type type, object data)
+	    {
+		    MethodInfo withDataMethod = typeof(ContextBuilder)
+			    .GetMethods()
+			    .First(m => m.Name == nameof(WithData) && m.IsGenericMethod);
+		    withDataMethod.MakeGenericMethod(type).Invoke(this, new[] { data });
+
+		    return this;
+	    }
 
 		/// <summary>Pre-declare the intent to handle data of type <c>T</c>. The effect will be to have <c>PreBuild</c>, <c>Build</c> and <c>PostBuild</c> run for builders that
 		/// support data of type <c>T</c>, even for tests which do not declare data of type <c>T</c>.</summary>
@@ -43,6 +53,17 @@ namespace LeanTest.Core.ExecutionHandling
 			DataStore.WithData<T>();
 			foreach (IBuilder builder in _builders)
 				builder.WithBuilderForData<T>();
+
+			return this;
+		}
+		/// <summary>Pre-declare the intent to handle data of type <c>Type</c>. The effect will be to have <c>PreBuild</c>, <c>Build</c> and <c>PostBuild</c> run for builders that
+		/// support data of type <c>Type</c>, even for tests which do not declare data of type <c>T</c>.</summary>
+		public ContextBuilder WithData(Type type)
+		{
+			MethodInfo withDataMethod = typeof(ContextBuilder)
+				.GetMethods()
+				.First(m => m.Name == nameof(WithData) && m.IsGenericMethod);
+			withDataMethod.MakeGenericMethod(type).Invoke(this, Array.Empty<object>());
 
 			return this;
 		}
