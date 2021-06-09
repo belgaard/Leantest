@@ -10,6 +10,7 @@ namespace LeanTest.Xunit
 		/// <summary>ctor</summary>
 		/// <param name="fixtureType"></param>
 		public AssemblyFixtureAttribute(Type fixtureType) => FixtureType = fixtureType;
+		/// <summary></summary>
 		public Type FixtureType { get; }
 	}
 }

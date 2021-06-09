@@ -14,6 +14,7 @@ namespace LeanTest.Xunit
 		/// <summary>ctor</summary>
 		/// <param name="testOutput">This is what you were passed in your Xunit test class ctor.</param>
 		public TestContext(ITestOutputHelper testOutput) => _testOutput = testOutput ?? throw new ArgumentNullException();
+		/// <summary></summary>
 		public string MethodName => GetTest().TestCase.TestMethod.Method.Name;
 
 		private ITest GetTest() => _test ??= (ITest)GetTestMethod().GetValue(_testOutput);

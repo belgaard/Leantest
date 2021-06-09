@@ -4,6 +4,7 @@ using Examples.L0Tests.Domain;
 using LeanTest.Core.ExecutionHandling;
 using LeanTest.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TestScenarioIdAttribute = LeanTest.Attribute.TestScenarioIdAttribute;
 
 namespace Examples.L0Tests
 {
