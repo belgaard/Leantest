@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>LeanTest.AspNetCore</AssemblyName>
     <RootNamespace>LeanTest</RootNamespace>
-
+    
     <PackageId>LeanTest.AspNetCore</PackageId>
     <PackageVersion>$(appveyor_build_version)</PackageVersion>
     <Authors>Brian Elgaard Bennett</Authors>
@@ -27,9 +27,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LeanTest.Core" Version="4.*" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Source\Core\Core.csproj" />
   </ItemGroup>
 
 </Project>
