@@ -20,12 +20,16 @@ namespace LeanTest.Core.ExecutionHandling
 		};
 		internal IDataStore DataStore { get; }
 
+		/// <summary>Public ctor will use the default builder factories.</summary>
+		/// <remarks>You can use this factory as an alternative to the static context builder factories.</remarks>
+		public ContextBuilder(IIocContainer container) : this(container, default) {}
+
 		/// <summary>Initialize internal fields, including data store and builders (for e.g. 'mocks' and 'state').</summary>
-		public ContextBuilder(IIocContainer container, params Func<IIocContainer, IDataStore, IBuilder>[] builderFactories)
+		internal ContextBuilder(IIocContainer container, params Func<IIocContainer, IDataStore, IBuilder>[] builderFactories)
 		{
 			_container = container ?? throw new ArgumentNullException(nameof(container));
 
-			if (!builderFactories!.Any())
+			if (!builderFactories?.Any() ?? true)
 				builderFactories = defaultBuilderFactories;
 
 			DataStore = new DataStore();
