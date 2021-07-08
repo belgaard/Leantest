@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using LeanTest.Mock;
 
 namespace LeanTest.Core.ExecutionHandling
 {
@@ -12,15 +13,23 @@ namespace LeanTest.Core.ExecutionHandling
 	{
 		private readonly IIocContainer _container;
 		private readonly IBuilder[] _builders;
+		private readonly Func<IIocContainer, IDataStore, IBuilder>[] defaultBuilderFactories = 
+		{
+            (container, dataStore) => new GenericBuilder(container, dataStore, typeof(IStateHandler<>)),
+            (container, dataStore) => new GenericBuilder(container, dataStore, typeof(IMockForData<>))
+		};
 		internal IDataStore DataStore { get; }
 
 		/// <summary>Initialize internal fields, including data store and builders (for e.g. 'mocks' and 'state').</summary>
-		internal ContextBuilder(IIocContainer container, params Func<IIocContainer, IDataStore, IBuilder>[] builderFactories)
+		public ContextBuilder(IIocContainer container, params Func<IIocContainer, IDataStore, IBuilder>[] builderFactories)
 		{
 			_container = container ?? throw new ArgumentNullException(nameof(container));
 
+			if (!builderFactories!.Any())
+				builderFactories = defaultBuilderFactories;
+
 			DataStore = new DataStore();
-			_builders = builderFactories?.Select(builderFactory => builderFactory(_container, DataStore)).ToArray() ?? throw new ArgumentNullException(nameof(builderFactories));
+			_builders = builderFactories.Select(builderFactory => builderFactory(_container, DataStore)).ToArray();
 		}
 
 		/// <summary>Get an instance of type <c>T</c> from the IoC container.</summary>
