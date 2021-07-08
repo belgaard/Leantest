@@ -6,7 +6,7 @@ using LeanTest.Core.ExecutionHandling;
 
 namespace LeanTest.Mock
 {
-    public class GenericBuilder : IBuilder
+    internal class GenericBuilder : IBuilder
     {
         private const string WithDataMethod = nameof(TypedData<GenericBuilder>.WithData);
         private const string PreBuildMethod = nameof(TypedData<GenericBuilder>.PreBuild);

@@ -6,7 +6,7 @@ namespace LeanTest.Core.ExecutionHandling
     /// <summary>
     /// Interface for a data store that hold all data in the context.
     /// </summary>
-    public interface IDataStore
+    internal interface IDataStore
     {
         /// <summary>The data of the store, per <c>Type</c> of data.</summary>
         IDictionary<Type, List<object>> TypedData { get; }
