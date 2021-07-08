@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Examples.L0Tests.Application;
 using Examples.L0Tests.Domain;
+using Examples.L0Tests.TestSetup;
 using LeanTest.Core.ExecutionHandling;
 using LeanTest.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -19,7 +20,7 @@ namespace Examples.L0Tests
 		[TestInitialize]
 		public void TestInitialize()
 		{
-			_contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+			_contextBuilder = new MyContextBuilderFactory().ContextBuilder
 				.WithData<MyData>()
 				.RegisterAttributes(TestContext);
 

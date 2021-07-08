@@ -1,17 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using LeanTest.Core.ExecutionHandling;
 using LeanTest.Attribute;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestScenarioIdAttribute = LeanTest.Attribute.TestScenarioIdAttribute;
-using TestDescriptionAttribute = LeanTest.Attribute.TestDescriptionAttribute;
 using TestTagAttribute = LeanTest.Attribute.TestTagAttribute;
 
 namespace LeanTest.MSTest
 {
-    /// <summary>Adds support for adding information on tests to test run results.</summary>
-    public static class ContextBuilderExtensions
+	/// <summary>Adds support for adding information on tests to test run results.</summary>
+	public static class ContextBuilderExtensions
     {
         /// <summary>Registers an intent to use the <c>TestScenarioId</c> attribute on test methods.</summary>
         /// <remarks>This causes LeanTest scenario IDs to be written to the test log (.trx-file).</remarks>
