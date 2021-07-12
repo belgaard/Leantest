@@ -89,26 +89,39 @@
 </ul>
 				<div id="static-content" class="markdown">
 					<h1 id="introduction">Introduction</h1>
-<p>The need for a library like LeanTest.Net became obvious when we noticed that a set of mocks for a non-trivial set of automated tests tended to not be designed as a set. Also, there was no consistency in the way that test data was passed to mock instances. The consequence of this was more often than not that it was difficult to maintain the set of tests and it was very difficult to reason about functional coverage.</p>
+<p>The need for a library like LeanTest.Net became obvious when we noticed that a set of test doubles, which we prefer to refer to as <em>mocks</em>, for a non-trivial <em>set of automated tests tended to not be designed as a set</em>. Also, there was no consistency in the way that test data was passed to mock instances. The consequence of this was more often than not that it was difficult to maintain the set of tests and it was very difficult to reason about functional coverage.</p>
 <p>We found that the Builder pattern could serve as a suitable abstraction for passing data in a consistent manner to a set of consistently designed mocks.</p>
 <p>On top of this Builder pattern implementation we added a number of guiding principles which gave us an even higher level of consistency. One of the guiding principles is that we want to <em>put as much code under test as possible</em>. As a consequence of that <em>we mock as little as possible</em>. Also, when we do mock, we try to do it in a way which mocks away as little production code as possible. We call these and a few more guiding principles the <em>Lean Testing methodology</em>.</p>
 <p>Funnily enough, it turned out that using our Builder pattern and following our guiding principles, our tests not only became more easy to maintain, but it was also much easier to reason about functional coverage. What started as a <em>better way of unit testing</em> for developers, was now what testers call <em>real tests</em>. In fact, the gap between developers and (automation) testers has been reduced significantly, which is a very important outcome.</p>
-<p>We get all of that, and still we have fast and 100% deterministic test, as we would expect for unit tests.</p>
+<p>We get all of that, and still we have fast and 100% deterministic tests, as we would expect for unit tests.</p>
 <p>At the time of writing, we write such tests at <em>all levels</em>, ranging from tests which are similar to traditional unit tests, middle-ground tests which cover e.g. database stored procedures, and all the way to full-fledged system integration tests. All of these with a consistent syntax and design of test code and mocks.</p>
 <p>Covering all levels required that we expanded the concept of mocks. Essentially, to us a mock is something that substitutes, or <em>mocks away</em>, some production code, whereas a <em>state handler</em> is something that handles data for the test target without mocking away production code. Low levels of test, those that are similar to traditional unit tests, will do some mocking. High levels of tests, those that are similar to integration tests, will, at least ideally, not mock at all but will probably use state handlers. The middle ground tests will use a mix. State handlers need infrastructure support in order to interact with a test environment, but LeanTest.Net is not concerned with the details of that.</p>
 <h2 id="the-concept">The Concept</h2>
-<p>The <em>Lean Testing methodology</em> (formerly known as <em>developer testing</em>) is not very well understood. I hope in the following to shed a little light on the subject. Also, watch <a href="https://blog.elgaard.com">my blog</a>, I may eventually explain the concept in great detail there.</p>
-<p>In short, this is about developers writing tests while developing code. And I mean tests that testers would call <em>real</em> tests, not simply unit tests. Tests which are simple to write initially, then simple to maintain going forward. Tests which cover actual functionality which is recognizable by and valuable to the business. In fact, tests which are conceptually and syntactically identical to the tests that automation testers write.</p>
+<p>The underlying thoughts behind the <em>Lean Testing methodology</em> (formerly known as <em>developer testing</em>) are described in three articles on medium.com,</p>
+<ul>
+<li><p><a href="https://medium.com/codex/should-you-unit-test-fd801abf9d04">Should You Unit Test?</a></p>
+</li>
+<li><p><a href="https://medium.com/swlh/should-you-unit-test-in-asp-net-core-793de767ac68">Should You Unit-Test in ASP.NET Core?</a></p>
+</li>
+<li><p><a href="https://javascript.plainenglish.io/why-dont-you-take-given-in-bdd-seriously-f168da29f1c">Why Don’t You Take ‘Given’ in BDD Seriously?</a></p>
+</li>
+</ul>
+<p>Another angle of this topic was described at the IWCT 2021 conference in the paper,</p>
+<ul>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/9440154">A Practical Method for API Testing in the Context of Continuous Delivery and Behavior Driven Development</a> (<a href="https://zenodo.org/record/4661956#.YOv17Pkzabg">you can see the presentation video here</a>)</li>
+</ul>
+<p>The following is an intro to the subject.</p>
+<p>In short, this is about <em>developers writing tests while developing code</em>. And I mean tests that testers would call <em>real</em> tests, not simply unit tests. Tests which are simple to write initially, then simple to maintain going forward. Tests which cover actual functionality which is recognizable by and valuable to the business. In fact, tests which are conceptually and syntactically identical to the tests that automation testers would write.</p>
 <p>The way we achieve all this is by <em>maximizing code under test</em> but <em>minimizing data</em>.</p>
-<p>Before we dig into that, let's look at an even more fundamental concept, that of <em>existing state</em>.</p>
-<h3 id="existing-state">Existing state</h3>
-<p>When <em>testers write tests</em> they often talk about <em>test data</em>. What they usually mean is that they use a set of test data, say a washed and minimized version of the full production database, which is sufficient for a number of tests to run.</p>
+<p>Before we dig into that, let's look at an even more fundamental concept, that of <em>existing state</em> (or <em>context</em>).</p>
+<h3 id="existing-state-or-context">Existing state (or context)</h3>
+<p>When <em>testers write tests</em> they often talk about <em>test data</em>. What they usually mean is that they use data, say a washed and minimized version of the full production database, which is sufficient for a number of tests to run.</p>
 <p>There are well known problems with this approach, for example that it can be difficult to keep the data and schema up-to-date with changes to the production system. Another problem is that each test will make assumptions about specific data in the set and these assumptions are usually not clear and documented, causing tests to fail mysteriously when the test data is updated.</p>
 <p>Personally, I don't like such a scatter-gun approach to test data, but I will come back to that.</p>
 <p>When <em>developers write unit tests</em> they usually don't think much about test data as a concept, but naturally they do use it.</p>
 <p>In a unit test, data is usually passed directly in each test, possibly via some kind of a mocking framework. Some of this data is similar to the test database in a <em>tester test</em>, while other data is input to the target under test. Usually, it is not clear which is which because unit tests traditionally work on such a low level that input to the target under test in a unit test would be data read from a database in a <em>tester test</em>.</p>
 <p>The effect of this is that for a traditional unit tests, it is not clear of what kind the data is, there is often many mocks and there is a separate mocking strategy per test. I don't like any of that.</p>
-<p>We have a single concept for the equivalent of a test database in Lean Testing - we call it <em>existing state</em>. We simply insist that each test must declare what data it needs in order to succeed. For this we have a <em>test context</em> to which we declare the data needed per test. Something like the following,</p>
+<p>We have a single concept for the equivalent of a test database in Lean Testing - we call it <em>existing state</em> (or <em>existing context</em>). We simply insist that each test must declare what data it needs in order to succeed. For this we have a <em>test context</em> to which we declare the data needed per test. Something like the following,</p>
 <pre class="csharp"><code class="csharp">		<span class="punctuation">[</span><span class="typename" data-toggle="tooltip" title="Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute">TestMethod</span><span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="LeanTest.Attribute.TestScenarioIdAttribute">TestScenarioId</span><span class="punctuation">(</span><span class="string" data-toggle="tooltip" title="string">&quot;SimpleExamples&quot;</span><span class="punctuation">)</span><span class="punctuation">]</span>
 		<span class="keyword" id="Examples.L0Tests.TestMyApplicationService.GetAgeMustReturn10WhenKeyMatchesNewUpData()" data-toggle="tooltip" title="Examples.L0Tests.TestMyApplicationService.GetAgeMustReturn10WhenKeyMatchesNewUpData()">public</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="Examples.L0Tests.TestMyApplicationService.GetAgeMustReturn10WhenKeyMatchesNewUpData()">GetAgeMustReturn10WhenKeyMatchesNewUpData</span><span class="punctuation">(</span><span class="punctuation">)</span>
 		<span class="punctuation">{</span>
@@ -124,10 +137,10 @@
 		<span class="punctuation">}</span>
 </code></pre>
 <p>In the above example, we have declared that our test must succeed if the only test data available is one specific instance of MyData. By the magic of dependency injection and a builder pattern (which will be described below), the data will be available to our test target.</p>
-<p>Our test target can potentially be part of a huge and tangled code base, but by minimizing the data per test, we can handle that with very few and simple mocks. Which is what the next section is about.</p>
+<p>Our test target can potentially be part of a huge and entangled code base, but by minimizing the data per test, we can handle that with very few and simple mocks. Which is what the next section is about.</p>
 <h3 id="maximizing-code-under-test-but-minimizing-data">Maximizing code under test but minimizing data</h3>
 <p>Maximizing code under test means not mocking away logic unless we really have to. And we only really have to mock logic away if we cannot control it deterministically (or if it is really slow to execute). In practice, this usually means that truly external dependencies must be mocked and nothing more. And we have a single mocking strategy for an entire test suite, having slightly different mocking per test case is a no-no.</p>
-<p>Minimizing data means ensuring that exactly the data needed for a given test to run (yes, we do this <em>per-test</em> unlike the way we do mocking) is provided for the test. With naming we try to express exactly what characteristica of the data will make the test run.</p>
+<p>Minimizing data means ensuring that exactly the data needed for a given test to run (yes, we declare data <em>per-test</em>) is provided for the test. With naming we try to express exactly what characteristics of the data will make the test run.</p>
 <h3 id="the-builder-pattern">The builder pattern</h3>
 <p>In the above example, we declare the data, then call <code>Build</code>,</p>
 <pre class="csharp"><code class="csharp">			<span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../../Source/Examples.L0Tests/TestMyApplicationService.html#Examples.L0Tests.TestMyApplicationService._contextBuilder">_contextBuilder</a></span>
@@ -138,10 +151,10 @@
 <p>We use a builder pattern for our data, as that layer of indirection from where the data is put allows us to write all levels of tests with the same syntax and the same concepts. The same test code will run in different levels of test,</p>
 <ul>
 <li>completely in-memory with all external dependencies mocked,</li>
-<li>in-memory, except for controllable external dependencies, such as e.g. in-memory databases (I use MongoDb no-SQL and Microsoft LocalDb SQL), and</li>
-<li>in a fully integrated environmnet with (ideally) nothing mocked out.</li>
+<li>in-memory, except for controllable external dependencies, such as e.g. in-memory databases (I use MongoDb no-SQL, Microsoft LocalDb SQL and Microsoft SQL Server in a Docker container), and</li>
+<li>in a fully integrated environment with (ideally) nothing mocked out.</li>
 </ul>
-<p>The differences among these models of execution is handled behind the scenes, with simple supporting test code which can be implemented per level of test. When we mock away logic, we substitute it with test code that implements an interface <code>IMockForData&lt;&gt;</code> with the type of data declared as a generic parameter. When we handle state in e.g. a database without mocking away the database code, we have test code which implements <code>IStateHandler&lt;&gt;</code>.</p>
+<p>The differences among these models of execution is handled behind the scenes, with simple test code which can be implemented per level of test. When we say that we <em>mock away logic</em>, we mean that we substitute production code with test code which implements an interface <code>IMockForData&lt;&gt;</code> with the type of data declared as a generic parameter. When we handle state in e.g. a database without mocking away the database code, we have test code which implements <code>IStateHandler&lt;&gt;</code>.</p>
 <p>It is that simple - the LeanTest nuGet packages handle the rest.</p>
 <p>And the good part is that experience shows that for large code bases only a few of these implementations are needed, and each of these are very simple with hardly any logic. When we made <a href="https://www.tradingfloor.com/">tradingfloor.com</a> we had a handful of mocks/state handlers with cyclomatic complexity close to 1.</p>
 <p>For tests which run in complex and shared test environments, it is not realistic to minimize data the way we can in in-memory tests. In such environments, state handler implementations will check if the required data is there and fail in a recognizable way if the required data is not there.</p>
@@ -158,7 +171,7 @@
     </div>
     
     <footer class="panel-footer text-center">
-        <div align="center">Copyright © 2019 Brian Elgaard Bennett</div>
+        <div align="center">Copyright © 2017-2021 Brian Elgaard Bennett</div>
 		<div align="right">
 			<small>
 				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.
