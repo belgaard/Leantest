@@ -5,7 +5,7 @@ ProjectName: LeanTest
 GitHub: https://github.com/SaxoBank/Leantest
 Download: https://www.nuget.org/packages?q=leantest
 License: LicenseApache.html
-Footer: "Copyright © 2019 Brian Elgaard Bennett"
+Footer: "Copyright © 2017-2021 Brian Elgaard Bennett"
 MarkdownStyle: book
 ShowDescriptionsInToc: false
 BootstrapStyle: readable
