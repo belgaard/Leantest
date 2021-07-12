@@ -89,51 +89,24 @@
 
 <span class="keyword" id="LeanTest.Mock">namespace</span> LeanTest<span class="punctuation">.</span>Mock
 <span class="punctuation">{</span>
-     &lt;summary&gt;
-    /// If you find it convenient, you can use this as a base class for classes which implement &lt;c&gt;IMockForData&lt;/c&gt; type &lt;c&gt;T&lt;/c&gt;.
-    /// &lt;/summary&gt;
-    <span class="keyword" id="LeanTest.Mock.TypedData<T>">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-    /// If you find it convenient, you can use this as a base class for classes which implement <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>IMockForData<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
-    /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+     &lt;summary&gt;If you find it convenient, you can use this as a base class for classes which implement &lt;c&gt;IMockForData&lt;/c&gt; type &lt;c&gt;T&lt;/c&gt;.&lt;/summary&gt;
+    <span class="keyword" id="LeanTest.Mock.TypedData<T>">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>If you find it convenient, you can use this as a base class for classes which implement <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>IMockForData<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span class="keyword">class</span> <span class="typename">TypedData</span><span class="punctuation">&lt;</span><span class="typename"><a href="../../../Source/Core/Mock/TypedData.html#T">T</a></span><span class="punctuation">&gt;</span>
     <span class="punctuation">{</span>
-         &lt;summary&gt;
-        /// Stores data for type &lt;c&gt;T&lt;/c&gt;.
-        /// &lt;/summary&gt;
-        <span class="keyword" id="LeanTest.Mock.TypedData<T>.Data">protected</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-        /// Stores data for type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
-        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+         &lt;summary&gt;Stores data for type &lt;c&gt;T&lt;/c&gt;.&lt;/summary&gt;
+        <span class="keyword" id="LeanTest.Mock.TypedData<T>.Data">protected</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Stores data for type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span class="typename" data-toggle="tooltip" title="System.Collections.Generic.List<T>">List</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../Source/Core/Mock/TypedData.html#T">T</a></span><span class="punctuation">&gt;</span> Data <span class="punctuation">{</span> <span class="keyword" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.Data.get">get</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.Data.get">;</span> <span class="punctuation">}</span> <span class="punctuation">=</span> <span class="keyword" data-toggle="tooltip" title="System.Collections.Generic.List<T>">new</span> <span class="typename">List</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../Source/Core/Mock/TypedData.html#T">T</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
-         &lt;summary&gt;
-        /// Store data of type &lt;c&gt;T&lt;/c&gt;.
-        /// &lt;/summary&gt;
-        <span class="keyword" id="LeanTest.Mock.TypedData<T>.WithData(T)" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.WithData(T)">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-        /// Store data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.
-        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
-<span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.WithData(T)">WithData</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../Source/Core/Mock/TypedData.html#T">T</a></span> data<span class="punctuation">)</span>
-        <span class="punctuation">{</span>
-            <span data-toggle="tooltip" title="System.Collections.Generic.List<T>"><a href="../../../Source/Core/Mock/TypedData.html#LeanTest.Mock.TypedData<T>.Data">Data</a></span><span class="punctuation" data-toggle="tooltip" title="System.Collections.Generic.List<T>.Add(T)">.</span><span data-toggle="tooltip" title="System.Collections.Generic.List<T>.Add(T)">Add</span><span class="punctuation">(</span><span data-toggle="tooltip" title="T">data</span><span class="punctuation">)</span><span class="punctuation">;</span>
-        <span class="punctuation">}</span>
-         &lt;summary&gt;
-        /// Override this in order to execute pre build actions.
-        /// &lt;/summary&gt;
-        <span class="keyword" id="LeanTest.Mock.TypedData<T>.PreBuild()" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.PreBuild()">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-        /// Override this in order to execute pre build actions.
-        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+         &lt;summary&gt;Store data of type &lt;c&gt;T&lt;/c&gt;.&lt;/summary&gt;
+        <span class="keyword" id="LeanTest.Mock.TypedData<T>.WithData(T)" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.WithData(T)">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Store data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.WithData(T)">WithData</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../Source/Core/Mock/TypedData.html#T">T</a></span> data<span class="punctuation">)</span> <span class="punctuation">=&gt;</span> <span data-toggle="tooltip" title="System.Collections.Generic.List<T>"><a href="../../../Source/Core/Mock/TypedData.html#LeanTest.Mock.TypedData<T>.Data">Data</a></span><span class="punctuation" data-toggle="tooltip" title="System.Collections.Generic.List<T>.Add(T)">.</span><span data-toggle="tooltip" title="System.Collections.Generic.List<T>.Add(T)">Add</span><span class="punctuation">(</span><span data-toggle="tooltip" title="T">data</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.WithData(T)">;</span>
+         &lt;summary&gt;Override this in order to execute pre build actions.&lt;/summary&gt;
+        <span class="keyword" id="LeanTest.Mock.TypedData<T>.PreBuild()" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.PreBuild()">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Override this in order to execute pre build actions.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span class="keyword" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.PreBuild()">virtual</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.PreBuild()">PreBuild</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span> <span class="punctuation">}</span>
-         &lt;summary&gt;
-        /// Override this in order to execute build actions per type.
-        /// &lt;/summary&gt;
-        <span class="keyword" id="LeanTest.Mock.TypedData<T>.Build(System.Type)" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.Build(System.Type)">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-        /// Override this in order to execute build actions per type.
-        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+         &lt;summary&gt;Override this in order to execute build actions per type.&lt;/summary&gt;
+        <span class="keyword" id="LeanTest.Mock.TypedData<T>.Build(System.Type)" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.Build(System.Type)">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Override this in order to execute build actions per type.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span class="keyword" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.Build(System.Type)">virtual</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.Build(System.Type)">Build</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Type">Type</span> type<span class="punctuation">)</span> <span class="punctuation">{</span> <span class="punctuation">}</span>
-         &lt;summary&gt;
-        /// Override this in order to execute post build actions.
-        /// &lt;/summary&gt;
-        <span class="keyword" id="LeanTest.Mock.TypedData<T>.PostBuild()" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.PostBuild()">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-        /// Override this in order to execute post build actions.
-        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+         &lt;summary&gt;Override this in order to execute post build actions.&lt;/summary&gt;
+        <span class="keyword" id="LeanTest.Mock.TypedData<T>.PostBuild()" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.PostBuild()">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Override this in order to execute post build actions.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span class="keyword" data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.PostBuild()">virtual</span> <span class="keyword" data-toggle="tooltip" title="void">void</span> <span data-toggle="tooltip" title="LeanTest.Mock.TypedData<T>.PostBuild()">PostBuild</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span> <span class="punctuation">}</span>
     <span class="punctuation">}</span>
 <span class="punctuation">}</span>

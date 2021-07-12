@@ -96,15 +96,27 @@
         <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Declare data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>T<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
 <span id="LeanTest.Mock.IMockForData<T>.WithData(T)" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.WithData(T)">WithData</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="T"><a href="../../../Source/Core/Mock/IMockForData.html#T">T</a></span> data<span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.WithData(T)">;</span>
          &lt;summary&gt;Called before build only once for the instance, allows you to prepare to populate state.&lt;/summary&gt;
-        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Called before build only once for the instance, allows you to prepare to populate state.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
-<span id="LeanTest.Mock.IMockForData<T>.PreBuild()" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.PreBuild()">PreBuild</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.PreBuild()">;</span>
-         &lt;summary&gt;Use the declared data to populate state, called after all data of type &lt;c&gt;type&lt;/c&gt; has been put to the instance with &lt;c&gt;WithData&lt;/c&gt;.&lt;/summary&gt;
-        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Use the declared data to populate state, called after all data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>type<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> has been put to the instance with <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>WithData<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
-<span id="LeanTest.Mock.IMockForData<T>.Build(System.Type)" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.Build(System.Type)">Build</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Type">Type</span> type<span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.Build(System.Type)">;</span>
-         &lt;summary&gt;Called after build, only once for the instance.&lt;/summary&gt;
-        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Called after build, only once for the instance.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
-<span id="LeanTest.Mock.IMockForData<T>.PostBuild()" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.PostBuild()">PostBuild</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.PostBuild()">;</span>
-    <span class="punctuation">}</span>
+<span class="preprocessor">#if NET472</span>        void PreBuild();
+<span class="preprocessor">#else</span>        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Called before build only once for the instance, allows you to prepare to populate state.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="punctuation">#</span><span class="keyword">if</span> NET472
+<span class="punctuation">#</span><span class="keyword">else</span>
+<span id="LeanTest.Mock.IMockForData<T>.PreBuild()" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.PreBuild()">PreBuild</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span><span class="punctuation">}</span>
+<span class="preprocessor">#endif</span>         &lt;summary&gt;Use the declared data to populate state, called after all data of type &lt;c&gt;type&lt;/c&gt; has been put to the instance with &lt;c&gt;WithData&lt;/c&gt;.&lt;/summary&gt;
+<span class="preprocessor">#if NET472</span>        void Build(Type type);
+<span class="preprocessor">#else</span>        <span class="keyword" data-toggle="tooltip" title="void">void</span> <span class="punctuation">#</span><span class="keyword">endif</span>
+/// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Use the declared data to populate state, called after all data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>type<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span> has been put to the instance with <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>WithData<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="punctuation">#</span><span class="keyword">if</span> NET472
+<span class="punctuation">#</span><span class="keyword">else</span>
+<span id="LeanTest.Mock.IMockForData<T>.Build(System.Type)" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.Build(System.Type)">Build</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Type">Type</span> type<span class="punctuation">)</span> <span class="punctuation">{</span><span class="punctuation">}</span>
+<span class="preprocessor">#endif</span>         &lt;summary&gt;Called after build, only once for the instance.&lt;/summary&gt;
+<span class="preprocessor">#if NET472</span>        void PostBuild();
+<span class="preprocessor">#else</span>        <span class="keyword" data-toggle="tooltip" title="void">void</span> <span class="punctuation">#</span><span class="keyword">endif</span>
+/// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Called after build, only once for the instance.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="punctuation">#</span><span class="keyword">if</span> NET472
+<span class="punctuation">#</span><span class="keyword">else</span>
+<span id="LeanTest.Mock.IMockForData<T>.PostBuild()" data-toggle="tooltip" title="LeanTest.Mock.IMockForData<T>.PostBuild()">PostBuild</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span><span class="punctuation">}</span>
+<span class="preprocessor">#endif</span>    <span class="punctuation">}</span>
+<span class="punctuation">#</span><span class="keyword">endif</span>
 <span class="punctuation">}</span>
 </code></pre>
 

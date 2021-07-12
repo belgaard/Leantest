@@ -1,0 +1,158 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>XunitTestCollectionRunnerWithAssemblyFixture - LeanTest</title>
+
+	<link rel="icon" type="image/x-icon" href="../../../images/favicon.ico">
+    <link rel="stylesheet" href="../../../bootstrap/css/readable/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../../sidebar/sidebar.min.css" />
+<link rel="stylesheet" href="../../../css/book.min.css" />
+<link rel="stylesheet" href="../../../syntax-highlight/solarized-light.min.css" />
+<link rel="stylesheet" href="../../../mermaid/mermaid.css" />
+
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#sidebar-toggle" id="sidebar-toggle">
+					<i id="sidebar-toggle-icon" class="hidden-md hidden-lg hidden-xl fa fa-angle-double-right" aria-hidden="true"></i>
+					LeanTest
+				</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					<li><a href="https://github.com/SaxoBank/Leantest"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+                    <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-download" aria-hidden="true"></i> Download</a></li>
+                    <li><a href="../../../LicenseApache.html">License</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-md-3 hidden-sm hidden-xs">
+                
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>On This Page</h4>
+            </div>
+            <div id="header-menu" class="panel-body main-menu">
+                <ul></ul>
+            </div>
+        </div>  
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Table of Contents</h4>
+            </div>
+            <div class="panel-body main-menu">
+                <ul>
+	<li><a href="../../../index.html">Home</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../Introduction.html">Introduction</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../LicenseApache.html">License</a></li>
+	<ul>
+	</ul>
+	<li><a href="../../../README.html">Readme</a></li>
+	<ul>
+	</ul>
+</ul>
+            </div>
+        </div>
+
+            </div>
+			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+								<div id="static-content" class="markdown">
+					<pre class="csharp"><code class="csharp"><span class="keyword">using</span> System<span class="punctuation">;</span>
+<span class="keyword">using</span> System<span class="punctuation">.</span>Collections<span class="punctuation">.</span>Generic<span class="punctuation">;</span>
+<span class="keyword">using</span> System<span class="punctuation">.</span>Threading<span class="punctuation">;</span>
+<span class="keyword">using</span> System<span class="punctuation">.</span>Threading<span class="punctuation">.</span>Tasks<span class="punctuation">;</span>
+<span class="keyword">using</span> Xunit<span class="punctuation">.</span>Abstractions<span class="punctuation">;</span>
+<span class="keyword">using</span> Xunit<span class="punctuation">.</span>Sdk<span class="punctuation">;</span>
+
+<span class="keyword" id="LeanTest.Xunit.XunitExtensions">namespace</span> LeanTest<span class="punctuation">.</span>Xunit<span class="punctuation">.</span>XunitExtensions
+<span class="punctuation">{</span>
+	 &lt;inheritdoc /&gt;
+	<span class="keyword" id="LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture">public</span> /// <span class="punctuation">&lt;</span>inheritdoc <span class="punctuation">/&gt;</span>
+<span class="keyword">class</span> <span class="typename">XunitTestCollectionRunnerWithAssemblyFixture</span> <span class="punctuation">:</span> <span class="typename" data-toggle="tooltip" title="Xunit.Sdk.XunitTestCollectionRunner">XunitTestCollectionRunner</span>
+    <span class="punctuation">{</span>
+        <span class="keyword">readonly</span> <span class="typename" data-toggle="tooltip" title="System.Collections.Generic.Dictionary<System.Type, object>">Dictionary</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="System.Type">Type</span><span class="punctuation">,</span> <span class="keyword" data-toggle="tooltip" title="object">object</span><span class="punctuation">&gt;</span> <span id="LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture._assemblyFixtureMappings">_assemblyFixtureMappings</span><span class="punctuation">;</span>
+        <span class="keyword">readonly</span> <span class="typename" data-toggle="tooltip" title="Xunit.Abstractions.IMessageSink">IMessageSink</span> <span id="LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture._diagnosticMessageSink">_diagnosticMessageSink</span><span class="punctuation">;</span>
+
+         &lt;inheritdoc /&gt;
+        <span class="keyword" id="LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture.XunitTestCollectionRunnerWithAssemblyFixture(System.Collections.Generic.Dictionary<System.Type, object>, Xunit.Abstractions.ITestCollection, System.Collections.Generic.IEnumerable<Xunit.Sdk.IXunitTestCase>, Xunit.Abstractions.IMessageSink, Xunit.Sdk.IMessageBus, Xunit.Sdk.ITestCaseOrderer, Xunit.Sdk.ExceptionAggregator, System.Threading.CancellationTokenSource)" data-toggle="tooltip" title="LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture.XunitTestCollectionRunnerWithAssemblyFixture(System.Collections.Generic.Dictionary<System.Type, object>, Xunit.Abstractions.ITestCollection, System.Collections.Generic.IEnumerable<Xunit.Sdk.IXunitTestCase>, Xunit.Abstractions.IMessageSink, Xunit.Sdk.IMessageBus, Xunit.Sdk.ITestCaseOrderer, Xunit.Sdk.ExceptionAggregator, System.Threading.CancellationTokenSource)">public</span> /// <span class="punctuation">&lt;</span>inheritdoc <span class="punctuation">/&gt;</span>
+<span data-toggle="tooltip" title="LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture.XunitTestCollectionRunnerWithAssemblyFixture(System.Collections.Generic.Dictionary<System.Type, object>, Xunit.Abstractions.ITestCollection, System.Collections.Generic.IEnumerable<Xunit.Sdk.IXunitTestCase>, Xunit.Abstractions.IMessageSink, Xunit.Sdk.IMessageBus, Xunit.Sdk.ITestCaseOrderer, Xunit.Sdk.ExceptionAggregator, System.Threading.CancellationTokenSource)">XunitTestCollectionRunnerWithAssemblyFixture</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="System.Collections.Generic.Dictionary<System.Type, object>">Dictionary</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="System.Type">Type</span><span class="punctuation">,</span> <span class="keyword" data-toggle="tooltip" title="object">object</span><span class="punctuation">&gt;</span> assemblyFixtureMappings<span class="punctuation">,</span>
+            <span class="typename" data-toggle="tooltip" title="Xunit.Abstractions.ITestCollection">ITestCollection</span> testCollection<span class="punctuation">,</span>
+            <span class="typename" data-toggle="tooltip" title="System.Collections.Generic.IEnumerable<Xunit.Sdk.IXunitTestCase>">IEnumerable</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="Xunit.Sdk.IXunitTestCase">IXunitTestCase</span><span class="punctuation">&gt;</span> testCases<span class="punctuation">,</span>
+            <span class="typename" data-toggle="tooltip" title="Xunit.Abstractions.IMessageSink">IMessageSink</span> diagnosticMessageSink<span class="punctuation">,</span>
+            <span class="typename" data-toggle="tooltip" title="Xunit.Sdk.IMessageBus">IMessageBus</span> messageBus<span class="punctuation">,</span>
+            <span class="typename" data-toggle="tooltip" title="Xunit.Sdk.ITestCaseOrderer">ITestCaseOrderer</span> testCaseOrderer<span class="punctuation">,</span>
+            <span class="typename" data-toggle="tooltip" title="Xunit.Sdk.ExceptionAggregator">ExceptionAggregator</span> aggregator<span class="punctuation">,</span>
+            <span class="typename" data-toggle="tooltip" title="System.Threading.CancellationTokenSource">CancellationTokenSource</span> cancellationTokenSource<span class="punctuation">)</span>
+            <span class="punctuation" data-toggle="tooltip" title="void">:</span> <span class="keyword" data-toggle="tooltip" title="void">base</span><span class="punctuation">(</span><span data-toggle="tooltip" title="Xunit.Abstractions.ITestCollection">testCollection</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="System.Collections.Generic.IEnumerable<Xunit.Sdk.IXunitTestCase>">testCases</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="Xunit.Abstractions.IMessageSink">diagnosticMessageSink</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="Xunit.Sdk.IMessageBus">messageBus</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="Xunit.Sdk.ITestCaseOrderer">testCaseOrderer</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="Xunit.Sdk.ExceptionAggregator">aggregator</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="System.Threading.CancellationTokenSource">cancellationTokenSource</span><span class="punctuation">)</span>
+        <span class="punctuation">{</span>
+            <span class="keyword" data-toggle="tooltip" title="LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture">this</span><span class="punctuation" data-toggle="tooltip" title="System.Collections.Generic.Dictionary<System.Type, object>">.</span><span data-toggle="tooltip" title="System.Collections.Generic.Dictionary<System.Type, object>"><a href="../../../Source/xUnit/XunitExtensions/XunitTestCollectionRunnerWithAssemblyFixture.html#LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture._assemblyFixtureMappings">_assemblyFixtureMappings</a></span> <span class="punctuation" data-toggle="tooltip" title="System.Collections.Generic.Dictionary<System.Type, object>">=</span> <span data-toggle="tooltip" title="System.Collections.Generic.Dictionary<System.Type, object>">assemblyFixtureMappings</span><span class="punctuation">;</span>
+            <span class="keyword" data-toggle="tooltip" title="LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture">this</span><span class="punctuation" data-toggle="tooltip" title="Xunit.Abstractions.IMessageSink">.</span><span data-toggle="tooltip" title="Xunit.Abstractions.IMessageSink"><a href="../../../Source/xUnit/XunitExtensions/XunitTestCollectionRunnerWithAssemblyFixture.html#LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture._diagnosticMessageSink">_diagnosticMessageSink</a></span> <span class="punctuation" data-toggle="tooltip" title="Xunit.Abstractions.IMessageSink">=</span> <span data-toggle="tooltip" title="Xunit.Abstractions.IMessageSink">diagnosticMessageSink</span><span class="punctuation">;</span>
+        <span class="punctuation">}</span>
+
+         &lt;inheritdoc /&gt;
+        <span class="keyword" id="LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture.RunTestClassAsync(Xunit.Abstractions.ITestClass, Xunit.Abstractions.IReflectionTypeInfo, System.Collections.Generic.IEnumerable<Xunit.Sdk.IXunitTestCase>)" data-toggle="tooltip" title="LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture.RunTestClassAsync(Xunit.Abstractions.ITestClass, Xunit.Abstractions.IReflectionTypeInfo, System.Collections.Generic.IEnumerable<Xunit.Sdk.IXunitTestCase>)">protected</span> /// <span class="punctuation">&lt;</span>inheritdoc <span class="punctuation">/&gt;</span>
+<span class="keyword" data-toggle="tooltip" title="LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture.RunTestClassAsync(Xunit.Abstractions.ITestClass, Xunit.Abstractions.IReflectionTypeInfo, System.Collections.Generic.IEnumerable<Xunit.Sdk.IXunitTestCase>)">override</span> <span class="typename" data-toggle="tooltip" title="System.Threading.Tasks.Task<Xunit.Sdk.RunSummary>">Task</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="Xunit.Sdk.RunSummary">RunSummary</span><span class="punctuation">&gt;</span> <span data-toggle="tooltip" title="LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture.RunTestClassAsync(Xunit.Abstractions.ITestClass, Xunit.Abstractions.IReflectionTypeInfo, System.Collections.Generic.IEnumerable<Xunit.Sdk.IXunitTestCase>)">RunTestClassAsync</span><span class="punctuation">(</span><span class="typename" data-toggle="tooltip" title="Xunit.Abstractions.ITestClass">ITestClass</span> testClass<span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="Xunit.Abstractions.IReflectionTypeInfo">IReflectionTypeInfo</span> @class<span class="punctuation">,</span> <span class="typename" data-toggle="tooltip" title="System.Collections.Generic.IEnumerable<Xunit.Sdk.IXunitTestCase>">IEnumerable</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="Xunit.Sdk.IXunitTestCase">IXunitTestCase</span><span class="punctuation">&gt;</span> testCases<span class="punctuation">)</span>
+        <span class="punctuation">{</span>
+            <span class="comment">// Don&#39;t want to use .Concat + .ToDictionary because of the possibility of overriding types,</span>
+            <span class="comment">// so instead we&#39;ll just let collection fixtures override assembly fixtures.</span>
+            <span class="keyword" data-toggle="tooltip" title="System.Collections.Generic.Dictionary<System.Type, object>">var</span> <span id="combinedFixtures">combinedFixtures</span> <span class="punctuation">=</span> <span class="keyword" data-toggle="tooltip" title="System.Collections.Generic.Dictionary<System.Type, object>">new</span> <span class="typename">Dictionary</span><span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="System.Type">Type</span><span class="punctuation">,</span> <span class="keyword" data-toggle="tooltip" title="object">object</span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span data-toggle="tooltip" title="System.Collections.Generic.Dictionary<System.Type, object>"><a href="../../../Source/xUnit/XunitExtensions/XunitTestCollectionRunnerWithAssemblyFixture.html#LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture._assemblyFixtureMappings">_assemblyFixtureMappings</a></span><span class="punctuation">)</span><span class="punctuation">;</span>
+            <span class="keyword">foreach</span> <span class="punctuation">(</span><span class="keyword" data-toggle="tooltip" title="System.Collections.Generic.KeyValuePair<System.Type, object>">var</span> kvp <span class="keyword">in</span> <span data-toggle="tooltip" title="System.Collections.Generic.Dictionary<System.Type, object>">CollectionFixtureMappings</span><span class="punctuation">)</span>
+                <span data-toggle="tooltip" title="System.Collections.Generic.Dictionary<System.Type, object>">combinedFixtures</span><span class="punctuation">[</span><span data-toggle="tooltip" title="System.Collections.Generic.KeyValuePair<System.Type, object>">kvp</span><span class="punctuation" data-toggle="tooltip" title="System.Type">.</span><span data-toggle="tooltip" title="System.Type">Key</span><span class="punctuation">]</span> <span class="punctuation" data-toggle="tooltip" title="object">=</span> <span data-toggle="tooltip" title="System.Collections.Generic.KeyValuePair<System.Type, object>">kvp</span><span class="punctuation" data-toggle="tooltip" title="object">.</span><span data-toggle="tooltip" title="object">Value</span><span class="punctuation">;</span>
+
+            <span class="comment">// We&#39;ve done everything we need, so let the built-in types do the rest of the heavy lifting</span>
+            <span class="keyword">return</span> <span class="keyword" data-toggle="tooltip" title="Xunit.Sdk.XunitTestClassRunner">new</span> <span class="typename">XunitTestClassRunner</span><span class="punctuation">(</span><span data-toggle="tooltip" title="Xunit.Abstractions.ITestClass">testClass</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="Xunit.Abstractions.IReflectionTypeInfo">@class</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="System.Collections.Generic.IEnumerable<Xunit.Sdk.IXunitTestCase>">testCases</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="Xunit.Abstractions.IMessageSink"><a href="../../../Source/xUnit/XunitExtensions/XunitTestCollectionRunnerWithAssemblyFixture.html#LeanTest.Xunit.XunitExtensions.XunitTestCollectionRunnerWithAssemblyFixture._diagnosticMessageSink">_diagnosticMessageSink</a></span><span class="punctuation">,</span> <span data-toggle="tooltip" title="Xunit.Sdk.IMessageBus">MessageBus</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="Xunit.Sdk.ITestCaseOrderer">TestCaseOrderer</span><span class="punctuation">,</span> <span class="keyword" data-toggle="tooltip" title="Xunit.Sdk.ExceptionAggregator">new</span> <span class="typename">ExceptionAggregator</span><span class="punctuation">(</span><span data-toggle="tooltip" title="Xunit.Sdk.ExceptionAggregator">Aggregator</span><span class="punctuation">)</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="System.Threading.CancellationTokenSource">CancellationTokenSource</span><span class="punctuation">,</span> <span data-toggle="tooltip" title="System.Collections.Generic.Dictionary<System.Type, object>">combinedFixtures</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="Xunit.Sdk.TestClassRunner<Xunit.Sdk.IXunitTestCase>.RunAsync()">.</span><span data-toggle="tooltip" title="Xunit.Sdk.TestClassRunner<Xunit.Sdk.IXunitTestCase>.RunAsync()">RunAsync</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+        <span class="punctuation">}</span>
+    <span class="punctuation">}</span>
+<span class="punctuation">}</span>
+</code></pre>
+
+				</div>
+							</div>
+        </div>
+    </div>
+    
+    <footer class="panel-footer text-center">
+        <div align="center">Copyright © 2019 Brian Elgaard Bennett</div>
+		<div align="right">
+			<small>
+				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.
+			</small>
+		</div>
+    </footer>
+
+
+    
+    <script src="../../../bootstrap/js/jquery.min.js"></script>
+    <script src="../../../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../sidebar/sidebar.js"></script>
+    <script src="../../../syntax-highlight/syntax.js"></script>
+
+</body>
+</html>
