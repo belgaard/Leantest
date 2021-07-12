@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>IBuilder - LeanTest</title>
+    <title>ICreateContextBuilder - LeanTest</title>
 
 	<link rel="icon" type="image/x-icon" href="../../../../images/favicon.ico">
     <link rel="stylesheet" href="../../../../bootstrap/css/readable/bootstrap.min.css" />
@@ -84,36 +84,16 @@
             </div>
 			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 								<div id="static-content" class="markdown">
-					<pre class="csharp"><code class="csharp"><span class="keyword">using</span> System<span class="punctuation">;</span>
-<span class="keyword">using</span> System<span class="punctuation">.</span>Collections<span class="punctuation">.</span>Generic<span class="punctuation">;</span>
-
-<span class="keyword" id="LeanTest.Core.ExecutionHandling">namespace</span> LeanTest<span class="punctuation">.</span>Core<span class="punctuation">.</span>ExecutionHandling
+					<pre class="csharp"><code class="csharp"><span class="keyword" id="LeanTest.Core.ExecutionHandling">namespace</span> LeanTest<span class="punctuation">.</span>Core<span class="punctuation">.</span>ExecutionHandling
 <span class="punctuation">{</span>
-     &lt;summary&gt;
-    /// Interface for all builders (for building stuff like e.g. &#39;mock&#39; and &#39;state&#39;).
-    /// &lt;/summary&gt;
-    <span class="keyword" id="LeanTest.Core.ExecutionHandling.IBuilder">internal</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-    /// Interface for all builders (for building stuff like e.g. &#39;mock&#39; and &#39;state&#39;).
-    /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
-<span class="keyword">interface</span> IBuilder
-    <span class="punctuation">{</span>
-         &lt;summary&gt;
-        /// Register a builder for data of type &lt;c&gt;TData&lt;/c&gt;
-        /// &lt;/summary&gt;
-        /// &lt;typeparam name=&quot;TData&quot;&gt;&lt;/typeparam&gt;
-        <span class="keyword" data-toggle="tooltip" title="void">void</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-        /// Register a builder for data of type <span class="punctuation">&lt;</span>c<span class="punctuation">&gt;</span>TData<span class="punctuation">&lt;/</span>c<span class="punctuation">&gt;</span>
-        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
-        /// <span class="punctuation">&lt;</span>typeparam name<span class="punctuation">=</span><span class="punctuation">&quot;</span><span class="typename" data-toggle="tooltip" title="TData"><a href="../../../../Source/Core/Core/ExecutionHandling/IBuilder.html#TData">TData</a></span><span class="punctuation">&quot;</span><span class="punctuation">&gt;</span><span class="punctuation">&lt;/</span>typeparam<span class="punctuation">&gt;</span>
-<span id="LeanTest.Core.ExecutionHandling.IBuilder.WithBuilderForData<TData>()" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder.WithBuilderForData<TData>()">WithBuilderForData</span><span class="punctuation">&lt;</span><span class="typename"><a href="../../../../Source/Core/Core/ExecutionHandling/IBuilder.html#TData">TData</a></span><span class="punctuation">&gt;</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder.WithBuilderForData<TData>()">;</span>
-         &lt;summary&gt;
-        /// Do the build.
-        /// &lt;/summary&gt;
-        <span class="typename" data-toggle="tooltip" title="System.Collections.Generic.HashSet<System.Type>">HashSet</span>/// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>
-        /// Do the build.
-        /// <span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
-<span class="punctuation">&lt;</span><span class="typename" data-toggle="tooltip" title="System.Type">Type</span><span class="punctuation">&gt;</span> <span id="LeanTest.Core.ExecutionHandling.IBuilder.Build()" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder.Build()">Build</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.IBuilder.Build()">;</span>
-    <span class="punctuation">}</span>
+	 &lt;summary&gt;Implementations create a context builder.&lt;/summary&gt;
+	<span class="keyword" id="LeanTest.Core.ExecutionHandling.ICreateContextBuilder">public</span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Implementations create a context builder.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span class="keyword">interface</span> ICreateContextBuilder
+	<span class="punctuation">{</span>
+		 &lt;summary&gt;Create a context builder, and thus the IoC container.&lt;/summary&gt;
+		<span class="typename" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../../../../Source/Core/Core/ExecutionHandling/ContextBuilder.html#LeanTest.Core.ExecutionHandling.ContextBuilder">ContextBuilder</a></span> /// <span class="punctuation">&lt;</span>summary<span class="punctuation">&gt;</span>Create a context builder, and thus the IoC container.<span class="punctuation">&lt;/</span>summary<span class="punctuation">&gt;</span>
+<span id="LeanTest.Core.ExecutionHandling.ICreateContextBuilder.CreateContextBuilder">CreateContextBuilder</span> <span class="punctuation">{</span> <span class="keyword" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ICreateContextBuilder.CreateContextBuilder.get">get</span><span class="punctuation" data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ICreateContextBuilder.CreateContextBuilder.get">;</span> <span class="punctuation">}</span>
+	<span class="punctuation">}</span>
 <span class="punctuation">}</span>
 </code></pre>
 

@@ -1,6 +1,6 @@
 # Introduction
 
-The need for a library like LeanTest.Net became obvious when we noticed that a set of mocks for a non-trivial set of automated tests tended to not be designed as a set. Also, there was no consistency in the way that test data was passed to mock instances. The consequence of this was more often than not that it was difficult to maintain the set of tests and it was very difficult to reason about functional coverage.
+The need for a library like LeanTest.Net became obvious when we noticed that a set of test doubles, which we prefer to refer to as *mocks*, for a non-trivial *set of automated tests tended to not be designed as a set*. Also, there was no consistency in the way that test data was passed to mock instances. The consequence of this was more often than not that it was difficult to maintain the set of tests and it was very difficult to reason about functional coverage.
 
 We found that the Builder pattern could serve as a suitable abstraction for passing data in a consistent manner to a set of consistently designed mocks.
 
@@ -8,7 +8,7 @@ On top of this Builder pattern implementation we added a number of guiding princ
 
 Funnily enough, it turned out that using our Builder pattern and following our guiding principles, our tests not only became more easy to maintain, but it was also much easier to reason about functional coverage. What started as a *better way of unit testing* for developers, was now what testers call *real tests*. In fact, the gap between developers and (automation) testers has been reduced significantly, which is a very important outcome.
 
-We get all of that, and still we have fast and 100% deterministic test, as we would expect for unit tests.
+We get all of that, and still we have fast and 100% deterministic tests, as we would expect for unit tests.
 
 At the time of writing, we write such tests at *all levels*, ranging from tests which are similar to traditional unit tests, middle-ground tests which cover e.g. database stored procedures, and all the way to full-fledged system integration tests. All of these with a consistent syntax and design of test code and mocks.
 
@@ -16,17 +16,29 @@ Covering all levels required that we expanded the concept of mocks. Essentially,
 
 ## The Concept
 
-The _Lean Testing methodology_ (formerly known as _developer testing_) is not very well understood. I hope in the following to shed a little light on the subject. Also, watch [my blog](https://blog.elgaard.com), I may eventually explain the concept in great detail there.
+The underlying thoughts behind the _Lean Testing methodology_ (formerly known as _developer testing_) are described in three articles on medium.com,
 
-In short, this is about developers writing tests while developing code. And I mean tests that testers would call _real_ tests, not simply unit tests. Tests which are simple to write initially, then simple to maintain going forward. Tests which cover actual functionality which is recognizable by and valuable to the business. In fact, tests which are conceptually and syntactically identical to the tests that automation testers write.
+- [Should You Unit Test?](https://medium.com/codex/should-you-unit-test-fd801abf9d04)
+
+- [Should You Unit-Test in ASP.NET Core?](https://medium.com/swlh/should-you-unit-test-in-asp-net-core-793de767ac68)
+
+- [Why Don’t You Take ‘Given’ in BDD Seriously?](https://javascript.plainenglish.io/why-dont-you-take-given-in-bdd-seriously-f168da29f1c)  
+
+Another angle of this topic was described at the IWCT 2021 conference in the paper,
+
+- [A Practical Method for API Testing in the Context of Continuous Delivery and Behavior Driven Development](https://ieeexplore.ieee.org/abstract/document/9440154) ([you can see the presentation video here](https://zenodo.org/record/4661956#.YOv17Pkzabg))
+
+The following is an intro to the subject. 
+
+In short, this is about *developers writing tests while developing code*. And I mean tests that testers would call _real_ tests, not simply unit tests. Tests which are simple to write initially, then simple to maintain going forward. Tests which cover actual functionality which is recognizable by and valuable to the business. In fact, tests which are conceptually and syntactically identical to the tests that automation testers would write.
 
 The way we achieve all this is by _maximizing code under test_ but _minimizing data_.
 
-Before we dig into that, let's look at an even more fundamental concept, that of _existing state_.
+Before we dig into that, let's look at an even more fundamental concept, that of _existing state_ (or *context*).
 
-### Existing state
+### Existing state (or context)
 
-When _testers write tests_ they often talk about _test data_. What they usually mean is that they use a set of test data, say a washed and minimized version of the full production database, which is sufficient for a number of tests to run. 
+When _testers write tests_ they often talk about _test data_. What they usually mean is that they use data, say a washed and minimized version of the full production database, which is sufficient for a number of tests to run. 
 
 There are well known problems with this approach, for example that it can be difficult to keep the data and schema up-to-date with changes to the production system. Another problem is that each test will make assumptions about specific data in the set and these assumptions are usually not clear and documented, causing tests to fail mysteriously when the test data is updated.
 
@@ -38,19 +50,19 @@ In a unit test, data is usually passed directly in each test, possibly via some 
 
 The effect of this is that for a traditional unit tests, it is not clear of what kind the data is, there is often many mocks and there is a separate mocking strategy per test. I don't like any of that.
 
-We have a single concept for the equivalent of a test database in Lean Testing - we call it _existing state_. We simply insist that each test must declare what data it needs in order to succeed. For this we have a _test context_ to which we declare the data needed per test. Something like the following,
+We have a single concept for the equivalent of a test database in Lean Testing - we call it _existing state_ (or *existing context*). We simply insist that each test must declare what data it needs in order to succeed. For this we have a _test context_ to which we declare the data needed per test. Something like the following,
 
 <<Example of existing state>>
 
 In the above example, we have declared that our test must succeed if the only test data available is one specific instance of MyData. By the magic of dependency injection and a builder pattern (which will be described below), the data will be available to our test target.
 
-Our test target can potentially be part of a huge and tangled code base, but by minimizing the data per test, we can handle that with very few and simple mocks. Which is what the next section is about.
+Our test target can potentially be part of a huge and entangled code base, but by minimizing the data per test, we can handle that with very few and simple mocks. Which is what the next section is about.
 
 ### Maximizing code under test but minimizing data
 
 Maximizing code under test means not mocking away logic unless we really have to. And we only really have to mock logic away if we cannot control it deterministically (or if it is really slow to execute). In practice, this usually means that truly external dependencies must be mocked and nothing more. And we have a single mocking strategy for an entire test suite, having slightly different mocking per test case is a no-no.
 
-Minimizing data means ensuring that exactly the data needed for a given test to run (yes, we do this _per-test_ unlike the way we do mocking) is provided for the test. With naming we try to express exactly what characteristica of the data will make the test run.
+Minimizing data means ensuring that exactly the data needed for a given test to run (yes, we declare data _per-test_) is provided for the test. With naming we try to express exactly what characteristics of the data will make the test run.
 
 ### The builder pattern
 
@@ -61,10 +73,10 @@ In the above example, we declare the data, then call `Build`,
 We use a builder pattern for our data, as that layer of indirection from where the data is put allows us to write all levels of tests with the same syntax and the same concepts. The same test code will run in different levels of test,
 
 - completely in-memory with all external dependencies mocked,
-- in-memory, except for controllable external dependencies, such as e.g. in-memory databases (I use MongoDb no-SQL and Microsoft LocalDb SQL), and
-- in a fully integrated environmnet with (ideally) nothing mocked out.
+- in-memory, except for controllable external dependencies, such as e.g. in-memory databases (I use MongoDb no-SQL, Microsoft LocalDb SQL and Microsoft SQL Server in a Docker container), and
+- in a fully integrated environment with (ideally) nothing mocked out.
 
-The differences among these models of execution is handled behind the scenes, with simple supporting test code which can be implemented per level of test. When we mock away logic, we substitute it with test code that implements an interface `IMockForData<>` with the type of data declared as a generic parameter. When we handle state in e.g. a database without mocking away the database code, we have test code which implements `IStateHandler<>`.
+The differences among these models of execution is handled behind the scenes, with simple test code which can be implemented per level of test. When we say that we *mock away logic*, we mean that we substitute production code with test code which implements an interface `IMockForData<>` with the type of data declared as a generic parameter. When we handle state in e.g. a database without mocking away the database code, we have test code which implements `IStateHandler<>`.
 
 It is that simple - the LeanTest nuGet packages handle the rest.
 
