@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using LeanTest.Core.ExecutionHandling;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DI.DotNetCore
+namespace LeanTest.DI.DotNetCore
 {
 	/// <inheritdoc/>
 	public class IocContainer : IIocContainer
@@ -11,7 +11,7 @@ namespace DI.DotNetCore
 		private readonly IServiceProvider _serviceProvider;
 
 		/// <summary>The ctor requires a service provider, you can generate it from a service collection using <c>.BuildServiceProvider()</c></summary>
-        public IocContainer(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
+		public IocContainer(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
 
 		/// <inheritdoc/>
 		/// <remarks>Gets a required service from the service provider.</remarks>
