@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+    <AssemblyName>LeanTest.DI.DotNetCore</AssemblyName>
+    <RootNamespace>LeanTest</RootNamespace>
+
+    <PackageId>LeanTest.DI.DotNetCore</PackageId>
+    <PackageVersion>$(appveyor_build_version)</PackageVersion>
+    <Authors>Brian Elgaard Bennett</Authors>
+    <Description>
+      Extensions for the core LeanTest. Integrates .NET Core/.NET 5 dependency injection by implemening the IIocContainer interface.
+    </Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright>LeanTest is licensed under the Apache License 2.0</Copyright>
+    <PackageTags>Unit Test UnitTest DeveloperTest Developer</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <AssemblyVersion>$(appveyor_build_version)</AssemblyVersion>
+    <FileVersion>$(appveyor_build_version)</FileVersion>
+
+    <!-- Embed PDB inside dll -->
+    <DebugType>embedded</DebugType>
+
+    <!-- Generate XML doc for consumers -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LeanTest.Core" Version="4.*" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>
