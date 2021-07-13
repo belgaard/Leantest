@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="LeanTest.Core" Version="4.*" />
+    <PackageReference Include="LeanTest.DI.DotNetCore" Version="4.*" />
     <PackageReference Include="LeanTest.MSTest" Version="4.*" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
