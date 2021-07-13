@@ -1,4 +1,4 @@
-﻿using DI.DotNetCore;
+﻿using LeanTest.DI.DotNetCore;
 using Examples.L0Tests.Application;
 using Examples.L0Tests.TestSetup.IoC;
 using LeanTest.Core.ExecutionHandling;
