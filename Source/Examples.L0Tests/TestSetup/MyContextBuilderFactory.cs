@@ -1,4 +1,5 @@
-﻿using Examples.L0Tests.Application;
+﻿using DI.DotNetCore;
+using Examples.L0Tests.Application;
 using Examples.L0Tests.TestSetup.IoC;
 using LeanTest.Core.ExecutionHandling;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +10,16 @@ namespace Examples.L0Tests.TestSetup
 	public class MyContextBuilderFactory
 	{
 		public ContextBuilder ContextBuilder {get;}
-		public MyContextBuilderFactory() => 
-			ContextBuilder = new ContextBuilder(new IocContainer(L0CompositionRootForTest.Initialize(CompositionRoot.Initialize(new ServiceCollection()))));
+		/// <summary>Use the production code composition root, let the test composition root override what must be mocked, wrap the chosen DI container, 
+		/// then create the context.</summary>
+		public MyContextBuilderFactory()
+		{
+			// Production code composition root with test overrides:
+			IServiceCollection serviceCollection = L0CompositionRootForTest.Initialize(CompositionRoot.Initialize(new ServiceCollection()));
+			// Wrap the .NET Core/.NET 5 DI container to be used by LeanTest:
+			IocContainer container = new IocContainer(serviceCollection.BuildServiceProvider());
+			// Create the context:
+			ContextBuilder = new ContextBuilder(container);
+		}
 	}
 }
