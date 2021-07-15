@@ -9,7 +9,8 @@
     <PackageVersion>$(appveyor_build_version)</PackageVersion>
     <Authors>Brian Elgaard Bennett</Authors>
     <Description>
-      Extensions for the core LeanTest. Allows for easy integration between LeanTest and ASP.NET Core based tests.
+      Extensions for the core LeanTest. Allows for easy integration between LeanTest and ASP.NET Core based tests. 
+      You do not need this package if you prefer the factory-less way of initialization.
     </Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Copyright>LeanTest is licensed under the Apache License 2.0</Copyright>
