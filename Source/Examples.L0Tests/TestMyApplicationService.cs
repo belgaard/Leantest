@@ -46,7 +46,6 @@ namespace Examples.L0Tests
 			#region Example of using a builder pattern
 			_contextBuilder
 				.WithData(new MyData { Age = 10, Key = "ac_32_576259321" })
-				.WithData(new MyOtherData { OtherAge = 10, OtherKey = "ac_32_576259321" })
 				.Build();
 			#endregion
 
