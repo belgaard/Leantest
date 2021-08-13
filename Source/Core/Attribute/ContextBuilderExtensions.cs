@@ -63,9 +63,10 @@ namespace LeanTest.Attribute
 
         /// <summary>Registers an intent to use the LeanTest attribute on test methods.</summary>
         /// <remarks>This causes LeanTest scenario IDs and tags as well as MsTest descriptions to be written to the test log (.trx-file).</remarks>
-        public static ContextBuilder RegisterAttributes(this ContextBuilder theContextBuilder, string testName, Assembly assembly = null, IStdOut stdOut = null)
+        public static ContextBuilder RegisterAttributes(this ContextBuilder theContextBuilder, string testName, Assembly assembly = null)
         {
             assembly ??= Assembly.GetCallingAssembly();
+            IStdOut stdOut = DefaultStdOut;
             return theContextBuilder
                 .RegisterDescription(testName, assembly, null, stdOut)
                 .RegisterScenarioId(testName, assembly, null, stdOut)
