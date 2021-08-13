@@ -28,5 +28,7 @@ namespace LeanTest.Xunit
 
 			return testMethod;
 		}
+
+		internal void WriteLine(string value) => _testOutput.WriteLine(value);
 	}
 }
