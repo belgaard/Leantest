@@ -2,10 +2,10 @@
 # for description of how the parameters affect the output.
 ---
 ProjectName: LeanTest
-GitHub: https://github.com/SaxoBank/Leantest
+GitHub: https://github.com/belgaard/Leantest
 Download: https://www.nuget.org/packages?q=leantest
 License: LicenseApache.html
-Footer: "Copyright © 2017-2021 Brian Elgaard Bennett"
+Footer: "Maintained by Brian Elgaard Bennett"
 MarkdownStyle: book
 ShowDescriptionsInToc: false
 BootstrapStyle: readable

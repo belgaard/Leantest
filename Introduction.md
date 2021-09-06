@@ -48,7 +48,7 @@ When _developers write unit tests_ they usually don't think much about test data
 
 In a unit test, data is usually passed directly in each test, possibly via some kind of a mocking framework. Some of this data is similar to the test database in a _tester test_, while other data is input to the target under test. Usually, it is not clear which is which because unit tests traditionally work on such a low level that input to the target under test in a unit test would be data read from a database in a _tester test_.
 
-The effect of this is that for a traditional unit tests, it is not clear of what kind the data is, there is often many mocks and there is a separate mocking strategy per test. I don't like any of that.
+The effect of this is that for a traditional unit test, it is not clear of what kind the data is, there is often many mocks and there is a separate mocking strategy per test. I don't like any of that.
 
 We have a single concept for the equivalent of a test database in Lean Testing - we call it _existing state_ (or *existing context*). We simply insist that each test must declare what data it needs in order to succeed. For this we have a _test context_ to which we declare the data needed per test. Something like the following,
 
