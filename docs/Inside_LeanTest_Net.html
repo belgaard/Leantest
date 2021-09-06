@@ -39,7 +39,7 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-					<li><a href="https://github.com/SaxoBank/Leantest"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+					<li><a href="https://github.com/belgaard/Leantest"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
                     <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-download" aria-hidden="true"></i> Download</a></li>
                     <li><a href="LicenseApache.html">License</a></li>
                 </ul>
@@ -94,17 +94,13 @@
 					<h1 id="inside-leantest.net">Inside LeanTest.Net</h1>
 <p>The Lean Testing methodology is backed up by a simple library, a set of nuGet packages named <a href="https://github.com/SaxoBank/Leantest">LeanTest.Net</a>.</p>
 <p>LeanTest.Net is little more than an implementation of a Builder pattern. In fact, the functionality of LeanTest.Net is so simple that it could almost serve as a morning coding kata for an experienced developer.</p>
-<p>While it is sufficient to understand that a test which,</p>
-<ul>
-<li>calls <em>WithData</em> on a context builder <em>declares</em> data, and when the test then</li>
-<li>calls Build it <em>passes</em> that data to the test target</li>
-</ul>
-<p>it can still be useful to understand what goes on under the hood, as it makes it more obvious how to write simple and elegant tests, and also to reason about what functionality existing tests cover.</p>
+<p>You can use LeanTest.Net if you understand that a test essentially <em>declares</em> data which is <em>passed</em> as initial context to external dependencies.</p>
+<p>However, it can still be useful to understand what goes on under the hood, as it makes it more obvious how to write simple and elegant tests, and also to reason about what functionality existing tests cover.</p>
 <p>This text is aimed at those who want to understand what is going on inside LeanTest.Net.</p>
 <h2 id="the-builder-pattern">The Builder Pattern</h2>
-<p>Let's assume that we want to write tests against a piece of software which has an external dependency represented by the interface IMyExternalService.</p>
+<p>Let's assume that we want to write tests targeting a piece of software which has an external dependency represented by the interface <code>IMyExternalService</code>.</p>
 <p>With Lean Testing, we mock as little as possible and when we do mock, we always mock at the boundary of external dependencies. We write tests in terms of the relevant state of such external dependencies.</p>
-<p>Thus, in this case, it makes sense to have a mock implement IMyExternalService, then pass relevant state to it in each test.</p>
+<p>Thus, in this case, it makes sense to have a mock implement <code>IMyExternalService</code>, then pass relevant state to it in each test.</p>
 <p>In essence, all that our Builder pattern does is to pass data from a test to a mock via an internal <em>context data store,</em></p>
 <table>
 <thead>
@@ -127,12 +123,12 @@
 <p><em>Declaring</em> data needed for a test, without explicitly stating <em>how</em> that data is supposed to be used, is what allows us to write tests in one consistent way, with any kind of mocking strategy, running in-process or out-of-process, mocking a database or not, running with immediate external dependencies or a full environment.</p>
 <p>In short, there is one consistent way to write tests at any level and there is one consistent way to reason about functional test coverage.</p>
 <p>Note that the test uses the <em>type</em> of the instance of data passed to the mock in order to decide the receiver, i.e. in order to identify the mock which will receive the data. We expect representations of external dependencies to use strong typing.</p>
-<p>Also note how a mock declares what type of data it is prepared to receive simply by implementing the interface IMockForData&lt;&gt;. Build() on the context builder will pass data of type <em>T</em> from the internal data store by <em>asking the DI container</em> for implementations of IMockForData&lt;T&gt;. LeanTest.Net will never use reflection to discover receivers of data, <em><strong>it will rely on receivers to be registered with the DI container and tests to declare relevant data</strong></em>.</p>
+<p>Also note how a mock declares what type of data it is prepared to receive simply by implementing the interface <code>IMockForData&lt;&gt;</code>. <code>Build()</code> on the context builder will pass data of type <code>T</code> from the internal data store by <em>asking the DI container</em> for implementations of <code>IMockForData&lt;T&gt;</code>. LeanTest.Net will never use reflection to discover receivers of data, <em><strong>it will rely on receivers to be registered with the DI container and tests to declare relevant data</strong></em>.</p>
 <h3 id="multiple-receivers">Multiple Receivers</h3>
 <p>In the example above we had a piece of data which was passed to a single mock. It is not always that simple; in fact, <em><strong>the possibility of having multiple receivers with a consistent view of test data is one major benefit of our flavour of the Builder pattern</strong></em>.</p>
 <p>One example usage of multiple receivers could be a test which declares that the financial Forex instrument EURUSD must be known and available. The external dependencies could be a number of backend services which each is responsible for handling a single aspect of that instrument (such as pricing, margin calculations etc.). We would expect that if one of these know about EURUSD, then the others will also.</p>
 <p>Another example is when <em>time itself</em> is an external dependency. If the code under test has logic around the current time and also run code regularly on a thread as spun up by a timer, then you would expect such code to have the same notion of time. In other words, if a test declares that the current time is <em>Star Wars day 2020</em>, then you expect that both the current time and the timer logic would reflect that.</p>
-<p>Treating time as an external dependency is a coding pattern which is documented TODO, the example functionality being a write-cache which flushes at regular times. From the details of the documented code pattern it follows that a single DateTime instance declared in a test will be passed to the two
+<p>Treating time as an external dependency is a coding pattern which is documented TODO, the example functionality being a write-cache which flushes at regular times. From the details of the documented code pattern it follows that a single <code>DateTime</code> instance declared in a test will be passed to the two
 relevant mocks,</p>
 <table>
 <thead>
@@ -156,8 +152,8 @@ relevant mocks,</p>
 <p>The difference between these two builders is only conceptual. In
 short,</p>
 <ul>
-<li>The <em>mock-for-data builder</em> passes data to mock implementations. Mock implementations <em>substitute production code</em> by implementing one or more interfaces, such as IMyExternalDependency, along with IMockForData&lt;T&gt; for all relevant data types T.</li>
-<li>The <em>state handler builder</em> passes data to state handler implementations. State handler implementations manage state of direct external dependencies by implementing  IStateHandler&lt;T&gt; for all relevant data types T. A state handler will never substitute production code.</li>
+<li>The <em>mock-for-data builder</em> passes data to mock implementations. Mock implementations <em>substitute production code</em> by implementing one or more interfaces, such as <code>IMyExternalDependency</code>, along with <code>IMockForData&lt;T&gt;</code> for all relevant data types <code>T</code>.</li>
+<li>The <em>state handler builder</em> passes data to state handler implementations. State handler implementations manage state of direct external dependencies by implementing  <code>IStateHandler&lt;T&gt;</code> for all relevant data types <code>T</code>. A state handler will never substitute production code.</li>
 </ul>
 <p>Since mocks substitute production code, we will mock as little as possible, thereby putting as much code under test as possible. And when we mock, we will try to not mock away any production code which is relevant to put under test. Key to this is to define façade interfaces TODO: link representing external dependencies; these interfaces are defined such that a production code implementation contains no logic, only pass-through to the actual external dependency.</p>
 <p>State handlers are typically used to handle data in database(s), but can also be used to handle other state, such as data in a distributed cache or a file system. In either case, a state handler must take full responsibility for handling the data. For a SQL database, that would involve deleting/inserting data in a way which respects referential integrity. Naturally, such destructive behaviour assumes ownership of the database.</p>
@@ -168,7 +164,7 @@ short,</p>
 <p>There is obviously a connection between WithData/Build in a test, and WithData/Build in mocks and state handlers, and it is quite possible
 to write tests without understanding the finer details of that connection.</p>
 <p>However, for those who want to dig a bit deeper in order to excel at writing tests, here are the finer details.</p>
-<p>The interfaces for mocks and state handlers, IMockForData&lt;T&gt; and IStateHandler&lt;T&gt; implement PreBuild and PostBuild in addition to WithData and Build,</p>
+<p>The interfaces for mocks and state handlers, <code>IMockForData&lt;T&gt;</code> and <code>IStateHandler&lt;T&gt;</code> implement <code>PreBuild</code> and <code>PostBuild</code> in addition to <code>WithData</code> and <code>Build</code>,</p>
 <pre><code class="language-{.syntaxhighlighter-pre">/// &lt;summary&gt;Declare data of type &lt;c&gt;T&lt;/c&gt;.&lt;/summary&gt;
 void WithData(T data);
 /// &lt;summary&gt;Called before build only once for the instance, allows you to prepare to populate state.&lt;/summary&gt;
@@ -178,29 +174,29 @@ void Build(Type type);
 /// &lt;summary&gt;Called after build, only once for the instance.&lt;/summary&gt;
 void PostBuild();
 </code></pre>
-<p>We implement either IMockForData&lt;T&gt; or IStateHandler&lt;T&gt;, but not both in a single class.</p>
-<p>It is often a good idea to implement either of the interfaces for several types T<sub>1</sub>, T<sub>2</sub>, ... T<sub>n</sub> in a single class[. For example, a state handler which handles data in a SQL database, will be able to insert and delete records corresponding to T<sub>1</sub>, T<sub>2</sub>, ... T<sub>n</sub> with respect to equivalent relational constraints in the database.</p>
+<p>We implement either <code>IMockForData&lt;T&gt;</code> or <code>IStateHandler&lt;T&gt;</code>, but not both in a single class.</p>
+<p>It is often a good idea to implement either of the interfaces for several types <code>T</code><sub>1</sub>, <code>T</code><sub>2</sub>, ... <code>T</code><sub>n</sub> in a single class. For example, a state handler which handles data in a SQL database, will be able to insert and delete records corresponding to <code>T</code><sub>1</sub>, <code>T</code><sub>2</sub>, ... <code>T</code><sub>n</sub> with respect to equivalent relational constraints in the database.</p>
 <p>In general, the data life-cycle is,</p>
 <ul>
-<li>Calling WithData in a test will add data to the internal context data store; no data is passed to any mock or state handler.</li>
-<li>Calling Build in a test will initiate a sequence of calls which will pass the data in the internal context data store to relevant mocks and state handlers. For each instance which implements either IMockForData&lt;T<sub>1</sub>&gt;, IMockForData&lt;T<sub>2</sub>&gt;, ... , IMockForData&lt;T<sub>n</sub>&gt; or IStateHandler&lt;T<sub>1</sub>&gt;, StateHandler&lt;T<sub>2</sub>&gt;, IStateHandler&lt;T<sub>n</sub>&gt;,
+<li>Calling <code>WithData</code> in a test will add data to the internal context data store; no data is passed to any mock or state handler.</li>
+<li>Calling <code>Build</code> in a test will initiate a sequence of calls which will pass the data in the internal context data store to relevant mocks and state handlers. For each instance which implements either <code>IMockForData&lt;T</code><sub>1</sub><code>&gt;</code>, <code>IMockForData&lt;T</code><sub>2</sub><code>&gt;</code>, ... , <code>IMockForData&lt;T</code><sub>n</sub><code>&gt;</code> or <code>IStateHandler&lt;T</code><sub>1</sub><code>&gt;</code>, <code>IStateHandler&lt;T</code><sub>2</sub><code>&gt;</code>, <code>IStateHandler&lt;T</code><sub>n</sub><code>&gt;</code>,
 <ul>
-<li>PreBuild is called once, allowing you to prepare to use the data which is coming. This allows you to delete any T<sub>1</sub>, T<sub>2</sub>, ... T<sub>n</sub> data stored in the instance, so that it is entirely clean. A state handler which handles data in a SQL database will delete all records, a mock will clear any internal data structures.</li>
-<li>WithData is called once per piece of data in the internal context data store, for each type T<sub>1</sub>, T<sub>2</sub>, ... T<sub>n</sub> of data. This is where you would store the data in your own internal data structures in the mock or state handler.</li>
-<li>Build is called once per type T<sub>1</sub>, T<sub>2</sub>, ... T<sub>n</sub> of data in the internal context data store. This is where you would commit
-the data from the WithData phase if you need to do that per data type. If on the other hand, you do not need per-data type processing, or perhaps you require cross-data type processing, then you will do your processing in PostBuild instead.</li>
-<li>PostBuild is called once, allowing you to clean-up. This is where you would do cross-data type work, such as storing data in
-a relational database, assuming that there are relational constraints. This is also where you would dispose resources needed during the earlier phases.</li>
+<li><code>PreBuild</code> is called once, allowing you to prepare to use the data which is coming. This allows you to delete any <code>T</code><sub>1</sub>, <code>T</code><sub>2</sub>, ... <code>T</code><sub>n</sub> data stored in the instance, so that it is entirely clean. A state handler which handles data in a SQL database will delete all records, a mock will clear any internal data structures.
+<ul>
+<li><code>WithData</code> is called once per piece of data in the internal context data store, for each type <code>T</code><sub>1</sub>, <code>T</code><sub>2</sub>, ... <code>T</code><sub>n</sub> of data. This is where you would store the data in your own internal data structures in the mock or state handler.</li>
+<li><code>Build</code> is called once per type <code>T</code><sub>1</sub>, <code>T</code><sub>2</sub>, ... <code>T</code><sub>n</sub> of data in the internal context data store. This is where you would commit the data from the <code>WithData</code> phase if you need to do that per data type. If on the other hand, you do not need per-data type processing, or perhaps you require cross-data type processing, then you will do your processing in <code>PostBuild</code> instead.</li>
+<li><code>PostBuild</code> is called once, allowing you to clean-up. This is where you would do cross-data type work, such as storing data in a relational database, assuming that there are relational constraints. This is also where you would dispose resources needed during the earlier phases.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 <p>Note that the above text describes the full flexibility of the data life-cycle, whereas most mock and state handler implementations will be much simpler.</p>
 <p>Most implementations will simply receive one or more pieces of data which are returned by methods of a mocked interface. In such cases, PreBuild will be a no-op, WithData is a single line (an assignment), and both Build and PostBuild are no-ops. Here is the full implementation of the time mock mentioned above (and described in details TODO: link)</p>
 <ul>
-<li>WithData stores a DateTime instance and the two methods of the IDateTime mocked interface are implemented simply by returning that instance or calling Ticks on it respectively,</li>
+<li><code>WithData</code> stores a <code>DateTime</code> instance and the two methods of the <code>IDateTime</code> mocked interface are implemented simply by returning that instance or calling <code>Ticks</code> on it respectively,</li>
 </ul>
-<pre><code class="language-{.syntaxhighlighter-pre">public class MockForDataDateTime : IDateTime, IMockForData&lt;DateTime&gt;
-{
+<pre><code class="language-public">{
     public DateTime UtcNow { get; private set; } = DateTime.UtcNow;
     public long Ticks =&gt; UtcNow.Ticks;
 
@@ -212,13 +208,12 @@ a relational database, assuming that there are relational constraints. This is a
 }
 </code></pre>
 <h2 id="multiple-build-calls">Multiple Build Calls</h2>
-<p>Most tests call WithData multiple times, then call Build once on a context builder. [This is because most test cases are simple enough that a single call to Build is sufficient.</p>
+<p>Most tests call <code>WithData</code> multiple times, then call <code>Build</code> once on a context builder. This is because most test cases are simple enough that a single call to Build is sufficient.</p>
 <p>But the entire data life-cycle is traversed every time a test calls Build and this allows us to handle more advanced test cases.</p>
 <p>Some examples of advanced cases involve testing of time based functionality. Such tests will typically not be simple AAA tests, with a single <em>arrange</em>, a single <em>act</em> and a single <em>assert</em>. Rather, it is common to set the state of the test target, perhaps do a bit of acting, change the current time, act a bit more etc.</p>
 <p>Again, we can use our write-cache TODO: link as an example. We arrange data, <em>act</em> in a way that puts data in the cache, <em>assert</em> that the cache has not been flushed (as no time has passed yet), then <em>arrange</em> that time passes past the flush delay, then finally <em>assert</em> that the cache has flushed as expected.</p>
 <p>Here is the test using the extended AAA,</p>
-<pre><code class="language-{.syntaxhighlighter-pre">[TestMethod]
-public void PutMustUpdateWhenTimeBetweenCacheFlushesHasElapsed()
+<pre><code class="language-[TestMethod]">public void PutMustUpdateWhenTimeBetweenCacheFlushesHasElapsed()
 {
     DateTime startDateTime = DateTime.UtcNow;
     _contextBuilder
@@ -242,8 +237,8 @@ public void PutMustUpdateWhenTimeBetweenCacheFlushesHasElapsed()
         () =&gt; Assert.AreEqual(@&quot;&quot;&quot;New value.&quot;&quot;&quot;, actual));
 }
 </code></pre>
-<p>Note that with the magic of MultiAssert we put all assert statements at the end of the test.</p>
-<p>Also note the use of WithClearDataStore, which clears all data which was passed in WithData statements in the first arrange block. The effect of this is that only data from the following WithData statement will be passed in the data life-cycle, so the UserSettingsRow above will not be passed again. In other words, WithData in mocks and statehandlers will not be called again for the type UserSettingsRow. [However, PreBuild and PostBuild will still be called, since the data types are known to LeanTest-Net.</p>
+<p>Note that with the magic of <code>MultiAssert</code> we put all assert statements at the end of the test.</p>
+<p>Also note the use of <code>WithClearDataStore</code>, which clears all data which was passed in <code>WithData</code> statements in the first arrange block. The effect of this is that only data from the following <code>WithData</code> statement will be passed in the data life-cycle, so the <code>UserSettingsRow</code> above will not be passed again. In other words, <code>WithData</code> in mocks and state handlers will not be called again for the type <code>UserSettingsRow</code>. However, <code>PreBuild</code> and <code>PostBuild</code> will still be called, since the data types are known to LeanTest.Net.</p>
 <p>This is important to bear in mind when using multiple build calls, as it might influence the details of how mocks and state handlers must be implemented.</p>
 <h2 id="dependency-injection-ioc-container-integration">Dependency Injection - IoC Container Integration</h2>
 <p>LeanTest.Net only knows about mocks and state handlers that you explicitly expose to it. This is the only way; LeanTest.Net will never magically find mocks and state handlers using reflection. This is what we call the <em>no magic</em> principle.</p>
@@ -256,24 +251,21 @@ public void PutMustUpdateWhenTimeBetweenCacheFlushesHasElapsed()
 }
 </code></pre>
 <p>Your implementation is passed to LeanTest.Net initialization <em>once per test suite</em> as described TODO: link. Note that it is wrapped in a factory which ensures that a new IoC container instance, along with new mock and state handler instances, are created <em>before each test is run</em>.</p>
-<p>The consequence of this is that <em><strong>each test will start with an empty context data store, empty (i.e., no data passed yet) mocks and state
-handlers</strong></em>.</p>
-<p>It also means that the builders for mocks and state handlers are <em>empty</em> in the sense that they do not know of any types for which to call PreBuild/Build/PostBuild on mocks and state handlers yet.</p>
+<p>The consequence of this is that <em><strong>each test will start with an empty context data store, empty (i.e., no data passed yet) mocks and state handlers</strong></em>.</p>
+<p>It also means that the builders for mocks and state handlers are <em>empty</em> in the sense that they do not know of any types for which to call <code>PreBuild</code>/<code>Build</code>/<code>PostBuild</code> on mocks and state handlers yet.</p>
 <p>This is a consequence of our <em>no magic</em> principle, which is exactly what is needed in most cases.</p>
 <h2 id="tweaking-the-data-life-cycle">Tweaking the Data Life-Cycle</h2>
 <p>At rare occasions you may wish to have slightly more low-level control of the steps in the data life-cycle for certain data types.</p>
-<p>We have already mentioned WithClearDataStore, which you use when you want to avoid passing data again to mocks and state handlers in subsequent calls to Build. This way, you control how WithData and Build is called on mocks and state handlers.</p>
-<p>The data life-cycle also controls when PreBuild and PostBuild are called; in short, these will be called on instances which handle a type for which data has been declared. For example, if data for the type T<sub>1</sub> has been declared, then PreBuild and PostBuild will be called on implementations of IMockForData&lt;T<sub>1</sub>&gt; and IStateHandler&lt;T<sub>1</sub>&gt;. However, if you don't have data for T<sub>2</sub> in a given test, but still want PreBuild and PostBuild to be called on implementations of IMockForData&lt;T<sub>2</sub>&gt; and IStateHandler&lt;T<sub>2</sub>&gt;, then you simply declare empty T<sub>2</sub> data,</p>
-<pre><code class="language-{.syntaxhighlighter-pre">_contextBuilder
-    .WithData&lt;T2&gt;()
+<p>We have already mentioned <code>WithClearDataStore</code>, which you use when you want to avoid passing data again to mocks and state handlers in subsequent calls to <code>Build</code>. This way, you control how <code>WithData</code> and <code>Build</code> is called on mocks and state handlers.</p>
+<p>The data life-cycle also controls when <code>PreBuild</code> and <code>PostBuild</code> are called; in short, these will be called on instances which handle a type for which data has been declared. For example, if data for the type <code>T</code><sub>1</sub> has been declared, then <code>PreBuild</code> and <code>PostBuild</code> will be called on implementations of <code>IMockForData&lt;T</code><sub>1</sub><code>&gt;</code> and <code>IStateHandler&lt;T</code><sub>1</sub><code>&gt;</code>. However, if you don't have data for <code>T</code><sub>2</sub> in a given test, but still want <code>PreBuild</code> and <code>PostBuild</code> to be called on implementations of <code>IMockForData&lt;T</code><sub>2</sub><code>&gt;</code> and <code>IStateHandler&lt;T</code><sub>2</sub><code>&gt;</code>, then you simply declare empty <code>T</code><sub>2</sub> data,</p>
+<pre><code class="language-_contextBuilder">    .WithData&lt;T2&gt;()
 // ... 
 </code></pre>
-<p><strong>Experimental, not implemented yet</strong>: With the example above in mind, you may wish to go the opposite way; you may want the builders to forget about the type T<sub>1</sub>, effectively stopping them from calling PreBuild and PostBuild on implementations of IMockForData&lt;T<sub>1</sub>&gt; and IStateHandler&lt;T<sub>1</sub>&gt;. For this you use WithClearBuilders.</p>
-<pre><code class="language-{.syntaxhighlighter-pre">_contextBuilder
-    .WithClearBuilders()
+<p><strong>Experimental, not implemented yet</strong>: With the example above in mind, you may wish to go the opposite way; you may want the builders to forget about the type <code>T</code><sub>1</sub>, effectively stopping them from calling <code>PreBuild</code> and <code>PostBuild</code> on implementations of <code>IMockForData&lt;T</code><sub>1</sub><code>&gt;</code> and <code>IStateHandler&lt;T</code><sub>1</sub><code>&gt;</code>. For this you use <code>WithClearBuilders</code>.</p>
+<pre><code class="language-_contextBuilder">    .WithClearBuilders()
 // ... 
 </code></pre>
-<p>Note that WithClearBuilders imply WithClearDataStore. Also note that WithClearBuilders and WithClearDataStore are never needed until the second call to Build on the context builder, as a test will always start with a clear data store and clear builders.</p>
+<p>Note that <code>WithClearBuilders</code> imply <code>WithClearDataStore</code>. Also note that <code>WithClearBuilders</code> and <code>WithClearDataStore</code> are never needed until the second call to <code>Build</code> on the context builder, as a test will always start with a clear data store and clear builders.</p>
 
 				</div>
 				<ul class="pager">
