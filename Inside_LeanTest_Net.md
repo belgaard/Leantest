@@ -67,22 +67,22 @@ Since mocks substitute production code, we will mock as little as possible, ther
 
 State handlers are typically used to handle data in database(s), but can also be used to handle other state, such as data in a distributed cache or a file system. In either case, a state handler must take full responsibility for handling the data. For a SQL database, that would involve deleting/inserting data in a way which respects referential integrity. Naturally, such destructive behaviour assumes ownership of the database.
 
-A special use of state handlers is for shared environments, in which destructive actions are not come-il-faut. The best we can do in such an environment is to be explicit about our assumptions, checking and ensuring whenever possible. Tests may still fail for all the reasons which tests fail in shared environments, but at least we can more easily determine the assumption(s) that fail and do corrective actions immediately.
+A special use of state handlers is for shared environments, in which destructive actions are not *come-il-faut*. The best we can do in such an environment is to be explicit about our assumptions, checking and ensuring whenever possible. Tests may still fail for all the reasons which tests fail in shared environments, but at least we can more easily determine the assumption(s) that fail and do corrective actions immediately.
 
-Naturally, the principle of having multiple receivers applies across multiple builders. Returning to an earlier example, a test could declare that EURUSD must be known and available; this instrument can then be passed to an INCA mock implementation as well as to a table in the test target\'s own database.
+Naturally, the principle of having multiple receivers applies across multiple builders. Returning to an earlier example, a test could declare that EURUSD must be known and available; this instrument can then be passed to a mock implementation as well as to a table in the test target\'s own database.
 
 ## The Data Life-Cycle
 
-In the examples above, we have declared data in tests using WithData, then sent data to mocks and state handlers, via the context store and the builders.
+In the examples above, we have declared data in tests using `WithData`, then sent data to mocks and state handlers, via the context store and the builders.
 
-There is obviously a connection between WithData/Build in a test, and WithData/Build in mocks and state handlers, and it is quite possible
+There is obviously a connection between `WithData`/`Build` in a test, and `WithData`/`Build` in mocks and state handlers, and it is quite possible
 to write tests without understanding the finer details of that connection.
 
 However, for those who want to dig a bit deeper in order to excel at writing tests, here are the finer details.
 
 The interfaces for mocks and state handlers, `IMockForData<T>` and `IStateHandler<T>` implement `PreBuild` and `PostBuild` in addition to `WithData` and `Build`,
 
-``` {.syntaxhighlighter-pre syntaxhighlighter-params="brush: c#; gutter: false; theme: Midnight" theme="Midnight"}
+```csharp
 /// <summary>Declare data of type <c>T</c>.</summary>
 void WithData(T data);
 /// <summary>Called before build only once for the instance, allows you to prepare to populate state.</summary>
@@ -95,12 +95,12 @@ void PostBuild();
 
 We implement either `IMockForData<T>` or `IStateHandler<T>`, but not both in a single class.
 
-It is often a good idea to implement either of the interfaces for several types `T`~1~, `T`~2~, ... `T`~n~ in a single class. For example, a state handler which handles data in a SQL database, will be able to insert and delete records corresponding to `T`~1~, `T`~2~, \... `T`~n~ with respect to equivalent relational constraints in the database.
+It is often a good idea to implement either of the interfaces for several types `T`~1~, `T`~2~, ... `T`~n~ in a single class. For example, a state handler which handles data in a SQL database, will be able to insert and delete records corresponding to `T`~1~, `T`~2~, \... `T`~n~ respecting relational constraints in the database.
 
 In general, the data life-cycle is,
 
 - Calling `WithData` in a test will add data to the internal context data store; no data is passed to any mock or state handler.
-- Calling `Build` in a test will initiate a sequence of calls which will pass the data in the internal context data store to relevant mocks and state handlers. For each instance which implements either `IMockForData<T`~1~`>`, `IMockForData<T`~2~`>`, ... , `IMockForData<T`~n~`>` or `IStateHandler<T`~1~`>`, `IStateHandler<T`~2~`>`, `IStateHandler<T`~n~`>`,
+- Calling `Build` in a test will initiate a sequence of calls which will pass the data in the internal context data store to relevant mocks and state handlers. For each instance which implements either `IMockForData<T`~1~`>`, `IMockForData<T`~2~`>`, ... , `IMockForData<T`~n~`>` or `IStateHandler<T`~1~`>`, `IStateHandler<T`~2~`>`, ...,  `IStateHandler<T`~n~`>`,
   - `PreBuild` is called once, allowing you to prepare to use the data which is coming. This allows you to delete any `T`~1~, `T`~2~, ... `T`~n~ data stored in the instance, so that it is entirely clean. A state handler which handles data in a SQL database will delete all records, a mock will clear any internal data structures.
     - `WithData` is called once per piece of data in the internal context data store, for each type `T`~1~, `T`~2~, ... `T`~n~ of data. This is where you would store the data in your own internal data structures in the mock or state handler.
     - `Build` is called once per type `T`~1~, `T`~2~, ... `T`~n~ of data in the internal context data store. This is where you would commit the data from the `WithData` phase if you need to do that per data type. If on the other hand, you do not need per-data type processing, or perhaps you require cross-data type processing, then you will do your processing in `PostBuild` instead.
@@ -108,20 +108,22 @@ In general, the data life-cycle is,
 
 Note that the above text describes the full flexibility of the data life-cycle, whereas most mock and state handler implementations will be much simpler.
 
-Most implementations will simply receive one or more pieces of data which are returned by methods of a mocked interface. In such cases, PreBuild will be a no-op, WithData is a single line (an assignment), and both Build and PostBuild are no-ops. Here is the full implementation of the time mock mentioned above (and described in details TODO: link)
+Most implementations will simply receive one or more pieces of data which are returned by methods of a mocked interface. In such cases, `PreBuild` will be a no-op, `WithData` will be a single line (an assignment), and both `Build` and `PostBuild` will be no-ops. Here is the full implementation of the time mock mentioned above (and described in details TODO: link)
 
 - `WithData` stores a `DateTime` instance and the two methods of the `IDateTime` mocked interface are implemented simply by returning that instance or calling `Ticks` on it respectively,
 
-``` public class MockForDataDateTime : IDateTime, IMockForData<DateTime>
+```csharp
+public class MockForDataDateTime : IDateTime, IMockForData<DateTime>
 {
+    // The two methods of the IDateTime mocked interface:
     public DateTime UtcNow { get; private set; } = DateTime.UtcNow;
     public long Ticks => UtcNow.Ticks;
 
     public void WithData(DateTime data) => UtcNow = data;
 
-    public void PreBuild() {}
-    public void Build(Type type) {}
-    public void PostBuild() {}
+    public void PreBuild() {} // Can be omitted entirely.
+    public void Build(Type type) {} // Can be omitted entirely.
+    public void PostBuild() {} // Can be omitted entirely.
 }
 ```
 
@@ -137,7 +139,8 @@ Again, we can use our write-cache TODO: link as an example. We arrange data, *a
 
 Here is the test using the extended AAA,
 
-``` [TestMethod]
+```csharp
+[TestMethod]
 public void PutMustUpdateWhenTimeBetweenCacheFlushesHasElapsed()
 {
     DateTime startDateTime = DateTime.UtcNow;
@@ -175,7 +178,7 @@ LeanTest.Net only knows about mocks and state handlers that you explicitly expos
 
 You expose your preferred IoC container by implementing a simple interface (as described TODO: link,
 
-``` {.syntaxhighlighter-pre syntaxhighlighter-params="brush: c#; gutter: false; theme: RDark" theme="RDark"}
+```csharp
 public interface IIocContainer
 {
     T Resolve<T>() where T : class;
@@ -200,14 +203,16 @@ We have already mentioned `WithClearDataStore`, which you use when you want to 
 
 The data life-cycle also controls when `PreBuild` and `PostBuild` are called; in short, these will be called on instances which handle a type for which data has been declared. For example, if data for the type `T`~1~ has been declared, then `PreBuild` and `PostBuild` will be called on implementations of `IMockForData<T`~1~`>` and `IStateHandler<T`~1~`>`. However, if you don't have data for `T`~2~ in a given test, but still want `PreBuild` and `PostBuild` to be called on implementations of `IMockForData<T`~2~`>` and `IStateHandler<T`~2~`>`, then you simply declare empty `T`~2~ data,
 
-``` _contextBuilder
+```csharp
+ _contextBuilder
     .WithData<T2>()
 // ... 
 ```
 
 **Experimental, not implemented yet**: With the example above in mind, you may wish to go the opposite way; you may want the builders to forget about the type `T`~1~, effectively stopping them from calling `PreBuild` and `PostBuild` on implementations of `IMockForData<T`~1~`>` and `IStateHandler<T`~1~`>`. For this you use `WithClearBuilders`.
 
-``` _contextBuilder
+```csharp
+ _contextBuilder
     .WithClearBuilders()
 // ... 
 ```
