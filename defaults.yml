@@ -4,7 +4,6 @@
 ProjectName: LeanTest
 GitHub: https://github.com/belgaard/Leantest
 NuGet: https://www.nuget.org/packages?q=leantest
-License: LicenseApache.html
 Footer: "Maintained by Brian Elgaard Bennett"
 MarkdownStyle: book
 ShowDescriptionsInToc: false
