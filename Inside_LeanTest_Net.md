@@ -24,14 +24,13 @@ In essence, all that our Builder pattern does is to pass data from a test to a m
 |----------------------|----------------------|-----------------------|
 | _contextBuilder<br>.WithData(new<br>**My**())<br>.Build();      | **My**: \<one instance\> | internal class MockForDataMy : IMockForData<**My**>, IMyExternalService<br>{<br>public voidWithData(**My** data) { }<br>public void Build(Type type) {}<br>// ...<br>} |
 
-> It is core to Lean testing that we pass data between a test and a mock this way.
->
-> We do not simply instantiate an instance of a mock and feed it with context data, as that would tightly couple tests with mocks. By avoiding such a tight coupling, we can write tests which emphasize *what* is being tested, rather than *how* it is being tested. This not only means that test code is not coupled to a specific mock implementation, it also means that the test code does not depend on a mock being implemented at all. The test in the example above declares that it depends on having a My data in the context, but the test does not care whether the data is passed to a mock or a database.
->
-> *Declaring* data needed for a test, without explicitly stating *how* that data is supposed to be used, is what allows us to write tests in one consistent way, with any kind of mocking strategy, running in-process or out-of-process, mocking a database or not, running with immediate external dependencies or a full environment.
->
-> In short, there is one consistent way to write tests at any level and there is one consistent way to reason about functional test coverage.
->
+It is core to Lean testing that we pass data between a test and a mock this way.
+
+We do not simply instantiate an instance of a mock and feed it with context data, as that would tightly couple tests with mocks. By avoiding such a tight coupling, we can write tests which emphasize *what* is being tested, rather than *how* it is being tested. This not only means that test code is not coupled to a specific mock implementation, it also means that the test code does not depend on a mock being implemented at all. The test in the example above declares that it depends on having a My data in the context, but the test does not care whether the data is passed to a mock or a database.
+
+*Declaring* data needed for a test, without explicitly stating *how* that data is supposed to be used, is what allows us to write tests in one consistent way, with any kind of mocking strategy, running in-process or out-of-process, mocking a database or not, running with immediate external dependencies or a full environment.
+
+In short, there is one consistent way to write tests at any level and there is one consistent way to reason about functional test coverage.
 
 Note that the test uses the *type* of the instance of data passed to the mock in order to decide the receiver, i.e. in order to identify the mock which will receive the data. We expect representations of external dependencies to use strong typing.
 

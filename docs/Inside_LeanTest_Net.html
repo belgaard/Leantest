@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="sidebar/sidebar.min.css" />
 <link rel="stylesheet" href="css/book.min.css" />
-<link rel="stylesheet" href="syntax-highlight/solarized-light.min.css" />
+<link rel="stylesheet" href="syntax-highlight/monokai.min.css" />
 <link rel="stylesheet" href="mermaid/mermaid.css" />
 
 </head>
@@ -40,7 +40,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
 					<li><a href="https://github.com/belgaard/Leantest"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
-                    <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-download" aria-hidden="true"></i> Download</a></li>
+                    <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-cloud-download" aria-hidden="true"></i> NuGet</a></li>
                     <li><a href="LicenseApache.html">License</a></li>
                 </ul>
             </div>
@@ -121,12 +121,10 @@
 </tr>
 </tbody>
 </table>
-<blockquote>
 <p>It is core to Lean testing that we pass data between a test and a mock this way.</p>
 <p>We do not simply instantiate an instance of a mock and feed it with context data, as that would tightly couple tests with mocks. By avoiding such a tight coupling, we can write tests which emphasize <em>what</em> is being tested, rather than <em>how</em> it is being tested. This not only means that test code is not coupled to a specific mock implementation, it also means that the test code does not depend on a mock being implemented at all. The test in the example above declares that it depends on having a My data in the context, but the test does not care whether the data is passed to a mock or a database.</p>
 <p><em>Declaring</em> data needed for a test, without explicitly stating <em>how</em> that data is supposed to be used, is what allows us to write tests in one consistent way, with any kind of mocking strategy, running in-process or out-of-process, mocking a database or not, running with immediate external dependencies or a full environment.</p>
 <p>In short, there is one consistent way to write tests at any level and there is one consistent way to reason about functional test coverage.</p>
-</blockquote>
 <p>Note that the test uses the <em>type</em> of the instance of data passed to the mock in order to decide the receiver, i.e. in order to identify the mock which will receive the data. We expect representations of external dependencies to use strong typing.</p>
 <p>Also note how a mock declares what type of data it is prepared to receive simply by implementing the interface <code>IMockForData&lt;&gt;</code>. <code>Build()</code> on the context builder will pass data of type <code>T</code> from the internal data store by <em>asking the DI container</em> for implementations of <code>IMockForData&lt;T&gt;</code>. LeanTest.Net will never use reflection to discover receivers of data, <em><strong>it will rely on receivers to be registered with the DI container and tests to declare relevant data</strong></em>.</p>
 <h3 id="multiple-receivers">Multiple Receivers</h3>

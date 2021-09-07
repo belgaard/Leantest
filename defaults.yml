@@ -3,13 +3,13 @@
 ---
 ProjectName: LeanTest
 GitHub: https://github.com/belgaard/Leantest
-Download: https://www.nuget.org/packages?q=leantest
+NuGet: https://www.nuget.org/packages?q=leantest
 License: LicenseApache.html
 Footer: "Maintained by Brian Elgaard Bennett"
 MarkdownStyle: book
 ShowDescriptionsInToc: false
 BootstrapStyle: readable
-SyntaxHighlight: solarized-light
+SyntaxHighlight: monokai
 
 
 # Command line options. See https://johtela.github.io/LiterateCS/LiterateCS/Options.html
