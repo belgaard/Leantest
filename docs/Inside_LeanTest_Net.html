@@ -133,7 +133,7 @@
 <p>In the example above we had a piece of data which was passed to a single mock. It is not always that simple; in fact, <em><strong>the possibility of having multiple receivers with a consistent view of test data is one major benefit of our flavour of the Builder pattern</strong></em>.</p>
 <p>One example usage of multiple receivers could be a test which declares that the financial Forex instrument EURUSD must be known and available. The external dependencies could be a number of backend services which each is responsible for handling a single aspect of that instrument (such as pricing, margin calculations etc.). We would expect that if one of these know about EURUSD, then the others will also.</p>
 <p>Another example is when <em>time itself</em> is an external dependency. If the code under test has logic around the current time and also run code regularly on a thread as spun up by a timer, then you would expect such code to have the same notion of time. In other words, if a test declares that the current time is <em>Star Wars day 2020</em>, then you expect that both the current time and the timer logic would reflect that.</p>
-<p>Treating time as an external dependency is a coding pattern which is documented TODO, the example functionality being a write-cache which flushes at regular times. From the details of the documented code pattern it follows that a single <code>DateTime</code> instance declared in a test will be passed to the two
+<p>Treating time as an external dependency is a coding pattern which is documented in <a href="Lean_Test_Coding_Patterns.html">Lean Test Coding Patterns</a>, the example functionality being a write-cache which flushes at regular times. From the details of the documented code pattern it follows that a single <code>DateTime</code> instance declared in a test will be passed to the two
 relevant mocks,</p>
 <table>
 <thead>
@@ -160,7 +160,7 @@ short,</p>
 <li>The <em>mock-for-data builder</em> passes data to mock implementations. Mock implementations <em>substitute production code</em> by implementing one or more interfaces, such as <code>IMyExternalDependency</code>, along with <code>IMockForData&lt;T&gt;</code> for all relevant data types <code>T</code>.</li>
 <li>The <em>state handler builder</em> passes data to state handler implementations. State handler implementations manage state of direct external dependencies by implementing  <code>IStateHandler&lt;T&gt;</code> for all relevant data types <code>T</code>. A state handler will never substitute production code.</li>
 </ul>
-<p>Since mocks substitute production code, we will mock as little as possible, thereby putting as much code under test as possible. And when we mock, we will try to not mock away any production code which is relevant to put under test. Key to this is to define façade interfaces TODO: link representing external dependencies; these interfaces are defined such that a production code implementation contains no logic, only pass-through to the actual external dependency.</p>
+<p>Since mocks substitute production code, we will mock as little as possible, thereby putting as much code under test as possible. And when we mock, we will try to not mock away any production code which is relevant to put under test. Key to this is to define façade interfaces representing external dependencies; these interfaces are defined such that a production code implementation contains no logic, only pass-through to the actual external dependency.</p>
 <p>State handlers are typically used to handle data in database(s), but can also be used to handle other state, such as data in a distributed cache or a file system. In either case, a state handler must take full responsibility for handling the data. For a SQL database, that would involve deleting/inserting data in a way which respects referential integrity. Naturally, such destructive behaviour assumes ownership of the database.</p>
 <p>A special use of state handlers is for shared environments, in which destructive actions are not <em>come-il-faut</em>. The best we can do in such an environment is to be explicit about our assumptions, checking and ensuring whenever possible. Tests may still fail for all the reasons which tests fail in shared environments, but at least we can more easily determine the assumption(s) that fail and do corrective actions immediately.</p>
 <p>Naturally, the principle of having multiple receivers applies across multiple builders. Returning to an earlier example, a test could declare that EURUSD must be known and available; this instrument can then be passed to a mock implementation as well as to a table in the test target's own database.</p>
@@ -197,7 +197,7 @@ void PostBuild();
 </li>
 </ul>
 <p>Note that the above text describes the full flexibility of the data life-cycle, whereas most mock and state handler implementations will be much simpler.</p>
-<p>Most implementations will simply receive one or more pieces of data which are returned by methods of a mocked interface. In such cases, <code>PreBuild</code> will be a no-op, <code>WithData</code> will be a single line (an assignment), and both <code>Build</code> and <code>PostBuild</code> will be no-ops. Here is the full implementation of the time mock mentioned above (and described in details TODO: link)</p>
+<p>Most implementations will simply receive one or more pieces of data which are returned by methods of a mocked interface. In such cases, <code>PreBuild</code> will be a no-op, <code>WithData</code> will be a single line (an assignment), and both <code>Build</code> and <code>PostBuild</code> will be no-ops. Here is the full implementation of the time mock mentioned above (and described in details in <a href="Lean_Test_Coding_Patterns.html">Lean Test Coding Patterns</a>)</p>
 <ul>
 <li><code>WithData</code> stores a <code>DateTime</code> instance and the two methods of the <code>IDateTime</code> mocked interface are implemented simply by returning that instance or calling <code>Ticks</code> on it respectively,</li>
 </ul>
@@ -218,7 +218,7 @@ void PostBuild();
 <p>Most tests call <code>WithData</code> multiple times, then call <code>Build</code> once on a context builder. This is because most test cases are simple enough that a single call to Build is sufficient.</p>
 <p>But the entire data life-cycle is traversed every time a test calls Build and this allows us to handle more advanced test cases.</p>
 <p>Some examples of advanced cases involve testing of time based functionality. Such tests will typically not be simple AAA tests, with a single <em>arrange</em>, a single <em>act</em> and a single <em>assert</em>. Rather, it is common to set the state of the test target, perhaps do a bit of acting, change the current time, act a bit more etc.</p>
-<p>Again, we can use our write-cache TODO: link as an example. We arrange data, <em>act</em> in a way that puts data in the cache, <em>assert</em> that the cache has not been flushed (as no time has passed yet), then <em>arrange</em> that time passes past the flush delay, then finally <em>assert</em> that the cache has flushed as expected.</p>
+<p>Again, we can use our <a href="Lean_Test_Coding_Patterns.html">write-cache</a> as an example. We arrange data, <em>act</em> in a way that puts data in the cache, <em>assert</em> that the cache has not been flushed (as no time has passed yet), then <em>arrange</em> that time passes past the flush delay, then finally <em>assert</em> that the cache has flushed as expected.</p>
 <p>Here is the test using the extended AAA,</p>
 <pre><code class="language-csharp">[TestMethod]
 public void PutMustUpdateWhenTimeBetweenCacheFlushesHasElapsed()
@@ -258,7 +258,7 @@ public void PutMustUpdateWhenTimeBetweenCacheFlushesHasElapsed()
     IEnumerable&lt;T&gt; TryResolveAll&lt;T&gt;() where T : class;
 }
 </code></pre>
-<p>Your implementation is passed to LeanTest.Net initialization <em>once per test suite</em> as described TODO: link. Note that it is wrapped in a factory which ensures that a new IoC container instance, along with new mock and state handler instances, are created <em>before each test is run</em>.</p>
+<p>Your implementation is passed to LeanTest.Net initialization <em>once per test suite</em>. Note that it is wrapped in a factory which ensures that a new IoC container instance, along with new mock and state handler instances, are created <em>before each test is run</em>.</p>
 <p>The consequence of this is that <em><strong>each test will start with an empty context data store, empty (i.e., no data passed yet) mocks and state handlers</strong></em>.</p>
 <p>It also means that the builders for mocks and state handlers are <em>empty</em> in the sense that they do not know of any types for which to call <code>PreBuild</code>/<code>Build</code>/<code>PostBuild</code> on mocks and state handlers yet.</p>
 <p>This is a consequence of our <em>no magic</em> principle, which is exactly what is needed in most cases.</p>
