@@ -12,7 +12,7 @@
       Features that depend on Xunit.
     </Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Copyright>LeanTest is licensed under the Apache License 2.0</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>Unit Test UnitTest DeveloperTest Developer</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyVersion>$(appveyor_build_version)</AssemblyVersion>
