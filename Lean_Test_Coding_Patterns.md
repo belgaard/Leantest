@@ -1,6 +1,6 @@
 # Lean Test Coding Patterns
 
-This document is intended for collecting coding patterns that show how to handle different kinds of external dependencies - and more.
+This section is intended for collecting coding patterns that show how to handle different kinds of external dependencies - and more.
 
 ## Time as an External Dependency
 
@@ -28,9 +28,9 @@ public class DateTimeMonoState : IDateTime
 }
 ```
 
-Note that we in this example have both `UtcNow` and `Ticks`, since that is exactly what our production code needs in this example. The interface `IDateTime` can be seen as a *facade* which represents exactly what the given client, our production code, needs.
+Note that we in this example have both `UtcNow` and `Ticks`, since that is exactly what our production code needs in this example. The interface `IDateTime` can be seen as a *façade* which represents exactly what the given client, our production code, needs.
 
-The example production code we are going to use is a write cache, caching user settings.
+The example production code we are going to use is a write cache which caches user settings.
 
 The `IDateTime` interface is injected into constructors and then used
 wherever it is needed, for example as follows,
@@ -78,7 +78,7 @@ internal void PutMustUpdateWhenTimeBetweenCacheFlushesHasNotElapsedButDelayIsCha
 
 ### The ITimer Interface
 
-Controlling time in a simple way as shown above is very simple. It is more interesting when we have a timer.
+Controlling time as shown above is very simple and useful, but it is a more interesting challenge when we have a *timer*.
 
 In our example write cache, entries expire after a certain amount of time, the default being 20 seconds, and the production code must check for expired items to flush every second.
 
@@ -252,7 +252,7 @@ public void PutMustUpdateWhenTimeBetweenCacheFlushesHasNotElapsedButDelayIsChang
 
 ... then it is both the `IDateTime` mock and the `ITimer` mock which gets the required time.
 
-This is important when we want to test advanced timing related functionality, in which both the current time and elapsed time combined determines expected and required behaviour.
+This is important when we want to test advanced timing related functionality, in which both the current time and elapsed time combined determine expected and required behaviour.
 
 Let's say our test scenario is,
 

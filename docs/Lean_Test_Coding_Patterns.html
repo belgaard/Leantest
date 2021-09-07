@@ -1,0 +1,371 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Lean_Test_Coding_Patterns - LeanTest</title>
+
+	<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="bootstrap/css/readable/bootstrap.min.css" />
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="sidebar/sidebar.min.css" />
+<link rel="stylesheet" href="css/book.min.css" />
+<link rel="stylesheet" href="syntax-highlight/solarized-light.min.css" />
+<link rel="stylesheet" href="mermaid/mermaid.css" />
+
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#sidebar-toggle" id="sidebar-toggle">
+					<i id="sidebar-toggle-icon" class="hidden-md hidden-lg hidden-xl fa fa-angle-double-right" aria-hidden="true"></i>
+					LeanTest
+				</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					<li><a href="https://github.com/belgaard/Leantest"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+                    <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-download" aria-hidden="true"></i> Download</a></li>
+                    <li><a href="LicenseApache.html">License</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-md-3 hidden-sm hidden-xs">
+                
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>On This Page</h4>
+            </div>
+            <div id="header-menu" class="panel-body main-menu">
+                <ul></ul>
+            </div>
+        </div>  
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Table of Contents</h4>
+            </div>
+            <div class="panel-body main-menu">
+                <ul>
+	<li><a href="index.html">Home</a></li>
+	<ul>
+	</ul>
+	<li><a href="Introduction.html">Introduction</a></li>
+	<ul>
+	</ul>
+	<li><a href="Lean_Test_Coding_Patterns.html" class="selected">Lean Test Coding Patterns</a></li>
+	<ul>
+	</ul>
+	<li><a href="Inside_LeanTest_Net.html">Inside LeanTest.Net</a></li>
+	<ul>
+	</ul>
+	<li><a href="LicenseApache.html">License</a></li>
+	<ul>
+	</ul>
+	<li><a href="README.html">Readme</a></li>
+	<ul>
+	</ul>
+</ul>
+            </div>
+        </div>
+
+            </div>
+			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+				<ul class="pager">
+	<li class="previous"><a href="Introduction.html">Previous: Introduction</a></li>
+	<li class="next"><a href="Inside_LeanTest_Net.html">Next: Inside LeanTest.Net</a></li>
+</ul>
+				<div id="static-content" class="markdown">
+					<h1 id="lean-test-coding-patterns">Lean Test Coding Patterns</h1>
+<p>This section is intended for collecting coding patterns that show how to handle different kinds of external dependencies - and more.</p>
+<h2 id="time-as-an-external-dependency">Time as an External Dependency</h2>
+<p>It is a common coding pattern to have time dependencies simply represented by calling the static .NET <code>DateTime.UtcNow</code> in order to get the current time. This can be a small nuisance in tests, e.g. when asserting on expected outcome which contains time information. It's a bit more challenging when production code functionality depend on elapsed time, such as branching on short, long and very long durations. We want our tests to run fast, not to wait for whatever a <em>very long duration</em> amounts to. We also want to test tricky cases like passing midnight or a leap year without actually waiting for such events. Timers represent a special challenge, as they spin up threads at specified intervals; we want to put timer dependent production code under test without much waiting or synchronization.</p>
+<p>In this example, we will walk through simple <em>time</em> dependencies as well as <em>timer</em> dependencies. The magic of the Lean Test builder pattern and <code>IMockForData</code> will ensure that this notion of time is consistent in both cases, across production and test code.</p>
+<h3 id="the-idatetime-interface">The IDateTime Interface</h3>
+<p>The main trick is to treat <em>time</em> itself as an external dependency, so we have an <code>IDateTime</code> interface in our <code>ExternalDependencies</code> folder in production code. Simply injecting and using <code>IDateTime</code> in production code rather than using the static <code>DateTime</code> allows for L0 testing most time dependent functionality. This requires only a very minor change to production code.</p>
+<p>The first step is to define an <code>IDateTime</code> interface and an implementation which wraps the static <code>DateTime</code>,</p>
+<pre><code class="language-csharp">public interface IDateTime
+{
+    DateTime UtcNow { get; }
+    long Ticks { get; }
+}
+
+public class DateTimeMonoState : IDateTime
+{
+    public DateTime UtcNow =&gt; DateTime.UtcNow;
+    public long Ticks =&gt; UtcNow.Ticks;
+}
+</code></pre>
+<p>Note that we in this example have both <code>UtcNow</code> and <code>Ticks</code>, since that is exactly what our production code needs in this example. The interface <code>IDateTime</code> can be seen as a <em>façade</em> which represents exactly what the given client, our production code, needs.</p>
+<p>The example production code we are going to use is a write cache which caches user settings.</p>
+<p>The <code>IDateTime</code> interface is injected into constructors and then used
+wherever it is needed, for example as follows,</p>
+<pre><code class="language-csharp">public UserSettingsWriteCache(IDateTime dateTime /*, ... */)
+{
+    _dateTime = dateTime;
+    // ...  
+}
+
+public void Enqueue(UserSettingsPutCommand putCommand)
+{
+    putCommandCache.AddOrUpdate((putCommand.UserId, putCommand.AppId), putCommand, _dateTime.UtcNow);
+    // ...  
+}
+</code></pre>
+<p>The mock-for-data implementation is as simple as we are used to,</p>
+<pre><code class="language-csharp">public class MockForDataDateTime : IDateTime, IMockForData&lt;DateTime&gt;
+{
+    public DateTime UtcNow { get; private set; } = DateTime.UtcNow;
+    public long Ticks =&gt; UtcNow.Ticks;
+    public void WithData(DateTime data) =&gt; UtcNow = data;
+    // ...  
+}
+</code></pre>
+<p>We have chosen to give <code>UtcNow</code> a default value so that we only need to provide a value for test cases in which it will make a difference. For such a test, a simple <code>WithData</code> statement is all it takes to set e.g. the <em>Star Wars date 2020</em>,</p>
+<pre><code class="language-csharp">[TestMethod]
+internal void PutMustUpdateWhenTimeBetweenCacheFlushesHasNotElapsedButDelayIsChangedToZero()
+{
+    DateTime startDateTime = new DateTime(2020, 5, 4);
+    _contextBuilder
+        .WithData(startDateTime)
+        // ...  
+        .Build();
+    // ...  
+}
+</code></pre>
+<h3 id="the-itimer-interface">The ITimer Interface</h3>
+<p>Controlling time as shown above is very simple and useful, but it is a more interesting challenge when we have a <em>timer</em>.</p>
+<p>In our example write cache, entries expire after a certain amount of time, the default being 20 seconds, and the production code must check for expired items to flush every second.</p>
+<p>Needless to say, we don't want our tests to wait one, 20 or any other number of seconds when we test this functionality.</p>
+<p>Again, the trick is to treat time itself as an external dependency.</p>
+<p>Unfortunately, this is not what MS does with .NET, so we cannot inject <code>IDateTime</code>, or anything similar, into the standard timers.</p>
+<p>Instead, we will wrap <code>System.Timers.Timer</code> similar to how we wrapped <code>DateTime</code></p>
+<pre><code class="language-csharp">public interface ITimer
+{
+    event ElapsedEventHandler Elapsed;
+    bool AutoReset { set; }
+    bool Enabled { set; }
+    void Dispose();
+}
+public interface ITimerFactory
+{
+    /// &lt;summary&gt;&lt;/summary&gt;
+    ITimer CreateTimer(double interval);
+}
+internal class InternalTimer : Timer, ITimer
+{
+    internal class TimerFactory : ITimerFactory
+    {
+        public ITimer CreateTimer(double interval) =&gt; new InternalTimer(interval);
+    }
+
+    private InternalTimer(double interval) : base(interval) {}
+}
+</code></pre>
+<p>There is a small, but important difference here - we have provided a factory class to create the timer, because it is common practice to create a timer on demand, not injecting it. By injecting a factory class, we are back to testable code again. Here is one example that shows how to create and initialize a timer,</p>
+<pre><code class="language-csharp">public UserSettingsWriteCache(ITimerFactory timerFactory /*, ... */)
+{
+    _checkForExpiredTimer = timerFactory.CreateTimer(MillisecondsBetweenCheckForExpired);
+    _checkForExpiredTimer.Elapsed += FlushExpiredCommands;
+    _checkForExpiredTimer.AutoReset = true;
+    _checkForExpiredTimer.Enabled = true;
+// ...
+}
+</code></pre>
+<p>The timer mock is relatively simple, but there are a couple of important and useful twists to it,</p>
+<pre><code class="language-csharp">internal class MockTimer : ITimer
+{
+    private readonly TimeSpan _interval;
+    private DateTime _dateTime;
+
+    /// &lt;summary&gt;We inject the timer factory, not the timer, so the factory must implement IMockForData and pass data on.&lt;/summary&gt;
+    internal class TimerFactory : ITimerFactory, IMockForData&lt;DateTime&gt;
+    {
+        private MockTimer _timerMock; // We assume that only a single instance is created; change this if there are more than one in the production code!
+
+        public ITimer CreateTimer(double interval) =&gt; _timerMock = new MockTimer(interval);
+        public void WithData(DateTime data) =&gt; _timerMock.WithData(data);
+        public void PreBuild() {}
+        public void Build(Type type) {}
+        public void PostBuild() {}
+    }
+
+    private MockTimer(double interval) =&gt; _interval = TimeSpan.FromMilliseconds(interval);
+
+    public event ElapsedEventHandler Elapsed;
+    public bool AutoReset { get; set; }
+    public bool Enabled { get; set; }
+    public void Dispose() {}
+
+    private void WithData(DateTime data) // Calling this means &quot;time has passed, the current time is now ...&quot;
+    {
+        if (data - _dateTime &gt; _interval)
+            Elapsed?.Invoke(null, null);
+        _dateTime = data;
+    }
+}
+</code></pre>
+<p>The first twist is that since we inject the factory, it is the factory which is known to the DI container not the timer itself, so we implement IMockForData on the factory and delegate to the timer. The timer implementation is instantiated and used by the factory, not the DI container.</p>
+<p>The second twist is the fact that the timer gets its notion of time from IDateTime - this is <em>the same time as any other piece of production or test code</em> in our solution.</p>
+<p>Occasionally, the above mock implementation will be too simplistic. As hinted in a comment, you will often need several timer instances. Also, if timer event handlers depend on time, through the IDateTime interface, you need to ensure that the time mock is updated with the current time before timer handlers are executed. There is no guarantee that mocks have their builder methods called in any specific order, so the trick is to implement both the ITimerFactory and the IDateTime interfaces in the same class. This is how the mock below implements these requirements,</p>
+<pre><code class="language-csharp">internal class MockTimer : ITimer
+{
+    private readonly TimeSpan _interval;
+    private DateTime _invokedAt;
+    private DateTime _currentTime;
+
+    /// &lt;summary&gt;We inject the timer factory, not the timer, so the factory must implement IMockForData and pass data on.&lt;/summary&gt;
+    /// &lt;remarks&gt;We implement time (IClock) here in order to ensure that timer handlers and the timers perceive time consistently.&lt;/remarks&gt;
+    internal class TimerFactory : ITimerFactory, IMockForData&lt;DateTime&gt;, IDateTime
+    {
+        private readonly IList&lt;MockTimer&gt; _timerMocks = new List&lt;MockTimer&gt;();
+        private DateTime _rawUtcNow;
+
+        public ITimer CreateTimer(double interval)
+        {
+            var theTimer = new MockTimer(interval);
+            _timerMocks.Add(theTimer);
+
+            return theTimer;
+        }
+
+        public void WithData(DateTime data)
+        {
+            _rawUtcNow = data;
+            foreach (MockTimer timerMock in _timerMocks)
+                timerMock.WithData(data);
+        }
+        public void PreBuild() { }
+        public void Build(Type type) { }
+        public void PostBuild()
+        {
+            UtcNow = _rawUtcNow;
+            foreach (MockTimer timerMock in _timerMocks)
+                timerMock.PostBuild();
+        }
+
+        public DateTime UtcNow { get; private set; }
+    }
+
+    private MockTimer(double interval) =&gt; _interval = TimeSpan.FromMilliseconds(interval);
+
+    public event ElapsedEventHandler Elapsed;
+    public bool AutoReset { get; set; }
+    public bool Enabled { get; set; }
+    public void Dispose() { }
+    public void Stop() { }
+
+    /// &lt;summary&gt;Calling this means &quot;time has passed, the current time is now ...&quot; &lt;/summary&gt;
+    private void WithData(DateTime data) =&gt; _currentTime = data;
+
+    private void PostBuild()
+    {
+        if (_currentTime == default)
+            return;
+        if (_invokedAt == default)
+            _invokedAt = _currentTime;
+        if (_currentTime - _invokedAt &lt; _interval)
+            return;
+
+        _invokedAt = _currentTime;
+        Elapsed?.Invoke(null, null);
+    }
+}
+</code></pre>
+<p>The meaning of this is that whenever we write test code like the following,</p>
+<pre><code class="language-csharp">[TestMethod]
+public void PutMustUpdateWhenTimeBetweenCacheFlushesHasNotElapsedButDelayIsChangedToZero()
+{
+    DateTime startDateTime = new DateTime(2020, 5, 4);
+    _contextBuilder
+        .WithData(startDateTime)
+        // ...  
+        .Build();
+    // ...  
+}
+</code></pre>
+<p>... then it is both the <code>IDateTime</code> mock and the <code>ITimer</code> mock which gets the required time.</p>
+<p>This is important when we want to test advanced timing related functionality, in which both the current time and elapsed time combined determine expected and required behaviour.</p>
+<p>Let's say our test scenario is,</p>
+<ul>
+<li>Enqueue a change to the write cache.</li>
+<li>Before the default time between cache flushes elapse, check that the     write cache has not been flushed, i.e. the change has not been written.</li>
+<li>Let more than the default time between cache flushes elapse.</li>
+<li>Check that the change has been written.</li>
+</ul>
+<p>It is straightforward to write such a test as well as similar tests. Here is an example of the above,</p>
+<pre><code class="language-csharp">[TestMethod]
+public void PutMustUpdateWhenTimeBetweenCacheFlushesHasElapsed()
+{
+    DateTime startDateTime = DateTime.UtcNow;
+    _contextBuilder
+        .WithData&lt;UserSettingsRow&gt;(TestData.UserSettingsRows.User1InitialSettings)
+        .WithData(startDateTime)
+        .Build();
+    string pre = _reader.Query(new UserSettingsQuery { UserId = 1, AppId = 42, Path = &quot;text&quot; });
+
+    _target.PutUserSettings(new JValue(&quot;New value.&quot;), &quot;text&quot;);
+
+    string afterPutButBeforeExpiry = _reader.Query(new UserSettingsQuery { UserId = 1, AppId = 42, Path = &quot;text&quot; });
+
+    _contextBuilder.WithClearDataStore()
+        .WithData(startDateTime + TimeSpan.FromMilliseconds(UserSettingsWriteCache.DefaultMillisecondsBetweenCacheFlushes + 1))
+        .Build();
+
+    string actual = _reader.Query(new UserSettingsQuery {UserId = 1, AppId = 42, Path = &quot;text&quot; });
+    MultiAssert.Aggregate(
+        () =&gt; Assert.AreEqual(@&quot;&quot;&quot;This is a string.&quot;&quot;&quot;, pre),
+        () =&gt; Assert.AreEqual(@&quot;&quot;&quot;This is a string.&quot;&quot;&quot;, afterPutButBeforeExpiry),
+        () =&gt; Assert.AreEqual(@&quot;&quot;&quot;New value.&quot;&quot;&quot;, actual));
+}
+</code></pre>
+<p>Note the way we control time simply by passing it in <code>WithData</code> statements. First, we set the initial time, which will be passed to the mocks at the time of the first <code>Build</code>.</p>
+<p>We execute the command, <code>PutUserSettings</code>, then check if the change has been written while <em>time effectively has stopped</em>. We are in the Matrix here.</p>
+<p>The next <code>WithData</code> and <code>Build()</code> sets the time to 1 ms after the cache delay. Note the <code>WithClearDataStore</code> statement which instructs Lean Test not to pass all the initial with-data again.</p>
+<p>This example has been boiled down from a slightly more advanced test which also changes the cache delay and asserts on log entries. Rest assured that the more advanced test is as simple and straightforward as the one described above.</p>
+
+				</div>
+				<ul class="pager">
+	<li class="previous"><a href="Introduction.html">Previous: Introduction</a></li>
+	<li class="next"><a href="Inside_LeanTest_Net.html">Next: Inside LeanTest.Net</a></li>
+</ul>
+			</div>
+        </div>
+    </div>
+    
+    <footer class="panel-footer text-center">
+        <div align="center">Maintained by Brian Elgaard Bennett</div>
+		<div align="right">
+			<small>
+				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.
+			</small>
+		</div>
+    </footer>
+
+
+    
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="sidebar/sidebar.js"></script>
+    <script src="syntax-highlight/syntax.js"></script>
+
+</body>
+</html>
