@@ -3,8 +3,9 @@
 ---
 ProjectName: LeanTest
 GitHub: https://github.com/belgaard/Leantest
+License: https://licenses.nuget.org/MIT
 NuGet: https://www.nuget.org/packages?q=leantest
-Footer: "Maintained by Brian Elgaard Bennett"
+Footer: "Maintained by Brian Elgaard Bennett, licensed to you under the MIT license"
 MarkdownStyle: book
 ShowDescriptionsInToc: false
 BootstrapStyle: readable
