@@ -44,7 +44,7 @@ One example usage of multiple receivers could be a test which declares that the 
 
 Another example is when *time itself* is an external dependency. If the code under test has logic around the current time and also run code regularly on a thread as spun up by a timer, then you would expect such code to have the same notion of time. In other words, if a test declares that the current time is *Star Wars day 2020*, then you expect that both the current time and the timer logic would reflect that.
 
-Treating time as an external dependency is a coding pattern which is documented TODO, the example functionality being a write-cache which flushes at regular times. From the details of the documented code pattern it follows that a single `DateTime` instance declared in a test will be passed to the two
+Treating time as an external dependency is a coding pattern which is documented in [Lean Test Coding Patterns](Lean_Test_Coding_Patterns.html), the example functionality being a write-cache which flushes at regular times. From the details of the documented code pattern it follows that a single `DateTime` instance declared in a test will be passed to the two
 relevant mocks,
 
 | Test arrange part                                            | Context data store             | Mock                                                         |
@@ -63,7 +63,7 @@ short,
 - The *mock-for-data builder* passes data to mock implementations. Mock implementations *substitute production code* by implementing one or more interfaces, such as `IMyExternalDependency`, along with `IMockForData<T>` for all relevant data types `T`.
 - The *state handler builder* passes data to state handler implementations. State handler implementations manage state of direct external dependencies by implementing  `IStateHandler<T>` for all relevant data types `T`. A state handler will never substitute production code.
 
-Since mocks substitute production code, we will mock as little as possible, thereby putting as much code under test as possible. And when we mock, we will try to not mock away any production code which is relevant to put under test. Key to this is to define façade interfaces TODO: link representing external dependencies; these interfaces are defined such that a production code implementation contains no logic, only pass-through to the actual external dependency.
+Since mocks substitute production code, we will mock as little as possible, thereby putting as much code under test as possible. And when we mock, we will try to not mock away any production code which is relevant to put under test. Key to this is to define façade interfaces representing external dependencies; these interfaces are defined such that a production code implementation contains no logic, only pass-through to the actual external dependency.
 
 State handlers are typically used to handle data in database(s), but can also be used to handle other state, such as data in a distributed cache or a file system. In either case, a state handler must take full responsibility for handling the data. For a SQL database, that would involve deleting/inserting data in a way which respects referential integrity. Naturally, such destructive behaviour assumes ownership of the database.
 
@@ -108,7 +108,7 @@ In general, the data life-cycle is,
 
 Note that the above text describes the full flexibility of the data life-cycle, whereas most mock and state handler implementations will be much simpler.
 
-Most implementations will simply receive one or more pieces of data which are returned by methods of a mocked interface. In such cases, `PreBuild` will be a no-op, `WithData` will be a single line (an assignment), and both `Build` and `PostBuild` will be no-ops. Here is the full implementation of the time mock mentioned above (and described in details TODO: link)
+Most implementations will simply receive one or more pieces of data which are returned by methods of a mocked interface. In such cases, `PreBuild` will be a no-op, `WithData` will be a single line (an assignment), and both `Build` and `PostBuild` will be no-ops. Here is the full implementation of the time mock mentioned above (and described in details in [Lean Test Coding Patterns](Lean_Test_Coding_Patterns.html))
 
 - `WithData` stores a `DateTime` instance and the two methods of the `IDateTime` mocked interface are implemented simply by returning that instance or calling `Ticks` on it respectively,
 
@@ -135,7 +135,7 @@ But the entire data life-cycle is traversed every time a test calls Build and th
 
 Some examples of advanced cases involve testing of time based functionality. Such tests will typically not be simple AAA tests, with a single *arrange*, a single *act* and a single *assert*. Rather, it is common to set the state of the test target, perhaps do a bit of acting, change the current time, act a bit more etc.
 
-Again, we can use our write-cache TODO: link as an example. We arrange data, *act* in a way that puts data in the cache, *assert* that the cache has not been flushed (as no time has passed yet), then *arrange* that time passes past the flush delay, then finally *assert* that the cache has flushed as expected.
+Again, we can use our [write-cache](Lean_Test_Coding_Patterns.html) as an example. We arrange data, *act* in a way that puts data in the cache, *assert* that the cache has not been flushed (as no time has passed yet), then *arrange* that time passes past the flush delay, then finally *assert* that the cache has flushed as expected.
 
 Here is the test using the extended AAA,
 
@@ -187,7 +187,7 @@ public interface IIocContainer
 }
 ```
 
-Your implementation is passed to LeanTest.Net initialization *once per test suite* as described TODO: link. Note that it is wrapped in a factory which ensures that a new IoC container instance, along with new mock and state handler instances, are created *before each test is run*.
+Your implementation is passed to LeanTest.Net initialization *once per test suite*. Note that it is wrapped in a factory which ensures that a new IoC container instance, along with new mock and state handler instances, are created *before each test is run*.
 
 The consequence of this is that ***each test will start with an empty context data store, empty (i.e., no data passed yet) mocks and state handlers***.
 

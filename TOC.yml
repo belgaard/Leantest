@@ -8,6 +8,9 @@ contents:
   - page: Introduction
     file: Introduction.md
     desc: Introduction to Lean Testing.
+  - page: Lean Test Coding Patterns
+    file: Lean_Test_Coding_Patterns.md
+    desc: Lean Test Coding Patterns.
   - page: Inside LeanTest.Net
     file: Inside_LeanTest_Net.md
     desc: Inside LeanTest.Net.
