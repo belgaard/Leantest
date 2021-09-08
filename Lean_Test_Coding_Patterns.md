@@ -1,4 +1,4 @@
-# Lean Test Coding Patterns
+# Coding Patterns
 
 This section is intended for collecting coding patterns that show how to handle different kinds of external dependencies - and more.
 

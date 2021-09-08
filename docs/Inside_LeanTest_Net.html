@@ -71,7 +71,10 @@
 	<li><a href="Introduction.html">Introduction</a></li>
 	<ul>
 	</ul>
-	<li><a href="Lean_Test_Coding_Patterns.html">Lean Test Coding Patterns</a></li>
+	<li><a href="Lean_Test_Coding_Guidelines.html">Coding Guidelines</a></li>
+	<ul>
+	</ul>
+	<li><a href="Lean_Test_Coding_Patterns.html">Coding Patterns</a></li>
 	<ul>
 	</ul>
 	<li><a href="Inside_LeanTest_Net.html" class="selected">Inside LeanTest.Net</a></li>
@@ -90,7 +93,7 @@
             </div>
 			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 				<ul class="pager">
-	<li class="previous"><a href="Lean_Test_Coding_Patterns.html">Previous: Lean Test Coding Patterns</a></li>
+	<li class="previous"><a href="Lean_Test_Coding_Patterns.html">Previous: Coding Patterns</a></li>
 	<li class="next"><a href="LicenseApache.html">Next: License</a></li>
 </ul>
 				<div id="static-content" class="markdown">
@@ -248,7 +251,7 @@ public void PutMustUpdateWhenTimeBetweenCacheFlushesHasElapsed()
 <p>This is important to bear in mind when using multiple build calls, as it might influence the details of how mocks and state handlers must be implemented.</p>
 <h2 id="dependency-injection-ioc-container-integration">Dependency Injection - IoC Container Integration</h2>
 <p>LeanTest.Net only knows about mocks and state handlers that you explicitly expose to it. This is the only way; LeanTest.Net will never magically find mocks and state handlers using reflection. This is what we call the <em>no magic</em> principle.</p>
-<p>You expose your preferred IoC container by implementing a simple interface (as described TODO: link,</p>
+<p>You expose your preferred IoC container by implementing a simple interface (or simply get the implementation from the <em>LeanTest.DI.DotNetCore</em> package if you use .NET Core/.NET 5),</p>
 <pre><code class="language-csharp">public interface IIocContainer
 {
     T Resolve&lt;T&gt;() where T : class;
@@ -277,7 +280,7 @@ public void PutMustUpdateWhenTimeBetweenCacheFlushesHasElapsed()
 
 				</div>
 				<ul class="pager">
-	<li class="previous"><a href="Lean_Test_Coding_Patterns.html">Previous: Lean Test Coding Patterns</a></li>
+	<li class="previous"><a href="Lean_Test_Coding_Patterns.html">Previous: Coding Patterns</a></li>
 	<li class="next"><a href="LicenseApache.html">Next: License</a></li>
 </ul>
 			</div>

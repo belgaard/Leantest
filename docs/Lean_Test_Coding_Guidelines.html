@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Lean_Test_Coding_Guidelines - LeanTest</title>
+
+	<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="bootstrap/css/readable/bootstrap.min.css" />
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="sidebar/sidebar.min.css" />
+<link rel="stylesheet" href="css/book.min.css" />
+<link rel="stylesheet" href="syntax-highlight/monokai.min.css" />
+<link rel="stylesheet" href="mermaid/mermaid.css" />
+
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#sidebar-toggle" id="sidebar-toggle">
+					<i id="sidebar-toggle-icon" class="hidden-md hidden-lg hidden-xl fa fa-angle-double-right" aria-hidden="true"></i>
+					LeanTest
+				</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					<li><a href="https://github.com/belgaard/Leantest"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+                    <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-cloud-download" aria-hidden="true"></i> NuGet</a></li>
+                    <li><a href="https://licenses.nuget.org/MIT">License</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-md-3 hidden-sm hidden-xs">
+                
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>On This Page</h4>
+            </div>
+            <div id="header-menu" class="panel-body main-menu">
+                <ul></ul>
+            </div>
+        </div>  
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Table of Contents</h4>
+            </div>
+            <div class="panel-body main-menu">
+                <ul>
+	<li><a href="index.html">Home</a></li>
+	<ul>
+	</ul>
+	<li><a href="Introduction.html">Introduction</a></li>
+	<ul>
+	</ul>
+	<li><a href="Lean_Test_Coding_Guidelines.html" class="selected">Coding Guidelines</a></li>
+	<ul>
+	</ul>
+	<li><a href="Lean_Test_Coding_Patterns.html">Coding Patterns</a></li>
+	<ul>
+	</ul>
+	<li><a href="Inside_LeanTest_Net.html">Inside LeanTest.Net</a></li>
+	<ul>
+	</ul>
+	<li><a href="LicenseApache.html">License</a></li>
+	<ul>
+	</ul>
+	<li><a href="README.html">Readme</a></li>
+	<ul>
+	</ul>
+</ul>
+            </div>
+        </div>
+
+            </div>
+			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+				<ul class="pager">
+	<li class="previous"><a href="Introduction.html">Previous: Introduction</a></li>
+	<li class="next"><a href="Lean_Test_Coding_Patterns.html">Next: Coding Patterns</a></li>
+</ul>
+				<div id="static-content" class="markdown">
+					<h1 id="coding-guidelines">Coding Guidelines</h1>
+<p>Note that the following guidelines assume that the test projects have <a href="https://www.nuget.org/packages?q=leantest">the latest LeanTest.Net packages from nuGet</a> installed.</p>
+<h2 id="the-nuget-packages">The nuGet Packages</h2>
+<p>The <em>LeanTest.Core</em> package contains the core builder pattern implementation, initialization etc.</p>
+<p>The <em>LeanTest.JSon</em> package adds extension methods for <code>WithData&lt;T&gt;(string)</code> for which a string parameter is deserialized to <code>T</code>.</p>
+<p>The <em>LeanTest.DI.DotNetCore</em> package implements a wrapper for .NET Core/.NET 5 dependency injection. Use this package rather than implementing <code>IIocContainer</code> if you use .NET Core/.NET 5.</p>
+<p>The <em>LeanTest.AspNetCore</em> package contains helper methods for setting up LeanTest as well as the .NET Core test host. LeanTest can handle all disposing, or you can chose to do that yourself. <strong>You do not need this package</strong> if you use <em>the factory-less method of initialization</em> which is described below.</p>
+<p>The <em>LeanTest.MsTest</em> package adds MsTest specific functionality, e.g. attributes initialized via an MsTest context. You only need this package if you use the MsTest test runner.</p>
+<p>The <em>LeanTest.Xunit</em> package adds Xunit specific functionality, e.g. attributes initialized via an Xunit <code>ITestOutputHelper</code>. You only need this package if you use the xUnit test runner.</p>
+<h2 id="introduction">Introduction</h2>
+<p>Lean Testing requires little or no refactoring of production code in order to put the code under test.</p>
+<p>The only hard requirement which Lean Testing imposes is that external dependencies must be well-defined. Furthermore, if these external dependencies are represented by interfaces implemented as pass-through to the actual external dependency then it is quite possible to put all relevant logic under test. Finally, if at least these external dependency interfaces and implementations are handled with dependency injection, then life as a person implementing automated tests is easy.</p>
+<p>However, the job is a lot easier if everybody consistently follows the following coding guidelines.</p>
+<h2 id="initialization">Initialization</h2>
+<h3 id="initialize-each-test-class">Initialize each Test Class</h3>
+<p>Each test class is initialized by creating a context builder and then getting an instance of the test target. Here is an example with the test target being a .NET Core test server (we have initialized LeanTest in an assembly initializer class, different ways of initialization are described later in this section),</p>
+<pre><code class="language-csharp">[TestClass]
+public class TestMyService
+{
+    private ContextBuilder _contextBuilder;
+    private HttpClient _target;
+
+    public TestContext TestContext { get; set; }
+
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        _contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+            .RegisterAttributes(TestContext)
+        _target = _contextBuilder.GetHttpClient();
+    }
+    // ...
+}
+</code></pre>
+<p>Using a test server is preferred for ASP.NET Core, as this approach will exercise the end-point through the http stack, which means that even routing, model binding etc. will be under test. For a good description of the benefits of testing through the .NET Core test server see this <a href="https://andrewlock.net/should-you-unit-test-controllers-in-aspnetcore/">blog post</a> or this <a href="https://app.pluralsight.com/library/courses/integration-testing-asp-dot-net-core-applications-best-practices/table-of-contents">Pluralsight course</a>. While it is not recommended to test through the controller C# class in .NET Core, it is sometimes necessary to test through other objects registered in the IoC container. Note that even in these cases <em>the principle of maximizing the code under test</em> must be adhered to.</p>
+<h3 id="initialize-leantest-itself">Initialize LeanTest Itself</h3>
+<p><a href="https://leantest.net/">LeanTest</a> itself must be initialized once per test suite. As a matter of principle we prefer that each test case starts with a clean (or <em>empty</em>, if you will) environment.</p>
+<p>There are a number of ways to ensure a clean environment, including the use of an assembly initializer class and with static factory classes.</p>
+<p>A better way, supported by versions &gt; 4.4 of the LeanTest nuGet packages is <em>factory-less</em> and an assembly initializer class is not necessary.</p>
+<h4 id="factory-less-initialization">Factory-less initialization</h4>
+<p>Factory-less initialization can be seen as a method with less <em>hidden magic</em>. Without the magic, you need to handle any clean-up needed, such as e.g. disposing instances.</p>
+<p>Below are examples of how to implement it for the .Net Core built-in IoC container. The first example does not use the ASP.NET Core TestServer, so you can use this approach for non-ASP.NET Core projects. Note that an assembly initializer is not needed, we simply new up a context builder for each test.</p>
+<h5 id="factory-less-lean-test-initialization-without-a-testserver">Factory-less Lean Test initialization without a TestServer</h5>
+<pre><code class="language-csharp">[TestInitialize]
+public void TestInitialize()
+{
+    _contextBuilder = new MyContextBuilderFactory().ContextBuilder
+        .WithData&lt;MyData&gt;()
+        .RegisterAttributes(TestContext);
+
+    _target = _contextBuilder.GetInstance&lt;MyApplicationService&gt;();
+}
+
+/// &lt;summary&gt;
+/// Does the setup which must must be done consistently across all tests in the assembly.
+/// &lt;/summary&gt;
+public class MyContextBuilderFactory
+{
+    public ContextBuilder ContextBuilder {get;}
+    public MyContextBuilderFactory() =&gt;     
+        ContextBuilder = 
+            new ContextBuilder(
+                new IocContainer(L0CompositionRootForTest.Initialize(
+                    CompositionRoot.Initialize(new ServiceCollection()))));
+}
+</code></pre>
+<h5 id="factory-less-lean-test-initialization-with-a-testserver">Factory-less Lean Test initialization with a TestServer</h5>
+<pre><code class="language-csharp">[TestClass]
+public class TestAuthController
+{
+    private ContextBuilder _contextBuilder;
+    private HttpClient _target;
+    private WebApplicationFactory&lt;Startup&gt; _factory;
+
+    public TestContext TestContext { get; set; }
+        
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        _factory = new ExampleWebApplication().Factory;
+        _contextBuilder = new ContextBuilder(new LeanTestContainer(_factory.Services))
+            .RegisterAttributes(TestContext);
+        _target = _factory.CreateClient();
+    }
+
+    /// &lt;summary&gt;
+    /// The factory is not automatically disposed.
+    /// In this example, the test fail if we don't dispose manually.
+    /// &lt;/summary&gt;
+    [TestCleanup]
+    public void TestCleanup() =&gt; _factory.Dispose();
+// ...
+}
+/// &lt;summary&gt;
+/// Does the setup which must must be done consistently across all tests in the assembly.
+/// &lt;/summary&gt;
+public class ExampleWebApplication
+{
+    public WebApplicationFactory&lt;Startup&gt; Factory {get;}
+
+    public ExampleWebApplication()
+    {
+        Factory = new WebApplicationFactory&lt;Startup&gt;();
+        Factory = Factory.WithWebHostBuilder(builder =&gt;
+            builder
+                .ConfigureTestServices(L0CompositionRootForTest.Initialize);
+    }
+}
+</code></pre>
+<h4 id="using-an-assembly-initializer-class-and-static-factory-classes">Using an assembly initializer class and static factory classes</h4>
+<p>The initialization can be done in an assembly initializer class so that initialization is done exactly once per test suite (a test project is considered to be a test suite). We ensure a clean environment per test case by passing a factory method to LeanTest's <code>ContextBuilderFactory</code> initializer. Below are examples of how to implement it for the .Net Core built-in IoC container. The first example does not use the ASP.NET Core TestServer, so you can use this approach for non-ASP.NET Core projects,</p>
+<h5 id="lean-test-initialization-without-a-testserver">Lean Test initialization without a TestServer</h5>
+<pre><code class="language-csharp">/// &lt;summary&gt;
+/// Does the setup which must must be done consistently across all tests in the assembly.
+/// &lt;/summary&gt;
+[TestClass]
+public static class AssemblyInitializer
+{
+    [AssemblyInitialize]
+    public static void AssemblyInitialize(TestContext _)
+    {
+        IIocContainer IocFactory() =&gt; 
+            new IocContainer(L0CompositionRootForTest.Initialize(
+                CompositionRoot.Initialize(new ServiceCollection())));
+        ContextBuilderFactory.Initialize(IocFactory);
+    }
+
+    [AssemblyCleanup]
+    public static void AssemblyCleanup() =&gt; ContextBuilderFactory.Cleanup();
+}
+</code></pre>
+<h5 id="lean-test-initialization-with-a-testserver">Lean Test initialization with a TestServer</h5>
+<pre><code class="language-csharp">[TestClass]
+public static class AssemblyInitializer
+{
+    [AssemblyInitialize]
+    public static void AssemblyInitialize(TestContext _)
+    {
+        static WebApplicationFactory&lt;Startup&gt; FactoryFactory()
+        {
+            var factory = new WebApplicationFactory&lt;Startup&gt;();
+            factory = factory.WithWebHostBuilder(builder =&gt;
+                builder
+                    .ConfigureTestServices(L0CompositionRootForTest.Initialize));
+
+            return factory;
+        }
+        AspNetCoreContextBuilderFactory.Initialize(
+            FactoryFactory, provider =&gt; new IocContainer(provider));
+    }
+
+    [AssemblyCleanup]
+    public static void AssemblyCleanup() =&gt; ContextBuilderFactory.Cleanup();
+}
+</code></pre>
+<p>The latter method of initialization above is one of the recommended ways for all ASP.NET Core test projects. It will in general allow testing what you set up in the <code>Startup</code> class, including background services. It uses the ASP.NET Core specific AspNetCoreContextBuilderFactory class which ensures that the objects created by the factory are properly disposed. This includes the IoC container which is built-up in the <code>Startup</code> class.</p>
+<p>Alternatively, you can chose to not use the convenience of the AspNetCoreContextBuilderFactory class and handle disposing yourself. The following illustrates this way of initializing and also how to properly dispose in a test class,</p>
+<h5 id="lean-test-initialization-using-leantestwebapplicationfactory">Lean Test initialization using LeanTestWebApplicationFactory</h5>
+<pre><code class="language-csharp">[TestClass]
+public static class AssemblyInitializer
+{
+    [AssemblyInitialize]
+    public static void AssemblyInitialize(TestContext _)
+    {
+        static ICreateContextBuilder FactoryFactory() =&gt;
+            new LeanTestWebApplicationFactory&lt;Startup&gt;(L0CompositionRootForTest.Initialize, provider =&gt; new IocContainer(provider));
+
+        ContextBuilderFactory.Initialize(FactoryFactory);
+    }
+
+    [AssemblyCleanup]
+    public static void AssemblyCleanup() =&gt; ContextBuilderFactory.Cleanup();
+}
+[TestClass]
+public class TestAuthController
+{
+    private ContextBuilder _contextBuilder;
+    private HttpClient _target;
+    private WebApplicationFactory&lt;Startup&gt; _factory;
+    public TestContext TestContext { get; set; }
+        
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        _contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+            .RegisterAttributes(TestContext);
+
+        var factoryAccess = _contextBuilder as IFactoryAccess&lt;Startup&gt;;
+        _factory = factoryAccess?.GetFactory();
+        _target = _factory?.CreateClient();
+    }
+
+    /// &lt;summary&gt;The factory is not automatically disposed because we use LeanTestWebApplicationFactory. In this example, the test
+    /// will fail if we don't dispose manually.&lt;/summary&gt;
+    [TestCleanup]
+    public void TestCleanup() =&gt; _factory?.Dispose();
+// ...
+}
+</code></pre>
+<p>The above examples of initialization is for an L0 test project, but an L1 test project will be very similar, the difference usually being code needed in order to reference a database running in a Docker container. Initialization in L2 test projects will be different because L2 tests depend on the run-time environment and environment dependencies make life difficult</p>
+<p>The next sections will describe how IoC containers, such as the one created with <code>new ServiceCollection()</code> above, and the Dependency Inversion Principle relates to LeanTest. The concept of <em>composition roots</em>, such as <code>L0CompositionRootForTest</code> and <code>CompositionRoot</code> above, will also be described.</p>
+<p>The passed factory will be called before execution of each individual test, thus ensuring that each test is run with a clear test target,newly instantiated mocks and state handlers etc.</p>
+<h3 id="initialize-with-the-xunit-test-framework">Initialize with the Xunit Test Framework</h3>
+<p>The examples above have implicitly used the MsTest test framework. The Lean Testing approach and the LeanTest.NET core library do not depend on any specific test environment, but separate nuGet packages provide support for MsTest and Xunit.</p>
+<p>An Xunit test project must include the packages</p>
+<ul>
+<li><em>xunit</em> and <em>xunit.runner.visualstudio</em> (not <em>MSTest.*</em>), and</li>
+<li><em>LeanTest.xUnit</em> (not <em>LeanTest.MsTest</em>)</li>
+</ul>
+<h4 id="factory-less-initialization-1">Factory-less initialization</h4>
+<p>With factory-less initialization, you new up a context builder similar to how it is done for MsTest. you do not need an assembly initializer.</p>
+<h4 id="using-an-assembly-initializer-class-and-static-factory-classes-1">Using an assembly initializer class and static factory classes</h4>
+<p>Initialization of LeanTest.NET itself in an <code>AssemblyInitializer</code> class is similar to MsTest based test projects, except that the following attributes must be added,</p>
+<pre><code class="language-csharp">[assembly: AssemblyFixture(typeof(AssemblyInitializer))]
+[assembly: Xunit.TestFramework(&quot;LeanTest.Xunit.XunitExtensions.XunitTestFrameworkWithAssemblyFixture&quot;, &quot;LeanTest.Xunit&quot;)]
+
+public sealed class AssemblyInitializer
+{
+    public AssemblyInitializer()
+    {
+        static ICreateContextBuilder FactoryFactory() =&gt; 
+            new CustomFactory&lt;Startup&gt;(L0CompositionRootForTest.Initialize, provider =&gt; new IocContainer(provider));
+
+        ContextBuilderFactory.Initialize(FactoryFactory);
+    }
+}
+</code></pre>
+<h4 id="writing-xunit-tests">Writing Xunit tests</h4>
+<p>Each Xunit test class will be very similar to MsTest test classes. Xunit does not have a <code>TestInitialize</code> attribute, but rather use the constructor for that purpose,</p>
+<pre><code class="language-csharp">public class TestMyController
+{
+    private readonly ContextBuilder _contextBuilder;
+    private readonly HttpClient _target;
+
+    public TestMyController(ITestOutputHelper output)
+    {
+        var testContext = new TestContext(output);
+        _contextBuilder = ContextBuilderFactory.CreateContextBuilder()
+            .RegisterAttributes(testContext)
+            .Build();
+        _target = _contextBuilder.GetHttpClient();
+    }
+// ...
+}
+</code></pre>
+<p>The difference here, when compared to an MsTest based test is the Xunit specific <code>ITestOutputHelper</code> which is used to craft our own <code>TestContext</code>. The reason for this is that Xunit does not support a test context (it is planned for version 3.x) as MsTest does.</p>
+<p>Each Xunit test will differ from similar MsTest only for test framework specific differences, such as Xunit using <code>Fact</code> or <code>Theory</code> attributes rather than <code>TestMethod</code>. Also, assertion syntax is different.</p>
+<p>As always, use the test attributes from the <em>LeanTest.Attribute</em>
+namespace.</p>
+<h2 id="dependency-injection">Dependency Injection</h2>
+<p>It is not compulsory to follow the Dependency Inversion Principle (aka.DIP, one of <a href="https://elgaard.blog/2014/05/31/coding-for-continuous-delivery-the-solid-principles/">the SOLID principles</a> and to use an Inversion of Control (IoC) container, but doing so is considered best practice and it tends to make the life of a developer easier. At least when applied to truly external dependencies.</p>
+<h3 id="integrating-leantest.net-with-your-preferred-ioc-container">Integrating LeanTest.Net with your Preferred IoC Container</h3>
+<p><a href="https://leantest.net/">LeanTest</a> will resolve instances using your preferred IoC container by calling your implementation of the <code>IIocContainer</code> interface,</p>
+<pre><code class="language-csharp">public interface IIocContainer
+{
+    T Resolve&lt;T&gt;() where T : class;
+    T TryResolve&lt;T&gt;() where T : class;
+    IEnumerable&lt;T&gt; TryResolveAll&lt;T&gt;() where T : class;
+}
+</code></pre>
+<p>LeanTest will resolve single instances using <code>Resolve&lt;T&gt;</code> it is expected that failure to resolve an instance of a given type will throw an exception.</p>
+<p>LeanTest will resolve (potentially) multiple instances using <code>TryResolveAll&lt;T&gt;</code>. This method will always be used when LeanTest tries to resolve instances of mock-for-data and state-handlers, i.e. implementations of <code>IMockForData&lt;TData&gt;</code> and <code>IStateHandler&lt;TData&gt;</code>. This way, it is possible to implement multiple mocks and handlers for a single <code>TData</code>.</p>
+<p>Here is how to implement <code>IIocContainer</code> for the .Net Core built-in IoC container,</p>
+<pre><code class="language-csharp">public class IocContainer : IIocContainer
+{
+    private readonly IServiceProvider _serviceProvider;
+    public IocContainer(IServiceProvider serviceProvider) =&gt; _serviceProvider = serviceProvider;
+
+    public T Resolve&lt;T&gt;() where T : class =&gt; _serviceProvider.GetRequiredService&lt;T&gt;();
+    public T TryResolve&lt;T&gt;() where T : class =&gt; _serviceProvider.GetService&lt;T&gt;();
+    public IEnumerable&lt;T&gt; TryResolveAll&lt;T&gt;() where T : class =&gt; _serviceProvider.GetServices&lt;T&gt;();
+}
+</code></pre>
+<h2 id="composition-roots">Composition Roots</h2>
+<p>It is recommended that all dependencies are injected into constructors and that dependencies (the object graph) is composed as close as possible to an application's entry point.</p>
+<p>This recommendation goes for production code as well as for test code - see more details <a href="https://blog.ploeh.dk/2011/07/28/CompositionRoot/">here</a>.</p>
+<p>For LeanTest, our recommendation goes one step further - we recommend that test code <em>reuse the production code composition root, only replacing the few mocks needed.</em> This makes it possible to catch tricky bugs that stem from life-time mismatches, such as injecting an object with transient life-time into a singleton. If the production code is following this best practice, then it will also simplify setup of the test project. And the simple test composition root will clearly document what is mocked.</p>
+<p>In .Net Core it is customary to compose the object graph with the built-in IoC container in Startup.ConfigureServices, so this method <em>is</em> the composition root. If you wish, you can choose to delegate initialization of dependencies to a class called CompositionRoot,</p>
+<pre><code class="language-csharp">internal static class CompositionRoot
+{
+    internal static IServiceCollection Initialize(IServiceCollection services)
+    {
+        services.AddSingleton&lt;IPortfolioService, PortfolioService&gt;();
+        services.AddSingleton&lt;ITimeFacade, TimeFacade&gt;();
+        services.AddSingleton&lt;Controllers.V2.UsersController&gt;();
+        return services;
+    }
+}
+</code></pre>
+<p>In the above, we declare an external dependency, a portfolio service. Note that the interface IPortfolioService can be found in the production code in a folder named ExternalDependencies and that its implementation is simple and has cyclomatic complexity of 1. That is why we can mock this interface in a test project and still claim that we have tested all significant code.</p>
+<p>The time facade wraps time, i.e. DateTime.Now. This can be necessary when time itself is a relevant external
+dependency TODO: link.</p>
+<p>The user controller declared above is not an external dependency so we will be careful <em><strong>not</strong></em>to mock it in a test project. This often means that an interface is not needed.</p>
+<p>Here is an example of how to implement the L0 test composition root for the .Net Core built-in IoC container,</p>
+<pre><code class="language-csharp">public static class L0CompositionRootForTest
+{
+    public static IServiceCollection Initialize(IServiceCollection services)
+    {
+        // Mocks (not mock-for-data):
+        services.Replace(ServiceDescriptor.Singleton&lt;ITimeFacade, MockTimeFacade&gt;());
+
+        // Mock-for-data:
+        services.RegisterMockForData&lt;IPortfolioService, MockForDataPortfolioService, AccountsList&gt;();
+
+        return services;
+    }
+}
+</code></pre>
+<p>In the above, we define a simple mock, not a mock-for-data, for the time facade, since the requirements for testing so far can be satisfied with hard-coded time. This may change, so the mock may later be turned into a proper mock-for-data.</p>
+<p>For the portfolio service, the tests require that we control existing state, so we use a utility method, <code>RegisterMockForData</code>, in order to declare that the mock-for-data implementation is <code>MockForDataPortfolioService</code> which implements <code>IPortfolioService</code>
+and <code>IMockForData&lt;AccountList&gt;</code>.</p>
+<p>Here is an example of how to implement <code>RegisterMockForData</code> for the .Net Core built-in IoC container,</p>
+<pre><code class="language-csharp">private static void RegisterMockForData&lt;TInterface, TImplementation, TData&gt;(this IServiceCollection container) 
+    where TImplementation: class, TInterface, IMockForData&lt;TData&gt;
+    where TInterface: class
+{
+    container.AddSingleton&lt;TImplementation&gt;();
+    container.AddSingleton&lt;TInterface&gt;(x =&gt; x.GetRequiredService&lt;TImplementation&gt;());
+    container.AddSingleton&lt;IMockForData&lt;TData&gt;&gt;(x =&gt; x.GetRequiredService&lt;TImplementation&gt;());
+}
+</code></pre>
+<p>The benefits of consistent use of composition roots can be seen when nuGet packages are consumed. If nuGet packages expose their composition roots, then it is possible for the consuming service to provide test doubles for the nuGet packages' external dependencies, thereby putting more code under test.</p>
+<p>&quot;# Test Doubles (Mocks)</p>
+<p>The implementation of the mock-for-data follows the usual pattern, it receives the existing state data in WithData, in this case it receives an <code>AccountList</code>, which it hands out in its single <code>IPortfolioService</code> method, <code>GetMyAccountsAsync</code>,</p>
+<pre><code class="language-csharp">public class MockForDataPortfolioService : IPortfolioService, IMockForData&lt;AccountsList&gt;
+{
+    private AccountsList _accountsList;
+
+    public Task&lt;AccountsList&gt; GetMyAccountsAsync(OpenApiHttpClient openApiClient) =&gt; Task.FromResult(_accountsList);
+
+    public void WithData(AccountsList data) =&gt; _accountsList = data;
+    public void PreBuild() {}
+    public void Build(Type type) {}
+    public void PostBuild() {}
+}
+</code></pre>
+<h2 id="tests">Tests</h2>
+<p>Tests largely follow the Arrange, Act, Assert (AAA) pattern. When <em>arranging</em>, the data context is setup using WithData() statements on the context builder, the <em>act</em> part will exercise the test target, and the <em>assert</em> part will, well, assert on the outcome. Here are examples, the first example calls the controller class directly, the second example calls through the test server,</p>
+<pre><code class="language-csharp">[TestMethod, TestScenarioId(&quot;UserAssumptions&quot;)]
+public async Task AssumeUsersAsyncMustReturnIbWithActiveChildWhenAssumingIbWithActiveChildAndIbWithActiveChildIsInTheEnvironment()
+{
+    _contextBuilder
+        .WithData&lt;OpenApiUsersWithEnvironment&gt;(TestData.UsersWithEnvironment.IbWithId43WithActiveChildWithId42)
+        .Build();
+
+    User actual = await _target.AssumeUsersAsync(myAssumption).ConfigureAwait(false);
+
+    Assert.IsTrue(actual.ChildrenOfIb.Any(c =&gt; c.IsActive == true));
+}
+</code></pre>
+<p>Note that it is quite possible that you need <a href="https://elgaard.blog/2011/02/06/multiple-asserts-in-a-single-unit-test-method/">multiple asserts in a single unit test method</a>, and that's OK as long as you use the magic of <code>MultiAssert</code> so that all relevant assertions are always executed.</p>
+<p>Since the main focus for Lean Testing is usually <em>functional coverage</em>, you will often need to combine multiple A's in a single test. That is often also OK, as long as the test code is as simple and maintainable as possible, and as long as all relevant assertions are always executed.</p>
+
+				</div>
+				<ul class="pager">
+	<li class="previous"><a href="Introduction.html">Previous: Introduction</a></li>
+	<li class="next"><a href="Lean_Test_Coding_Patterns.html">Next: Coding Patterns</a></li>
+</ul>
+			</div>
+        </div>
+    </div>
+    
+    <footer class="panel-footer text-center">
+        <div align="center">Maintained by Brian Elgaard Bennett, licensed to you under the MIT license</div>
+		<div align="right">
+			<small>
+				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.
+			</small>
+		</div>
+    </footer>
+
+
+    
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="sidebar/sidebar.js"></script>
+    <script src="syntax-highlight/syntax.js"></script>
+
+</body>
+</html>
