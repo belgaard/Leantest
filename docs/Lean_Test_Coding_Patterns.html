@@ -71,7 +71,10 @@
 	<li><a href="Introduction.html">Introduction</a></li>
 	<ul>
 	</ul>
-	<li><a href="Lean_Test_Coding_Patterns.html" class="selected">Lean Test Coding Patterns</a></li>
+	<li><a href="Lean_Test_Coding_Guidelines.html">Coding Guidelines</a></li>
+	<ul>
+	</ul>
+	<li><a href="Lean_Test_Coding_Patterns.html" class="selected">Coding Patterns</a></li>
 	<ul>
 	</ul>
 	<li><a href="Inside_LeanTest_Net.html">Inside LeanTest.Net</a></li>
@@ -90,11 +93,11 @@
             </div>
 			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 				<ul class="pager">
-	<li class="previous"><a href="Introduction.html">Previous: Introduction</a></li>
+	<li class="previous"><a href="Lean_Test_Coding_Guidelines.html">Previous: Coding Guidelines</a></li>
 	<li class="next"><a href="Inside_LeanTest_Net.html">Next: Inside LeanTest.Net</a></li>
 </ul>
 				<div id="static-content" class="markdown">
-					<h1 id="lean-test-coding-patterns">Lean Test Coding Patterns</h1>
+					<h1 id="coding-patterns">Coding Patterns</h1>
 <p>This section is intended for collecting coding patterns that show how to handle different kinds of external dependencies - and more.</p>
 <h2 id="time-as-an-external-dependency">Time as an External Dependency</h2>
 <p>It is a common coding pattern to have time dependencies simply represented by calling the static .NET <code>DateTime.UtcNow</code> in order to get the current time. This can be a small nuisance in tests, e.g. when asserting on expected outcome which contains time information. It's a bit more challenging when production code functionality depend on elapsed time, such as branching on short, long and very long durations. We want our tests to run fast, not to wait for whatever a <em>very long duration</em> amounts to. We also want to test tricky cases like passing midnight or a leap year without actually waiting for such events. Timers represent a special challenge, as they spin up threads at specified intervals; we want to put timer dependent production code under test without much waiting or synchronization.</p>
@@ -344,7 +347,7 @@ public void PutMustUpdateWhenTimeBetweenCacheFlushesHasElapsed()
 
 				</div>
 				<ul class="pager">
-	<li class="previous"><a href="Introduction.html">Previous: Introduction</a></li>
+	<li class="previous"><a href="Lean_Test_Coding_Guidelines.html">Previous: Coding Guidelines</a></li>
 	<li class="next"><a href="Inside_LeanTest_Net.html">Next: Inside LeanTest.Net</a></li>
 </ul>
 			</div>

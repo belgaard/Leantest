@@ -176,7 +176,7 @@ This is important to bear in mind when using multiple build calls, as it might i
 
 LeanTest.Net only knows about mocks and state handlers that you explicitly expose to it. This is the only way; LeanTest.Net will never magically find mocks and state handlers using reflection. This is what we call the *no magic* principle.
 
-You expose your preferred IoC container by implementing a simple interface (as described TODO: link,
+You expose your preferred IoC container by implementing a simple interface (or simply get the implementation from the *LeanTest.DI.DotNetCore* package if you use .NET Core/.NET 5),
 
 ```csharp
 public interface IIocContainer

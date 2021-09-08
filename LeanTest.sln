@@ -27,7 +27,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LiterateCS", "LiterateCS", 
 	ProjectSection(SolutionItems) = preProject
 		defaults.yml = defaults.yml
 		index.md = index.md
+		Inside_LeanTest_Net.md = Inside_LeanTest_Net.md
 		Introduction.md = Introduction.md
+		Lean_Test_Coding_Patterns.md = Lean_Test_Coding_Patterns.md
 		TOC.yml = TOC.yml
 	EndProjectSection
 EndProject
