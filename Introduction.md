@@ -34,9 +34,9 @@ In short, this is about *developers writing tests while developing code*. And I 
 
 The way we achieve all this is by _maximizing code under test_ but _minimizing data_.
 
-Before we dig into that, let's look at an even more fundamental concept, that of _existing state_ (or *context*).
+Before we dig into that, let's look at an even more fundamental concept, that of _initial context_.
 
-### Existing state (or context)
+### Initial context
 
 When _testers write tests_ they often talk about _test data_. What they usually mean is that they use data, say a washed and minimized version of the full production database, which is sufficient for a number of tests to run. 
 
@@ -50,9 +50,9 @@ In a unit test, data is usually passed directly in each test, possibly via some 
 
 The effect of this is that for a traditional unit test, it is not clear of what kind the data is, there is often many mocks and there is a separate mocking strategy per test. I don't like any of that.
 
-We have a single concept for the equivalent of a test database in Lean Testing - we call it _existing state_ (or *existing context*). We simply insist that each test must declare what data it needs in order to succeed. For this we have a _test context_ to which we declare the data needed per test. Something like the following,
+We have a single concept for the equivalent of a test database in Lean Testing - we call it _initial context_. We simply insist that each test must declare what data it needs in order to succeed. For this we have a _test context_ to which we declare the data needed per test. Something like the following,
 
-<<Example of existing state>>
+<<Example of initial context>>
 
 In the above example, we have declared that our test must succeed if the only test data available is one specific instance of MyData. By the magic of dependency injection and a builder pattern (which will be described below), the data will be available to our test target.
 

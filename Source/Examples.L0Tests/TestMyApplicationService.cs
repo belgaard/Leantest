@@ -39,7 +39,7 @@ namespace Examples.L0Tests
 				$"Expected '{nameof(MyApplicationService.GetAgeAsync)}' not to throw").ConfigureAwait(false);
 		}
 
-		#region Example of existing state
+		#region Example of initial context
 		[TestMethod, TestScenarioId("SimpleExamples")]
 		public void GetAgeMustReturn10WhenKeyMatchesNewUpData()
 		{
