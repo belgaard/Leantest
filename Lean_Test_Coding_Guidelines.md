@@ -8,7 +8,7 @@ The *LeanTest.JSon* package adds extension methods for `WithData<T>(string)` for
 
 The *LeanTest.DI.DotNetCore* package implements a wrapper for .NET Core/.NET 5 dependency injection. Use this package rather than implementing `IIocContainer` if you use .NET Core/.NET 5.
 
-The *LeanTest.AspNetCore* package contains helper methods for setting up LeanTest as well as the .NET Core test host. LeanTest can handle all disposing, or you can chose to do that yourself. **You do not need this package** if you use *the factory-less method of initialization* which is described below.
+The *LeanTest.AspNetCore* package contains helper methods for setting up LeanTest as well as the .NET Core test host. LeanTest can handle all disposing, or you can chose to do that yourself. **You do not need this package** if you use the recommended method of initialization described below.
 
 The *LeanTest.MsTest* package adds MsTest specific functionality, e.g. attributes initialized via an MsTest context. You only need this package if you use the MsTest test runner.
 
@@ -70,15 +70,15 @@ LeanTest itself must be initialized once per test suite. As a matter of princip
 
 There are a number of ways to ensure a clean environment, including the use of an assembly initializer class and static factory classes.
 
-A better way, supported by versions \> 4.4 of the LeanTest nuGet packages, is called *factory-less* and an assembly initializer class is not necessary.
+A better way which does not require an assembly initializer class is described in the next section.
 
-## Factory-less LeanTest initialization
+## Recommended LeanTest initialization
 
-Factory-less initialization can be seen as a method with less *hidden magic*. Without the magic, you need to handle any clean-up needed, such as e.g. disposing instances.
+The recommended method of initialization can be seen as a method with less *hidden magic* than the *`AssemblyInitializer` based method* described below. Without the magic, you need to handle any clean-up needed, such as e.g. disposing instances.
 
 Below are examples of how to implement it for the .Net Core built-in IoC container. The first example does not use the ASP.NET Core test server, so you can use this approach for non-ASP.NET Core projects. Note that an assembly initializer is not needed, we simply new up a context builder for each test.
 
-### Factory-less initialization without a test server
+### Initialization without a test server
 
 ```csharp
 [TestInitialize]
@@ -105,7 +105,7 @@ public class MyContextBuilderFactory
 }
 ```
 
-### Factory-less initialization with a test server
+### Initialization with a test server
 
 ```csharp
 [TestClass]
@@ -218,9 +218,9 @@ An Xunit test project must include the packages
 - *xunit* and *xunit.runner.visualstudio* (not *MSTest.\**), and
 - *LeanTest.xUnit* (not *LeanTest.MsTest*)
 
-### Factory-less LeanTest initialization with Xunit
+### Recommended LeanTest initialization with Xunit
 
-With factory-less initialization, you new up a context builder similar to how it is done for MS Test. you do not need an assembly initializer.
+With Xunit, you new up a context builder similar to how it is done for MS Test..
 
 ### Using an assembly initializer class and static factory classes with Xunit
 

@@ -102,7 +102,7 @@
 <p>The <em>LeanTest.Core</em> package contains the core builder pattern implementation, initialization etc.</p>
 <p>The <em>LeanTest.JSon</em> package adds extension methods for <code>WithData&lt;T&gt;(string)</code> for which a string parameter is deserialized to <code>T</code>.</p>
 <p>The <em>LeanTest.DI.DotNetCore</em> package implements a wrapper for .NET Core/.NET 5 dependency injection. Use this package rather than implementing <code>IIocContainer</code> if you use .NET Core/.NET 5.</p>
-<p>The <em>LeanTest.AspNetCore</em> package contains helper methods for setting up LeanTest as well as the .NET Core test host. LeanTest can handle all disposing, or you can chose to do that yourself. <strong>You do not need this package</strong> if you use <em>the factory-less method of initialization</em> which is described below.</p>
+<p>The <em>LeanTest.AspNetCore</em> package contains helper methods for setting up LeanTest as well as the .NET Core test host. LeanTest can handle all disposing, or you can chose to do that yourself. <strong>You do not need this package</strong> if you use the recommended method of initialization described below.</p>
 <p>The <em>LeanTest.MsTest</em> package adds MsTest specific functionality, e.g. attributes initialized via an MsTest context. You only need this package if you use the MsTest test runner.</p>
 <p>The <em>LeanTest.Xunit</em> package adds Xunit specific functionality, e.g. attributes initialized via an Xunit <code>ITestOutputHelper</code>. You only need this package if you use the xUnit test runner.</p>
 <h2 id="introduction">Introduction</h2>
@@ -146,11 +146,11 @@ public async Task AssumeUsersAsyncMustReturnIbWithActiveChildWhenAssumingIbWithA
 <p>Since the main focus for Lean Testing is usually <em>functional coverage</em>, you will often need to combine multiple A's in a single test. That is often also OK, as long as the test code is as simple and maintainable as possible, and as long as all relevant assertions are always executed.</p>
 <p>LeanTest itself must be initialized once per test suite. As a matter of principle we prefer that each test case starts with a clean (or <em>empty</em>, if you will) environment.</p>
 <p>There are a number of ways to ensure a clean environment, including the use of an assembly initializer class and static factory classes.</p>
-<p>A better way, supported by versions &gt; 4.4 of the LeanTest nuGet packages, is called <em>factory-less</em> and an assembly initializer class is not necessary.</p>
-<h2 id="factory-less-leantest-initialization">Factory-less LeanTest initialization</h2>
-<p>Factory-less initialization can be seen as a method with less <em>hidden magic</em>. Without the magic, you need to handle any clean-up needed, such as e.g. disposing instances.</p>
+<p>A better way which does not require an assembly initializer class is described in the next section.</p>
+<h2 id="recommended-leantest-initialization">Recommended LeanTest initialization</h2>
+<p>The recommended method of initialization can be seen as a method with less <em>hidden magic</em> than the <em><code>AssemblyInitializer</code> based method</em> described below. Without the magic, you need to handle any clean-up needed, such as e.g. disposing instances.</p>
 <p>Below are examples of how to implement it for the .Net Core built-in IoC container. The first example does not use the ASP.NET Core test server, so you can use this approach for non-ASP.NET Core projects. Note that an assembly initializer is not needed, we simply new up a context builder for each test.</p>
-<h3 id="factory-less-initialization-without-a-test-server">Factory-less initialization without a test server</h3>
+<h3 id="initialization-without-a-test-server">Initialization without a test server</h3>
 <pre><code class="language-csharp">[TestInitialize]
 public void TestInitialize()
 {
@@ -174,7 +174,7 @@ public class MyContextBuilderFactory
                     CompositionRoot.Initialize(new ServiceCollection()))));
 }
 </code></pre>
-<h3 id="factory-less-initialization-with-a-test-server">Factory-less initialization with a test server</h3>
+<h3 id="initialization-with-a-test-server">Initialization with a test server</h3>
 <pre><code class="language-csharp">[TestClass]
 public class TestAuthController
 {
@@ -220,7 +220,7 @@ public class ExampleWebApplication
 <p>Using a test server is preferred for ASP.NET Core, as this approach will exercise the end-point through the http stack, which means that even routing, model binding etc. will be under test. For a good description of the benefits of testing through the .NET Core test server see this <a href="https://andrewlock.net/should-you-unit-test-controllers-in-aspnetcore/">blog post</a> or this <a href="https://app.pluralsight.com/library/courses/integration-testing-asp-dot-net-core-applications-best-practices/table-of-contents">Pluralsight course</a>. While it is not recommended to test through the controller C# class in .NET Core, it is sometimes necessary to test through other objects registered in the IoC container. Note that even in these cases <em>the principle of maximizing the code under test</em> must be adhered to.</p>
 <h2 id="using-an-assembly-initializer-class-and-static-factory-classes">Using an assembly initializer class and static factory classes</h2>
 <p>The initialization can be done in an assembly initializer class so that initialization is done exactly once per test suite (a test project is considered to be a test suite). We ensure a clean environment per test case by passing a factory method to LeanTest's <code>ContextBuilderFactory</code> initializer. Below are examples of how to implement it for the .Net Core built-in IoC container. The first example does not use the ASP.NET Core TestServer, so you can use this approach for non-ASP.NET Core projects,</p>
-<h3 id="initialization-without-a-test-server">Initialization without a test server</h3>
+<h3 id="initialization-without-a-test-server-1">Initialization without a test server</h3>
 <pre><code class="language-csharp">/// &lt;summary&gt;
 /// Does the setup which must must be done consistently across all tests in the assembly.
 /// &lt;/summary&gt;
@@ -240,7 +240,7 @@ public static class AssemblyInitializer
     public static void AssemblyCleanup() =&gt; ContextBuilderFactory.Cleanup();
 }
 </code></pre>
-<h3 id="initialization-with-a-test-server">Initialization with a test server</h3>
+<h3 id="initialization-with-a-test-server-1">Initialization with a test server</h3>
 <pre><code class="language-csharp">[TestClass]
 public static class AssemblyInitializer
 {
@@ -272,8 +272,8 @@ public static class AssemblyInitializer
 <li><em>xunit</em> and <em>xunit.runner.visualstudio</em> (not <em>MSTest.*</em>), and</li>
 <li><em>LeanTest.xUnit</em> (not <em>LeanTest.MsTest</em>)</li>
 </ul>
-<h3 id="factory-less-leantest-initialization-with-xunit">Factory-less LeanTest initialization with Xunit</h3>
-<p>With factory-less initialization, you new up a context builder similar to how it is done for MS Test. you do not need an assembly initializer.</p>
+<h3 id="recommended-leantest-initialization-with-xunit">Recommended LeanTest initialization with Xunit</h3>
+<p>With Xunit, you new up a context builder similar to how it is done for MS Test..</p>
 <h3 id="using-an-assembly-initializer-class-and-static-factory-classes-with-xunit">Using an assembly initializer class and static factory classes with Xunit</h3>
 <p>Initialization of LeanTest.NET itself in an <code>AssemblyInitializer</code> class is similar to MS Test based test projects, except that the following attributes must be added,</p>
 <pre><code class="language-csharp">[assembly: AssemblyFixture(typeof(AssemblyInitializer))]
