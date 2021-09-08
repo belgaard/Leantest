@@ -264,7 +264,7 @@ public class TestMyController
 }
 ```
 
-The difference here, when compared to an MS Test based test is the Xunit specific `ITestOutputHelper` which is used to craft our own `TestContext`. The reason for this is that Xunit does not support a test context (it is planned for version 3.x) as MS Test does.
+The difference here, when compared to an MS Test based test, is the Xunit specific `ITestOutputHelper` which is used to craft our own `TestContext`. The reason for this is that Xunit does not support a test context (it is planned for version 3.x) as MS Test does.
 
 Each Xunit test will differ from similar MS Test dittos only for test framework specific differences, such as Xunit using `Fact` or `Theory` attributes rather than `TestMethod`. Also, assertion syntax is different.
 

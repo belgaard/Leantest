@@ -305,7 +305,7 @@ public sealed class AssemblyInitializer
 // ...
 }
 </code></pre>
-<p>The difference here, when compared to an MS Test based test is the Xunit specific <code>ITestOutputHelper</code> which is used to craft our own <code>TestContext</code>. The reason for this is that Xunit does not support a test context (it is planned for version 3.x) as MS Test does.</p>
+<p>The difference here, when compared to an MS Test based test, is the Xunit specific <code>ITestOutputHelper</code> which is used to craft our own <code>TestContext</code>. The reason for this is that Xunit does not support a test context (it is planned for version 3.x) as MS Test does.</p>
 <p>Each Xunit test will differ from similar MS Test dittos only for test framework specific differences, such as Xunit using <code>Fact</code> or <code>Theory</code> attributes rather than <code>TestMethod</code>. Also, assertion syntax is different.</p>
 <p>As always, use the test attributes from the <em>LeanTest.Attribute</em> namespace.</p>
 <h2 id="dependency-injection">Dependency Injection</h2>
