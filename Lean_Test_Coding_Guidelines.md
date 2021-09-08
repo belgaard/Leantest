@@ -38,7 +38,7 @@ public class TestMyService
     [TestInitialize]
     public void TestInitialize()
     {
-        _contextBuilder = // there are a coupe of ways to create a context builder
+        _contextBuilder = // there are a couple of ways to create a context builder
             .RegisterAttributes(TestContext)
         _target = _contextBuilder.GetHttpClient();
     }
@@ -68,9 +68,9 @@ Since the main focus for Lean Testing is usually *functional coverage*, you wil
 
 LeanTest itself must be initialized once per test suite. As a matter of principle we prefer that each test case starts with a clean (or *empty*, if you will) environment.
 
-There are a number of ways to ensure a clean environment, including the use of an assembly initializer class and with static factory classes.
+There are a number of ways to ensure a clean environment, including the use of an assembly initializer class and static factory classes.
 
-A better way, supported by versions \> 4.4 of the LeanTest nuGet packages is *factory-less* and an assembly initializer class is not necessary.
+A better way, supported by versions \> 4.4 of the LeanTest nuGet packages, is called *factory-less* and an assembly initializer class is not necessary.
 
 ## Factory-less LeanTest initialization
 

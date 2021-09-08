@@ -122,7 +122,7 @@ public class TestMyService
     [TestInitialize]
     public void TestInitialize()
     {
-        _contextBuilder = // there are a coupe of ways to create a context builder
+        _contextBuilder = // there are a couple of ways to create a context builder
             .RegisterAttributes(TestContext)
         _target = _contextBuilder.GetHttpClient();
     }
@@ -145,8 +145,8 @@ public async Task AssumeUsersAsyncMustReturnIbWithActiveChildWhenAssumingIbWithA
 <p>Note that it is quite possible that you need <a href="https://elgaard.blog/2011/02/06/multiple-asserts-in-a-single-unit-test-method/">multiple asserts in a single unit test method</a>, and that's OK as long as you use the magic of <code>MultiAssert</code> so that all relevant assertions are always executed.</p>
 <p>Since the main focus for Lean Testing is usually <em>functional coverage</em>, you will often need to combine multiple A's in a single test. That is often also OK, as long as the test code is as simple and maintainable as possible, and as long as all relevant assertions are always executed.</p>
 <p>LeanTest itself must be initialized once per test suite. As a matter of principle we prefer that each test case starts with a clean (or <em>empty</em>, if you will) environment.</p>
-<p>There are a number of ways to ensure a clean environment, including the use of an assembly initializer class and with static factory classes.</p>
-<p>A better way, supported by versions &gt; 4.4 of the LeanTest nuGet packages is <em>factory-less</em> and an assembly initializer class is not necessary.</p>
+<p>There are a number of ways to ensure a clean environment, including the use of an assembly initializer class and static factory classes.</p>
+<p>A better way, supported by versions &gt; 4.4 of the LeanTest nuGet packages, is called <em>factory-less</em> and an assembly initializer class is not necessary.</p>
 <h2 id="factory-less-leantest-initialization">Factory-less LeanTest initialization</h2>
 <p>Factory-less initialization can be seen as a method with less <em>hidden magic</em>. Without the magic, you need to handle any clean-up needed, such as e.g. disposing instances.</p>
 <p>Below are examples of how to implement it for the .Net Core built-in IoC container. The first example does not use the ASP.NET Core test server, so you can use this approach for non-ASP.NET Core projects. Note that an assembly initializer is not needed, we simply new up a context builder for each test.</p>
