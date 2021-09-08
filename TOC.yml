@@ -17,9 +17,6 @@ contents:
   - page: Inside LeanTest.Net
     file: Inside_LeanTest_Net.md
     desc: Inside LeanTest.Net.
-  - page: License
-    file: LicenseApache.md
-    desc: Program license and terms of use.
   - page: Readme
     file: README.md
     desc: Deployment, support and references.
