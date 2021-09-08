@@ -383,7 +383,8 @@ and <code>IMockForData&lt;AccountList&gt;</code>.</p>
 {
     private AccountsList _accountsList;
 
-    public Task&lt;AccountsList&gt; GetMyAccountsAsync(OpenApiHttpClient openApiClient) =&gt; Task.FromResult(_accountsList);
+    public Task&lt;AccountsList&gt; GetMyAccountsAsync(OpenApiHttpClient openApiClient) =&gt; 
+        Task.FromResult(_accountsList);
 
     public void WithData(AccountsList data) =&gt; _accountsList = data;
 }

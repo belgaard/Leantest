@@ -376,7 +376,8 @@ public class MockForDataPortfolioService : IPortfolioService, IMockForData<Accou
 {
     private AccountsList _accountsList;
 
-    public Task<AccountsList> GetMyAccountsAsync(OpenApiHttpClient openApiClient) => Task.FromResult(_accountsList);
+    public Task<AccountsList> GetMyAccountsAsync(OpenApiHttpClient openApiClient) => 
+        Task.FromResult(_accountsList);
 
     public void WithData(AccountsList data) => _accountsList = data;
 }
