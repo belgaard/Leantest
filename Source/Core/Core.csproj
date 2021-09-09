@@ -11,7 +11,7 @@
       A shared library used to simplify the process of creating and maintaining simple and consistent developer tests accross projects.
     </Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageTags>Unit Test UnitTest DeveloperTest Developer</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyVersion>$(appveyor_build_version)</AssemblyVersion>
@@ -28,4 +28,6 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>LeanTest.AspNetCore</_Parameter1>
     </AssemblyAttribute>
-  </ItemGroup></Project>
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
+</Project>

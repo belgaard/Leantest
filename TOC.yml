@@ -20,3 +20,6 @@ contents:
   - page: Readme
     file: README.md
     desc: Deployment, support and references.
+  - page: License
+    file: LICENSE.md
+    desc: License.

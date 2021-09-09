@@ -12,7 +12,7 @@
       Adds support for adding test data in Json format.
     </Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageTags>Unit Test UnitTest DeveloperTest Developer</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyVersion>$(appveyor_build_version)</AssemblyVersion>
@@ -27,6 +27,7 @@
   <ItemGroup>
     <PackageReference Include="LeanTest.Core" Version="4.*" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
 </Project>
