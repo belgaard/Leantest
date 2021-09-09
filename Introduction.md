@@ -14,6 +14,12 @@ At the time of writing, we write such tests at *all levels*, ranging from tests 
 
 Covering all levels required that we expanded the concept of mocks. Essentially, to us a mock is something that substitutes, or *mocks away*, some production code, whereas a *state handler* is something that handles data for the test target without mocking away production code. Low levels of test, those that are similar to traditional unit tests, will do some mocking. High levels of tests, those that are similar to integration tests, will, at least ideally, not mock at all but will probably use state handlers. The middle ground tests will use a mix. State handlers need infrastructure support in order to interact with a test environment, but LeanTest.Net is not concerned with the details of that.
 
+We have borrowed part of our nomenclature from the Microsofties since they have been on a quest to [*shift left to make testing fast and reliable*](https://docs.microsoft.com/en-us/devops/develop/shift-left-make-testing-fast-reliable), not at all unlike what lead to the concepts described here. For the definition of levels of tests, we are very much aligned,
+
+- L0 tests are fast, in-memory tests. What most people would call unit tests, except that we tend to have very large units. You can include e.g. an in-memory Entity Framework database with an L0 test suite.
+- L1 tests are as L0 tests, but may have one or more out-of-process dependencies. The purpose of L1 tests is to test "code" which resides in out-of-process dependencies, such as e.g. stored procedures in SQL Server. Since L1 tests run in-memory, you don't need an environment per se, but you could run your SQL Server instance with the relevant schema in a Docker container on your build server and local computers.
+- L2 tests target deployed, out-of-process code. L2 tests require some kind of test environment. We prefer *owned, on-demand environments* because *shared, long-living environments* tend to cause non-deterministic (flaky) tests and *the value for money* ([confidence for stakeholders](https://dannorth.net/2021/07/26/we-need-to-talk-about-testing/)) tends to be very low.
+
 ## The Concept
 
 The underlying thoughts behind the _Lean Testing methodology_ (formerly known as _developer testing_) are described in three articles on medium.com,
