@@ -222,6 +222,20 @@ public void PostOrderMustSellWhenAssetIsTradable()
 }
 </code></pre>
 <p>The test tooling is supposed to put the description in a column in a test report, e.g. by adding or augmenting a <em>Description</em> column in test case tables found in source test plan documents.</p>
+<h2 id="implementing-the-leantest.net-attributes">Implementing the LeanTest.Net attributes</h2>
+<p>The implementation of the attributes is quite simple and involves only writing easily recognizable texts and given arguments to <em>standard output</em>.</p>
+<p>It is then assumed that a test runner will store these texts with test run output and that tools can read this information.</p>
+<p>While conventional wisdom tells us that <a href="https://www.coderhood.com/assumption-evil-mother-mistakes/">assumption is the evil mother of all mistakes</a>, the above assumption is actually sensible if you use the MS Test (<code>vstest.console</code>) test runner and then parse its XML output, a so-called <code>.trx</code>-file.</p>
+<p>LeanTest.Net provides implementations of the attributes for MS Test and Xunit tests. Test output can be generated as e.g.</p>
+<pre><code class="language-cmd">vstest.console Orders.L0Tests.dll /logger:trx;LogFileName=MyTrx.trx /platform:x64
+</code></pre>
+<p>output in <code>MyTrx.trx</code> will contain information like the following,</p>
+<pre><code class="language-xml">&lt;UnitTestResult testName=&quot;Orders.L0Tests.TestOrders.PostOrderMustReportErrorWhenInvalidId&quot;&gt;
+      &lt;Output&gt;
+        &lt;StdOut&gt;TestScenarioId = ###---Input---###&lt;/StdOut&gt;
+      &lt;/Output&gt;
+&lt;/UnitTestResult&gt;
+</code></pre>
 
 				</div>
 				<ul class="pager">
