@@ -107,7 +107,7 @@
 </blockquote>
 <p>When confronted with that definition, many people ask &quot;<em>what</em> is meant by <em><strong>evidence</strong></em> and <em>how</em> do I produce that?&quot;</p>
 <p><a href="https://ieeexplore.ieee.org/document/9440154">There is a paper which offers a possible answer to <em>what evidence is</em></a>. The paper argues that a healthy dose of BDD thinking leads us to boil down the process of testing into identifying values which can then be managed using combinatorial testing, knowledge about business value and common sense. <a href="https://zenodo.org/record/4661956#.YUrgsvkzabg">There is a 15-minute conference presentation of the paper here</a>.</p>
-<p>LeanTest.Net can <em>help you</em> with the <em>how to produce evidence</em> part. Note that it can <em>help you</em>, it <strong>cannot</strong> <em>produce the evidence</em> for you since testing is inherently a human effort.</p>
+<p>LeanTest.Net can <em>help you</em> with <em>how to produce the evidence</em>. Note that it can <em>help you</em>, it <strong>cannot</strong> <em>produce the evidence</em> for you since testing is inherently a human effort.</p>
 <p>The idea is that you use your experience, your business stakeholder knowledge and your <em>I-want-break-things</em> super power to produce a test plan document. A test plan will contain a set of tables which outline relevant combinations and a test case name for each test case which you intend to implement.</p>
 <p>You don't need LeanTest.Net to write tooling which ties test case tables to each test run, as you simply take output from each test run and merge it with test plan documents, then generate new documents with the combined information.</p>
 <p>For example, with the test case table below (<a href="https://github.com/belgaard/OrdersExample/blob/master/doc/TestPlans/Orders.md">from the GitHub repo which accompanies the above mentioned paper</a>), a tool could simply parse the <em>Test case</em> column, find e.g. the outcome of the <code>PostOrderMustReportErrorWhenInvalidId</code> test method in a given test run, then present the combined information in a report. We may not have implementations of all four test cases at any given time during iterative development, but the tool can give us fast feedback on what we are still missing.</p>
@@ -188,7 +188,9 @@
 </tbody>
 </table>
 <p>Define scenarios with IDs in test plan(s), then put a reference to these on each test method by attributing with the <code>TestScenarioId</code> Attribute, e.g. as,</p>
-<pre><code class="language-csharp">[TestMethod, TestScenarioId(&quot;Input&quot;)]
+<pre><code class="language-csharp">using LeanTest.Attribute;
+// ...
+[TestMethod, TestScenarioId(&quot;Input&quot;)]
 public void PostOrderMustReportErrorWhenInvalidId()
 {
 // ...
@@ -196,19 +198,24 @@ public void PostOrderMustReportErrorWhenInvalidId()
 </code></pre>
 <p>The scenario ID is supposed to be unique within a certain context, typically a single Git repository. It is recommended to use information bearing IDs such as generic <code>Core</code>, <code>Input</code> or specific references to areas of business functionality.</p>
 <h3 id="the-testtag-attribute">The <code>TestTag</code> Attribute</h3>
-<p>When working incrementally, you will often find that you have decided on a set of test cases but you have not yet implemented the equivalent test methods. It is a fair assumption that test tools will flag missing test methods as <em>you are not there yet</em>. An explicit way to specify that test cases which have been agreed upon are not implemented yet can be documented in code with a placeholder test method with a <em>test tag</em>,</p>
-<pre><code class="language-csharp">using static LeanTest.Attribute.TestTagAttribute;
+<p>When working incrementally, you will often find that you have decided on a set of test cases but you have not yet implemented the equivalent test methods.</p>
+<p>It is a fair assumption that test tools will flag missing test methods as <em>you are not there yet</em>.</p>
+<p>An explicit way to specify that test cases which have been agreed upon are not implemented yet can be documented in code with a placeholder test method with a <em>test tag</em>,</p>
+<pre><code class="language-csharp">using LeanTest.Attribute;
+using static LeanTest.Attribute.TestTagAttribute;
 // ...
 [TestMethod, TestScenarioId(&quot;Core&quot;), TestTag(NotImplemented)]
 public void PostOrderMustBuyWhenAssetIsTradable()
 {
 }
 </code></pre>
-<p>The above example is a special case of using the <code>TestTag</code> attribute, giving it a pre-defined constant <code>NotImplemented</code>.</p>
+<p>The above example is a special case of using the <code>TestTag</code> attribute, giving it a pre-defined constant <code>NotImplemented</code>. Test tooling could <em>ensure</em> that all test cases in test plans have equivalent test methods by generating such placeholder tests for what may be missing.</p>
 <p>In general, you can pass any string to the attribute and then interpret it as you like in your tooling.</p>
 <h4 id="the-testdescription-attribute">The <code>TestDescription</code> Attribute</h4>
 <p>Comments can be added to test cases using the <code>TestDescription</code> attribute on test methods,</p>
-<pre><code class="language-csharp">[TestMethod, TestScenarioId(&quot;Core&quot;), TestDescription(&quot;This will go into the comments column for this test in the test report.&quot;)]
+<pre><code class="language-csharp">using LeanTest.Attribute;
+// ...
+[TestMethod, TestScenarioId(&quot;Core&quot;), TestDescription(&quot;This will go into the comments column for this test in the test report.&quot;)]
 public void PostOrderMustSellWhenAssetIsTradable()
 {
 // ...
