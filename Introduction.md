@@ -68,7 +68,7 @@ Our test target can potentially be part of a huge and entangled code base, but b
 
 Maximizing code under test means not mocking away logic unless we really have to. And we only really have to mock logic away if we cannot control it deterministically (or if it is really slow to execute). In practice, this usually means that truly external dependencies must be mocked and nothing more. And we have a single mocking strategy for an entire test suite, having slightly different mocking per test case is a no-no.
 
-Minimizing data means ensuring that exactly the data needed for a given test to run (yes, we declare data _per-test_) is provided for the test. With naming we try to express exactly what characteristics of the data will make the test run.
+Minimizing data means ensuring that exactly the data needed for a given test to run (yes, we declare data _per-test_) is provided for the test. With naming we try to express exactly what characteristics of the data will make the test pass.
 
 ### The builder pattern
 

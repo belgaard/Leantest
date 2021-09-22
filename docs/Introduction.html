@@ -157,7 +157,7 @@
 <p>Our test target can potentially be part of a huge and entangled code base, but by minimizing the data per test, we can handle that with very few and simple mocks. Which is what the next section is about.</p>
 <h3 id="maximizing-code-under-test-but-minimizing-data">Maximizing code under test but minimizing data</h3>
 <p>Maximizing code under test means not mocking away logic unless we really have to. And we only really have to mock logic away if we cannot control it deterministically (or if it is really slow to execute). In practice, this usually means that truly external dependencies must be mocked and nothing more. And we have a single mocking strategy for an entire test suite, having slightly different mocking per test case is a no-no.</p>
-<p>Minimizing data means ensuring that exactly the data needed for a given test to run (yes, we declare data <em>per-test</em>) is provided for the test. With naming we try to express exactly what characteristics of the data will make the test run.</p>
+<p>Minimizing data means ensuring that exactly the data needed for a given test to run (yes, we declare data <em>per-test</em>) is provided for the test. With naming we try to express exactly what characteristics of the data will make the test pass.</p>
 <h3 id="the-builder-pattern">The builder pattern</h3>
 <p>In the above example, we declare the data, then call <code>Build</code>,</p>
 <pre class="csharp"><code class="csharp">			<span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../../Source/Examples.L0Tests/TestMyApplicationService.html#Examples.L0Tests.TestMyApplicationService._contextBuilder">_contextBuilder</a></span>
