@@ -26,6 +26,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LiterateCS", "LiterateCS", "{492CD0A9-8FAC-461E-A1C7-A4ACBE2F0171}"
 	ProjectSection(SolutionItems) = preProject
 		defaults.yml = defaults.yml
+		Evidence.md = Evidence.md
 		index.md = index.md
 		Inside_LeanTest_Net.md = Inside_LeanTest_Net.md
 		Introduction.md = Introduction.md
