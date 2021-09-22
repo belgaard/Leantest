@@ -10,7 +10,7 @@ When confronted with that definition, many people ask "*what* is meant by ***evi
 
 LeanTest.Net can *help you* with *how to produce the evidence*. Note that it can *help you*, it **cannot** *produce the evidence* for you since testing is inherently a human effort.
 
-The idea is that you use your experience, your business stakeholder knowledge and your *I-want-break-things* super power to produce a test plan document. A test plan will contain a set of tables which outline relevant combinations and a test case name for each test case which you intend to implement.
+The idea is that you use your experience, your business stakeholder knowledge and your *I-want-to-break-things* super power to produce a test plan document. A test plan will contain a set of tables which outline relevant combinations and a test case name for each test case which you intend to implement.
 
 You don't need LeanTest.Net to write tooling which ties test case tables to each test run, as you simply take output from each test run and merge it with test plan documents, then generate new documents with the combined information.
 
