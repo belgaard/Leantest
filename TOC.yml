@@ -8,6 +8,9 @@ contents:
   - page: Introduction
     file: Introduction.md
     desc: Introduction to Lean Testing.
+  - page: Producing Evidence
+    file: Evidence.md
+    desc: Producing evidence.
   - page: Coding Guidelines
     file: Lean_Test_Coding_Guidelines.md
     desc: Coding Guidelines.
