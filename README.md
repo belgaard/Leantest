@@ -36,7 +36,7 @@ Officially released builds are available on nuGet.org,
 ## References
 An early version of LeanTest, as well as the concept of developer testing, 
 was used extensively while developing Saxo Bank's social web site, 
-[TradingFloor.com](https://www.tradingfloor.com/). 
+[TradingFloor.com](https://web.archive.org/web/20170223064452/https://www.tradingfloor.com/). 
 Around 850+ developer tests (today 1000+ tests) covered most business functionality, running on a typical developer PC in around one minute. 
 Major refactorings of the code were done with these tests as a safety net.
 

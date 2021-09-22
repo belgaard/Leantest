@@ -86,7 +86,7 @@ The differences among these models of execution is handled behind the scenes, wi
 
 It is that simple - the LeanTest nuGet packages handle the rest.
 
-And the good part is that experience shows that for large code bases only a few of these implementations are needed, and each of these are very simple with hardly any logic. When we made [tradingfloor.com](https://www.tradingfloor.com/) we had a handful of mocks/state handlers with cyclomatic complexity close to 1.
+And the good part is that experience shows that for large code bases only a few of these implementations are needed, and each of these are very simple with hardly any logic. When we made [tradingfloor.com](https://web.archive.org/web/20170223064452/https://www.tradingfloor.com/) we had a handful of mocks/state handlers with cyclomatic complexity close to 1.
 
 For tests which run in complex and shared test environments, it is not realistic to minimize data the way we can in in-memory tests. In such environments, state handler implementations will check if the required data is there and fail in a recognizable way if the required data is not there.
 
