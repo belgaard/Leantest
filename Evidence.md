@@ -99,13 +99,13 @@ It is then assumed that a test runner will store these texts with test run outpu
 
 While conventional wisdom tells us that [assumption is the evil mother of all mistakes](https://www.coderhood.com/assumption-evil-mother-mistakes/), the above assumption is actually sensible if you use the MS Test (`vstest.console`) test runner and then parse its XML output, a so-called `.trx`-file.
 
-LeanTest.Net provides implementations of the attributes for MS Test and Xunit tests. Test output can be generated as e.g.
+LeanTest.Net provides implementations of the attributes for MS Test and Xunit tests. Test output can be generated and put in a file `MyTrx.trx` using the following command,
 
 ```cmd
 vstest.console Orders.L0Tests.dll /logger:trx;LogFileName=MyTrx.trx /platform:x64
 ```
 
-output in `MyTrx.trx` will contain information like the following,
+The output will contain information like the following,
 
 ```xml
 <UnitTestResult testName="Orders.L0Tests.TestOrders.PostOrderMustReportErrorWhenInvalidId">
@@ -114,3 +114,5 @@ output in `MyTrx.trx` will contain information like the following,
       </Output>
 </UnitTestResult>
 ```
+
+The schema of this file is defined in the file `vstst.xsd` which is found in the Visual Studio installation folder.
