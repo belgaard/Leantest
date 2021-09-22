@@ -75,7 +75,7 @@ The above example is a special case of using the `TestTag` attribute, giving it 
 
 In general, you can pass any string to the attribute and then interpret it as you like in your tooling.
 
-#### The `TestDescription` Attribute
+### The `TestDescription` Attribute
 
 Comments can be added to test cases using the `TestDescription` attribute on test methods,
 
