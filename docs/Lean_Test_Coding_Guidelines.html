@@ -379,7 +379,8 @@ and <code>IMockForData&lt;AccountList&gt;</code>.</p>
     where TInterface: class
 {
     container.AddSingleton&lt;TImplementation&gt;();
-    container.AddSingleton&lt;TInterface&gt;(x =&gt; x.GetRequiredService&lt;TImplementation&gt;());
+    if (typeof(TInterface) != typeof(TImplementation))
+    	container.AddSingleton&lt;TInterface&gt;(x =&gt; x.GetRequiredService&lt;TImplementation&gt;());
     container.AddSingleton&lt;IMockForData&lt;TData&gt;&gt;(x =&gt; x.GetRequiredService&lt;TImplementation&gt;());
 }
 </code></pre>
