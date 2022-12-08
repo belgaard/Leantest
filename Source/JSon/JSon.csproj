@@ -26,7 +26,7 @@
 
   <ItemGroup>
     <PackageReference Include="LeanTest.Core" Version="4.*" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <None Include="..\..\LICENSE.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
