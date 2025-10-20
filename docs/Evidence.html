@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Evidence - LeanTest</title>
+
+	<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="bootstrap/css/readable/bootstrap.min.css" />
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="sidebar/sidebar.min.css" />
+<link rel="stylesheet" href="css/book.min.css" />
+<link rel="stylesheet" href="syntax-highlight/monokai.min.css" />
+<link rel="stylesheet" href="mermaid/mermaid.css" />
+
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#sidebar-toggle" id="sidebar-toggle">
+					<i id="sidebar-toggle-icon" class="hidden-md hidden-lg hidden-xl fa fa-angle-double-right" aria-hidden="true"></i>
+					LeanTest
+				</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					<li><a href="https://github.com/belgaard/Leantest"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
+                    <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-cloud-download" aria-hidden="true"></i> NuGet</a></li>
+                    <li><a href="LICENSE.html">License</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-md-3 hidden-sm hidden-xs">
+                
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>On This Page</h4>
+            </div>
+            <div id="header-menu" class="panel-body main-menu">
+                <ul></ul>
+            </div>
+        </div>  
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Table of Contents</h4>
+            </div>
+            <div class="panel-body main-menu">
+                <ul>
+	<li><a href="index.html">Home</a></li>
+	<ul>
+	</ul>
+	<li><a href="Introduction.html">Introduction</a></li>
+	<ul>
+	</ul>
+	<li><a href="Evidence.html" class="selected">Producing Evidence</a></li>
+	<ul>
+	</ul>
+	<li><a href="Lean_Test_Coding_Guidelines.html">Coding Guidelines</a></li>
+	<ul>
+	</ul>
+	<li><a href="Lean_Test_Coding_Patterns.html">Coding Patterns</a></li>
+	<ul>
+	</ul>
+	<li><a href="Inside_LeanTest_Net.html">Inside LeanTest.Net</a></li>
+	<ul>
+	</ul>
+	<li><a href="README.html">Readme</a></li>
+	<ul>
+	</ul>
+	<li><a href="LICENSE.html">License</a></li>
+	<ul>
+	</ul>
+</ul>
+            </div>
+        </div>
+
+            </div>
+			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+				<ul class="pager">
+	<li class="previous"><a href="Introduction.html">Previous: Introduction</a></li>
+	<li class="next"><a href="Lean_Test_Coding_Guidelines.html">Next: Coding Guidelines</a></li>
+</ul>
+				<div id="static-content" class="markdown">
+					<h1 id="producing-evidence">Producing Evidence</h1>
+<p><a href="https://dannorth.net/2021/07/26/we-need-to-talk-about-testing/">Daniel-Terhorst North defines</a>,</p>
+<blockquote>
+<p><em>The purpose of testing is to <strong>increase confidence</strong> for <strong>stakeholders</strong> through <strong>evidence</strong>.</em></p>
+</blockquote>
+<p>When confronted with that definition, many people ask &quot;<em>what</em> is meant by <em><strong>evidence</strong></em> and <em>how</em> do I produce that?&quot;</p>
+<p><a href="https://ieeexplore.ieee.org/document/9440154">There is a paper which offers a possible answer to <em>what evidence is</em></a>. The paper argues that a healthy dose of BDD thinking leads us to boil down the process of testing into identifying values which can then be managed using combinatorial testing, knowledge about business value and common sense. <a href="https://zenodo.org/record/4661956#.YUrgsvkzabg">There is a 15-minute conference presentation of the paper here</a>.</p>
+<p>LeanTest.Net can <em>help you</em> with <em>how to produce the evidence</em>. Note that it can <em>help you</em>, it <strong>cannot</strong> <em>produce the evidence</em> for you since testing is inherently a human effort.</p>
+<p>The idea is that you use your experience, your business stakeholder knowledge and your <em>I-want-to-break-things</em> super power to produce a test plan document. A test plan will contain a set of tables which outline relevant combinations and a test case name for each test case which you intend to implement.</p>
+<p>You don't need LeanTest.Net to write tooling which ties test case tables to each test run, as you simply take output from each test run and merge it with test plan documents, then generate new documents with the combined information.</p>
+<p>For example, with the test case table below (<a href="https://github.com/belgaard/OrdersExample/blob/master/doc/TestPlans/Orders.md">from the GitHub repo which accompanies the above mentioned paper</a>), a tool could simply parse the <em>Test case</em> column, find e.g. the outcome of the <code>PostOrderMustReportErrorWhenInvalidId</code> test method in a given test run, then present the combined information in a report. We may not have implementations of all four test cases at any given time during iterative development, but the tool can give us fast feedback on what we are still missing.</p>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Price</th>
+<th>Amount</th>
+<th>Duration</th>
+<th>Test case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>~Invalid</td>
+<td>Valid</td>
+<td>Valid</td>
+<td>Valid</td>
+<td>PostOrderMustReportErrorWhenInvalidId</td>
+</tr>
+<tr>
+<td>Valid</td>
+<td>~Invalid</td>
+<td>Valid</td>
+<td>Valid</td>
+<td>PostOrderMustReportErrorWhenInvalidPrice</td>
+</tr>
+<tr>
+<td>Valid</td>
+<td>Valid</td>
+<td>~Invalid</td>
+<td>Valid</td>
+<td>PostOrderMustReportErrorWhenInvalidAmount</td>
+</tr>
+<tr>
+<td>Valid</td>
+<td>Valid</td>
+<td>Valid</td>
+<td>~Invalid</td>
+<td>PostOrderMustReportErrorWhenInvalidDuration</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-leantest.net-attributes">The LeanTest.Net attributes</h2>
+<p>The attributes of LeanTest.Net provide a simple means to augment generated documents.</p>
+<h3 id="the-testscenarioid-attribute">The <code>TestScenarioId</code> Attribute</h3>
+<p>A <em>test scenario</em> is essentially a headline for a group of test cases.</p>
+<p>If you define scenarios in a table in a test plan, you can assign a scenario to a test method. Tooling can then extract the information and e.g. group test cases under each scenario in a generated report. <a href="https://github.com/belgaard/OrdersExample/blob/master/doc/TestPlans/Orders.md">Here is an example of a scenario table</a>,</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Category</th>
+<th>Comments</th>
+<th>Scenario ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Simple input parameter validation</td>
+<td>InputValidation</td>
+<td></td>
+<td>Input</td>
+</tr>
+<tr>
+<td>Advanced input parameter validation</td>
+<td>CoreFunctionality</td>
+<td></td>
+<td>AdvancedInput</td>
+</tr>
+<tr>
+<td>Mapping combinations of input parameters for QTE and Tbl</td>
+<td>CoreFunctionality</td>
+<td></td>
+<td>Core</td>
+</tr>
+</tbody>
+</table>
+<p>Define scenarios with IDs in test plan(s), then put a reference to these on each test method by attributing with the <code>TestScenarioId</code> Attribute, e.g. as,</p>
+<pre><code class="language-csharp">using LeanTest.Attribute;
+// ...
+[TestMethod, TestScenarioId(&quot;Input&quot;)]
+public void PostOrderMustReportErrorWhenInvalidId()
+{
+// ...
+}
+</code></pre>
+<p>The scenario ID is supposed to be unique within a certain context, typically a single Git repository. It is recommended to use information bearing IDs such as generic <code>Core</code>, <code>Input</code> or specific references to areas of business functionality.</p>
+<h3 id="the-testtag-attribute">The <code>TestTag</code> Attribute</h3>
+<p>When working incrementally, you will often find that you have decided on a set of test cases but you have not yet implemented the equivalent test methods.</p>
+<p>It is a fair assumption that test tools will flag missing test methods as <em>you are not there yet</em>.</p>
+<p>An explicit way to specify that test cases which have been agreed upon are not implemented yet can be documented in code with a placeholder test method with a <em>test tag</em>,</p>
+<pre><code class="language-csharp">using LeanTest.Attribute;
+using static LeanTest.Attribute.TestTagAttribute;
+// ...
+[TestMethod, TestScenarioId(&quot;Core&quot;), TestTag(NotImplemented)]
+public void PostOrderMustBuyWhenAssetIsTradable()
+{
+}
+</code></pre>
+<p>The above example is a special case of using the <code>TestTag</code> attribute, giving it a pre-defined constant <code>NotImplemented</code>. Test tooling could <em>ensure</em> that all test cases in test plans have equivalent test methods by generating such placeholder tests for what may be missing.</p>
+<p>In general, you can pass any string to the attribute and then interpret it as you like in your tooling.</p>
+<h3 id="the-testdescription-attribute">The <code>TestDescription</code> Attribute</h3>
+<p>Comments can be added to test cases using the <code>TestDescription</code> attribute on test methods,</p>
+<pre><code class="language-csharp">using LeanTest.Attribute;
+// ...
+[TestMethod, TestScenarioId(&quot;Core&quot;), TestDescription(&quot;This will go into the comments column for this test in the test report.&quot;)]
+public void PostOrderMustSellWhenAssetIsTradable()
+{
+// ...
+}
+</code></pre>
+<p>The test tooling is supposed to put the description in a column in a test report, e.g. by adding or augmenting a <em>Description</em> column in test case tables found in source test plan documents.</p>
+<h2 id="implementing-the-leantest.net-attributes">Implementing the LeanTest.Net attributes</h2>
+<p>The implementation of the attributes is quite simple and involves only writing easily recognizable texts and given arguments to <em>standard output</em>.</p>
+<p>It is then assumed that a test runner will store these texts with test run output and that tools can read this information.</p>
+<p>While conventional wisdom tells us that <a href="https://www.coderhood.com/assumption-evil-mother-mistakes/">assumption is the evil mother of all mistakes</a>, the above assumption is actually sensible if you use the MS Test (<code>vstest.console</code>) test runner and then parse its XML output, a so-called <code>.trx</code>-file.</p>
+<p>LeanTest.Net provides implementations of the attributes for MS Test and Xunit tests. Test output can be generated and put in a file <code>MyTrx.trx</code> using the following command,</p>
+<pre><code class="language-cmd">vstest.console Orders.L0Tests.dll /logger:trx;LogFileName=MyTrx.trx /platform:x64
+</code></pre>
+<p>The output will contain information like the following,</p>
+<pre><code class="language-xml">&lt;UnitTestResult testName=&quot;Orders.L0Tests.TestOrders.PostOrderMustReportErrorWhenInvalidId&quot;&gt;
+      &lt;Output&gt;
+        &lt;StdOut&gt;TestScenarioId = ###---Input---###&lt;/StdOut&gt;
+      &lt;/Output&gt;
+&lt;/UnitTestResult&gt;
+</code></pre>
+<p>The schema of this file is defined in the file <code>vstst.xsd</code> which is found in the Visual Studio installation folder.</p>
+
+				</div>
+				<ul class="pager">
+	<li class="previous"><a href="Introduction.html">Previous: Introduction</a></li>
+	<li class="next"><a href="Lean_Test_Coding_Guidelines.html">Next: Coding Guidelines</a></li>
+</ul>
+			</div>
+        </div>
+    </div>
+    
+    <footer class="panel-footer text-center">
+        <div align="center">Invented, created and maintained by Brian Elgaard Bennett, licensed to you under the MIT license</div>
+		<div align="right">
+			<small>
+				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.
+			</small>
+		</div>
+    </footer>
+
+
+    
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="sidebar/sidebar.js"></script>
+    <script src="syntax-highlight/syntax.js"></script>
+
+</body>
+</html>

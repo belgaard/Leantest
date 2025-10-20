@@ -41,7 +41,7 @@
                     <li><a href="index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
 					<li><a href="https://github.com/belgaard/Leantest"><i class="fa fa-github" aria-hidden="true"></i> GitHub Repository</a></li>
                     <li><a href="https://www.nuget.org/packages?q=leantest"><i class="fa fa-cloud-download" aria-hidden="true"></i> NuGet</a></li>
-                    <li><a href="https://licenses.nuget.org/MIT">License</a></li>
+                    <li><a href="LICENSE.html">License</a></li>
                 </ul>
             </div>
         </div>
@@ -71,6 +71,9 @@
 	<li><a href="Introduction.html" class="selected">Introduction</a></li>
 	<ul>
 	</ul>
+	<li><a href="Evidence.html">Producing Evidence</a></li>
+	<ul>
+	</ul>
 	<li><a href="Lean_Test_Coding_Guidelines.html">Coding Guidelines</a></li>
 	<ul>
 	</ul>
@@ -83,6 +86,9 @@
 	<li><a href="README.html">Readme</a></li>
 	<ul>
 	</ul>
+	<li><a href="LICENSE.html">License</a></li>
+	<ul>
+	</ul>
 </ul>
             </div>
         </div>
@@ -91,7 +97,7 @@
 			<div id="contentarea" class="col-md-9 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 				<ul class="pager">
 	<li class="previous"><a href="index.html">Previous: Home</a></li>
-	<li class="next"><a href="Lean_Test_Coding_Guidelines.html">Next: Coding Guidelines</a></li>
+	<li class="next"><a href="Evidence.html">Next: Producing Evidence</a></li>
 </ul>
 				<div id="static-content" class="markdown">
 					<h1 id="introduction">Introduction</h1>
@@ -102,6 +108,12 @@
 <p>We get all of that, and still we have fast and 100% deterministic tests, as we would expect for unit tests.</p>
 <p>At the time of writing, we write such tests at <em>all levels</em>, ranging from tests which are similar to traditional unit tests, middle-ground tests which cover e.g. database stored procedures, and all the way to full-fledged system integration tests. All of these with a consistent syntax and design of test code and mocks.</p>
 <p>Covering all levels required that we expanded the concept of mocks. Essentially, to us a mock is something that substitutes, or <em>mocks away</em>, some production code, whereas a <em>state handler</em> is something that handles data for the test target without mocking away production code. Low levels of test, those that are similar to traditional unit tests, will do some mocking. High levels of tests, those that are similar to integration tests, will, at least ideally, not mock at all but will probably use state handlers. The middle ground tests will use a mix. State handlers need infrastructure support in order to interact with a test environment, but LeanTest.Net is not concerned with the details of that.</p>
+<p>We have borrowed part of our nomenclature from the Microsofties since they have been on a quest to <a href="https://docs.microsoft.com/en-us/devops/develop/shift-left-make-testing-fast-reliable"><em>shift left to make testing fast and reliable</em></a>, not at all unlike what lead to the concepts described here. For the definition of levels of tests, we are very much aligned,</p>
+<ul>
+<li>L0 tests are fast, in-memory tests. What most people would call unit tests, except that we tend to have very large units. You can include e.g. an in-memory Entity Framework database with an L0 test suite.</li>
+<li>L1 tests are as L0 tests, but may have one or more out-of-process dependencies. The purpose of L1 tests is to test &quot;code&quot; which resides in out-of-process dependencies, such as e.g. stored procedures in SQL Server. Since L1 tests run in-memory, you don't need an environment per se, but you could run your SQL Server instance with the relevant schema in a Docker container on your build server and local computers.</li>
+<li>L2 tests target deployed, out-of-process code. L2 tests require some kind of test environment. We prefer <em>owned, on-demand environments</em> because <em>shared, long-living environments</em> tend to cause non-deterministic (flaky) tests and <em>the value for money</em> (<a href="https://dannorth.net/2021/07/26/we-need-to-talk-about-testing/">confidence for stakeholders</a>) tends to be very low.</li>
+</ul>
 <h2 id="the-concept">The Concept</h2>
 <p>The underlying thoughts behind the <em>Lean Testing methodology</em> (formerly known as <em>developer testing</em>) are described in three articles on medium.com,</p>
 <ul>
@@ -145,7 +157,7 @@
 <p>Our test target can potentially be part of a huge and entangled code base, but by minimizing the data per test, we can handle that with very few and simple mocks. Which is what the next section is about.</p>
 <h3 id="maximizing-code-under-test-but-minimizing-data">Maximizing code under test but minimizing data</h3>
 <p>Maximizing code under test means not mocking away logic unless we really have to. And we only really have to mock logic away if we cannot control it deterministically (or if it is really slow to execute). In practice, this usually means that truly external dependencies must be mocked and nothing more. And we have a single mocking strategy for an entire test suite, having slightly different mocking per test case is a no-no.</p>
-<p>Minimizing data means ensuring that exactly the data needed for a given test to run (yes, we declare data <em>per-test</em>) is provided for the test. With naming we try to express exactly what characteristics of the data will make the test run.</p>
+<p>Minimizing data means ensuring that exactly the data needed for a given test to run (yes, we declare data <em>per-test</em>) is provided for the test. With naming we try to express exactly what characteristics of the data will make the test pass.</p>
 <h3 id="the-builder-pattern">The builder pattern</h3>
 <p>In the above example, we declare the data, then call <code>Build</code>,</p>
 <pre class="csharp"><code class="csharp">			<span data-toggle="tooltip" title="LeanTest.Core.ExecutionHandling.ContextBuilder"><a href="../../Source/Examples.L0Tests/TestMyApplicationService.html#Examples.L0Tests.TestMyApplicationService._contextBuilder">_contextBuilder</a></span>
@@ -160,7 +172,7 @@
 </ul>
 <p>The differences among these models of execution is handled behind the scenes, with simple test code which can be implemented per level of test. When we say that we <em>mock away logic</em>, we mean that we substitute production code with test code which implements an interface <code>IMockForData&lt;&gt;</code> with the type of data declared as a generic parameter. When we handle state in e.g. a database without mocking away the database code, we have test code which implements <code>IStateHandler&lt;&gt;</code>.</p>
 <p>It is that simple - the LeanTest nuGet packages handle the rest.</p>
-<p>And the good part is that experience shows that for large code bases only a few of these implementations are needed, and each of these are very simple with hardly any logic. When we made <a href="https://www.tradingfloor.com/">tradingfloor.com</a> we had a handful of mocks/state handlers with cyclomatic complexity close to 1.</p>
+<p>And the good part is that experience shows that for large code bases only a few of these implementations are needed, and each of these are very simple with hardly any logic. When we made <a href="https://web.archive.org/web/20170223064452/https://www.tradingfloor.com/">tradingfloor.com</a> we had a handful of mocks/state handlers with cyclomatic complexity close to 1.</p>
 <p>For tests which run in complex and shared test environments, it is not realistic to minimize data the way we can in in-memory tests. In such environments, state handler implementations will check if the required data is there and fail in a recognizable way if the required data is not there.</p>
 <p>So in such tests, the <code>WithData&lt;&gt;</code> syntax means <em>check if the data is there, fail if not</em>, while in in-memory tests it means <em>ensure that the data is there by putting it wherever it belongs</em>.</p>
 <p>The above is not the only advantage of the builder pattern in this context, but experience has shown that it is by far the most useful and most used.</p>
@@ -168,14 +180,14 @@
 				</div>
 				<ul class="pager">
 	<li class="previous"><a href="index.html">Previous: Home</a></li>
-	<li class="next"><a href="Lean_Test_Coding_Guidelines.html">Next: Coding Guidelines</a></li>
+	<li class="next"><a href="Evidence.html">Next: Producing Evidence</a></li>
 </ul>
 			</div>
         </div>
     </div>
     
     <footer class="panel-footer text-center">
-        <div align="center">Maintained by Brian Elgaard Bennett, licensed to you under the MIT license</div>
+        <div align="center">Invented, created and maintained by Brian Elgaard Bennett, licensed to you under the MIT license</div>
 		<div align="right">
 			<small>
 				Documentation created with <a href="https://johtela.github.io/LiterateCS/">LiterateCS</a>.

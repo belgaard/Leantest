@@ -12,7 +12,7 @@
       Features that depend on Xunit.
     </Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageTags>Unit Test UnitTest DeveloperTest Developer</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyVersion>$(appveyor_build_version)</AssemblyVersion>
@@ -29,6 +29,7 @@
   <ItemGroup>
     <PackageReference Include="LeanTest.Core" Version="4.*" />
     <PackageReference Include="xunit" Version="2.4.1" />
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
 </Project>
