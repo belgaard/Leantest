@@ -32,33 +32,33 @@ namespace LeanTest.L0Tests
         [TestMethod]
         public void WithDataMustThrowArgumentExceptionWhenNoBuilderHasBeenRegistered()
         {
-            ArgumentException actual = Assert.ThrowsException<ArgumentException>(() =>
+            ArgumentException actual = Assert.Throws<ArgumentException>(() =>
                 _contextBuilder
                     .WithData(new DataWithNoHandler())
                     .WithData(new AlsoDataWithNoHandler())
                     .Build());
 
             MultiAssertForTException.Aggregate<AssertFailedException>(
-                () => Assert.IsTrue(actual.Message.Contains(nameof(DataWithNoHandler)), 
-                    $"Expected the exception to mention the type '{nameof(DataWithNoHandler)}' as not registered."),
-                () => Assert.IsTrue(actual.Message.Contains(nameof(AlsoDataWithNoHandler)), 
-                    $"Expected the exception to mention the type '{nameof(AlsoDataWithNoHandler)}' as not registered."));
+                () => Assert.Contains(nameof(DataWithNoHandler),
+actual.Message, $"Expected the exception to mention the type '{nameof(DataWithNoHandler)}' as not registered."),
+                () => Assert.Contains(nameof(AlsoDataWithNoHandler),
+actual.Message, $"Expected the exception to mention the type '{nameof(AlsoDataWithNoHandler)}' as not registered."));
         }
 
         [TestMethod]
         public void WithDataPreRegistrationMustThrowArgumentExceptionWhenNoBuilderHasBeenRegistered()
         {
-            ArgumentException actual = Assert.ThrowsException<ArgumentException>(() =>
+            ArgumentException actual = Assert.Throws<ArgumentException>(() =>
                 _contextBuilder
                     .WithData<DataWithNoHandler>()
                     .WithData<AlsoDataWithNoHandler>()
                     .Build());
 
             MultiAssertForTException.Aggregate<AssertFailedException>(
-                () => Assert.IsTrue(actual.Message.Contains(nameof(DataWithNoHandler)), 
-                    $"Expected the exception to mention the type '{nameof(DataWithNoHandler)}' as not registered."),
-                () => Assert.IsTrue(actual.Message.Contains(nameof(AlsoDataWithNoHandler)), 
-                    $"Expected the exception to mention the type '{nameof(AlsoDataWithNoHandler)}' as not registered."));
+                () => Assert.Contains(nameof(DataWithNoHandler),
+actual.Message, $"Expected the exception to mention the type '{nameof(DataWithNoHandler)}' as not registered."),
+                () => Assert.Contains(nameof(AlsoDataWithNoHandler),
+actual.Message, $"Expected the exception to mention the type '{nameof(AlsoDataWithNoHandler)}' as not registered."));
         }
 
         [TestMethod]
@@ -89,7 +89,7 @@ namespace LeanTest.L0Tests
             DataWithTwoMocks[] allDataInMocks = _dataWithTwoMocksReader.Query().ToArray();
             var actions = new List<Action> 
             {
-                () => Assert.AreEqual(2, allDataInMocks.Length, "Expected exactly two mocks."),
+                () => Assert.HasCount(2, allDataInMocks, "Expected exactly two mocks."),
                 () => Assert.AreEqual("TheData", allDataInMocks[0].SomeData, "Expected the data to be passed to the first registered mock-for-data."),
                 () => Assert.AreEqual("TheData", allDataInMocks[1].SomeData, "Expected the data to be passed to the second registered mock-for-data.")
             };
@@ -116,7 +116,7 @@ namespace LeanTest.L0Tests
             DataWithTwoStateHandlers[] allDataInStateHandlers = _dataWithTwoStateHandlersReader.Query().ToArray();
             var actions = new List<Action> 
             {
-                () => Assert.AreEqual(2, allDataInStateHandlers.Length, "Expected exactly two state handlers."),
+                () => Assert.HasCount(2, allDataInStateHandlers, "Expected exactly two state handlers."),
                 () => Assert.AreEqual("TheData", allDataInStateHandlers[0].SomeData, "Expected the data to be passed to the first registered state handler."),
                 () => Assert.AreEqual("TheData", allDataInStateHandlers[1].SomeData, "Expected the data to be passed to the second registered state handler.")
             };
@@ -134,7 +134,7 @@ namespace LeanTest.L0Tests
             DataWithOneMockAndOneStateHandler[] allDataInStateHandlers = _dataWithOneMockAndStateHandlersReader.Query().ToArray();
             var actions = new List<Action> 
             {
-                () => Assert.AreEqual(2, allDataInStateHandlers.Length, "Expected exactly two state handlers."),
+                () => Assert.HasCount(2, allDataInStateHandlers, "Expected exactly two state handlers."),
                 () => Assert.AreEqual("TheData", allDataInStateHandlers[0].SomeData, "Expected the data to be passed to the first registered state handler."),
                 () => Assert.AreEqual("TheData", allDataInStateHandlers[1].SomeData, "Expected the data to be passed to the second registered state handler.")
             };
@@ -144,7 +144,7 @@ namespace LeanTest.L0Tests
         [TestMethod]
         public void BuildMustThrowExceptionFromStateHandlerWhenItThrowsInBuild()
         {
-            Assert.ThrowsException<Exception>(() =>
+            Assert.Throws<Exception>(() =>
                 _contextBuilder
                     .WithData(new DataForStateHandlerWhichThrowsInBuild())
                     .Build());
@@ -162,9 +162,9 @@ namespace LeanTest.L0Tests
             _contextBuilder.WithClearDataStore();
 
             MultiAssertForTException.Aggregate<AssertFailedException>(
-                () => Assert.IsTrue(allPre.Single() == firstPre, "Expected a single piece of data in the data store initially."),
-                () => Assert.IsTrue(firstPre == lastPre, "Expected the first to be the last in the data store initially."),
-                () => Assert.ThrowsException<KeyNotFoundException>(() => _contextBuilder.All<DataWithOneMock>(), 
+                () => Assert.AreEqual(firstPre, allPre.Single(), "Expected a single piece of data in the data store initially."),
+                () => Assert.AreEqual(lastPre, firstPre, "Expected the first to be the last in the data store initially."),
+                () => Assert.Throws<KeyNotFoundException>(() => _contextBuilder.All<DataWithOneMock>(), 
                     "Expected an empty data store after WithClearDataStore.")
             );
         }
