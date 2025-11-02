@@ -9,7 +9,7 @@
     <PackageVersion>$(appveyor_build_version)</PackageVersion>
     <Authors>Brian Elgaard Bennett</Authors>
     <Description>
-      Extensions for the core LeanTest. Integrates .NET Core/.NET 5 dependency injection by implemening the IIocContainer interface.
+      Extensions for the core LeanTest. Integrates .NET Core/.NET 8 dependency injection by implemening the IIocContainer interface.
     </Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
