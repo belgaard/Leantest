@@ -17,11 +17,13 @@
   <ItemGroup>
     <PackageReference Include="LeanTest.Core" Version="4.*" />
     <PackageReference Include="LeanTest.DI.DotNetCore" Version="4.*" />
-    <PackageReference Include="LeanTest.MSTest" Version="4.*" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
     <PackageReference Include="MSTest" Version="4.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MSTest\MSTest.csproj" />
+  </ItemGroup>
 </Project>
