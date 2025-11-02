@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net472;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net472;net8</TargetFrameworks>
     <AssemblyName>LeanTest.Xunit</AssemblyName>
     <RootNamespace>LeanTest.Xunit</RootNamespace>
     
@@ -28,7 +28,7 @@
 
   <ItemGroup>
     <PackageReference Include="LeanTest.Core" Version="4.*" />
-    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
     <None Include="..\..\LICENSE.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 

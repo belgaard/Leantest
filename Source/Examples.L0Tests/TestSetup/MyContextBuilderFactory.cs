@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples.L0Tests.TestSetup
 {
-	/// <summary>Does the setup which must must be done consistently across all tests in the assembly.</summary>
+	/// <summary>Does the setup which must be done consistently across all tests in the assembly.</summary>
 	public class MyContextBuilderFactory
 	{
 		public ContextBuilder ContextBuilder {get;}
@@ -16,7 +16,7 @@ namespace Examples.L0Tests.TestSetup
 		{
 			// Production code composition root with test overrides:
 			IServiceCollection serviceCollection = L0CompositionRootForTest.Initialize(CompositionRoot.Initialize(new ServiceCollection()));
-			// Wrap the .NET Core/.NET 5 DI container to be used by LeanTest:
+			// Wrap the .NET Core/.NET 8 DI container to be used by LeanTest:
 			IocContainer container = new IocContainer(serviceCollection.BuildServiceProvider());
 			// Create the context:
 			ContextBuilder = new ContextBuilder(container);

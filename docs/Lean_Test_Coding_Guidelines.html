@@ -104,7 +104,7 @@
 <p>Note that the following guidelines assume that the test projects have <a href="https://www.nuget.org/packages?q=leantest">the latest LeanTest.Net packages from nuGet</a> installed.</p>
 <p>The <em>LeanTest.Core</em> package contains the core builder pattern implementation, initialization etc.</p>
 <p>The <em>LeanTest.JSon</em> package adds extension methods for <code>WithData&lt;T&gt;(string)</code> for which a string parameter is deserialized to <code>T</code>.</p>
-<p>The <em>LeanTest.DI.DotNetCore</em> package implements a wrapper for .NET Core/.NET 5 dependency injection. Use this package rather than implementing <code>IIocContainer</code> if you use .NET Core/.NET 5.</p>
+<p>The <em>LeanTest.DI.DotNetCore</em> package implements a wrapper for .NET Core/.NET 8 dependency injection. Use this package rather than implementing <code>IIocContainer</code> if you use .NET Core/.NET 5.</p>
 <p>The <em>LeanTest.AspNetCore</em> package contains helper methods for setting up LeanTest as well as the .NET Core test host. LeanTest can handle all disposing, or you can chose to do that yourself. <strong>You do not need this package</strong> if you use the recommended method of initialization described below.</p>
 <p>The <em>LeanTest.MsTest</em> package adds MsTest specific functionality, e.g. attributes initialized via an MsTest context. You only need this package if you use the MsTest test runner.</p>
 <p>The <em>LeanTest.Xunit</em> package adds Xunit specific functionality, e.g. attributes initialized via an Xunit <code>ITestOutputHelper</code>. You only need this package if you use the xUnit test runner.</p>

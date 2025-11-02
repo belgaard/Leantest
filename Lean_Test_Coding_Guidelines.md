@@ -6,7 +6,7 @@ The *LeanTest.Core* package contains the core builder pattern implementation, in
 
 The *LeanTest.JSon* package adds extension methods for `WithData<T>(string)` for which a string parameter is deserialized to `T`.
 
-The *LeanTest.DI.DotNetCore* package implements a wrapper for .NET Core/.NET 5 dependency injection. Use this package rather than implementing `IIocContainer` if you use .NET Core/.NET 5.
+The *LeanTest.DI.DotNetCore* package implements a wrapper for .NET Core/.NET 8 dependency injection. Use this package rather than implementing `IIocContainer` if you use .NET Core/.NET 5.
 
 The *LeanTest.AspNetCore* package contains helper methods for setting up LeanTest as well as the .NET Core test host. LeanTest can handle all disposing, or you can chose to do that yourself. **You do not need this package** if you use the recommended method of initialization described below.
 

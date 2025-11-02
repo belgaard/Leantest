@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+    <TargetFramework>net8</TargetFramework>
     <AssemblyName>LeanTest.DI.DotNetCore</AssemblyName>
     <RootNamespace>LeanTest.DI.DotNetCore</RootNamespace>
 
@@ -9,7 +9,7 @@
     <PackageVersion>$(appveyor_build_version)</PackageVersion>
     <Authors>Brian Elgaard Bennett</Authors>
     <Description>
-      Extensions for the core LeanTest. Integrates .NET Core/.NET 5 dependency injection by implemening the IIocContainer interface.
+      Extensions for the core LeanTest. Integrates .NET Core/.NET 8 dependency injection by implemening the IIocContainer interface.
     </Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
@@ -28,7 +28,7 @@
 
   <ItemGroup>
     <PackageReference Include="LeanTest.Core" Version="4.*" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
     <None Include="..\..\LICENSE.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
