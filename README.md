@@ -13,7 +13,7 @@ You can find the documentation in [GitHub Pages](https://belgaard.github.io/Lean
 Pre-release nuGet packages from the latest AppVeyor build [![Build status](https://ci.appveyor.com/api/projects/status/gd05aw9aslc3kgbq/branch/master?svg=true)](https://ci.appveyor.com/project/belgaard/leantest/branch/master) (from the latest push to master on GitHub) are available on myGet.org,
  - https://www.myget.org/F/belgaard-ci/api/v3/index.json
 
-LeanTest.Net is built on at least .Net Standard 2.0, in order to avoid the many supporting dependencies needed by 1.0.
+LeanTest.Net is built on at least .Net Standard 2.1, in order to avoid the many supporting dependencies needed by 1.0.
 Older versions from v0.13.* were built on .Net Standard 1.0 
 in order to make it possible to use LeanTest.Net on all platforms supported by .Net Standard.
 
