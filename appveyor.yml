@@ -1,5 +1,5 @@
 # Inspired by https://andrewlock.net/publishing-your-first-nuget-package-with-appveyor-and-myget
-version: 4.14.0.{build}
+version: 4.14.1.{build}
 configuration: Release
 platform: Any CPU
 build_script:  
@@ -17,7 +17,7 @@ deploy:
 - provider: NuGet
   server: https://www.myget.org/F/belgaard-ci/api/v2/package
   api_key:
-    secure: whdEZ/zZL09ILdI18RLIeGgL71etbLNJpiIY4hNBhHMbZVZ82ziU6tSyMR4gw1mt
+    secure: HgQ3BAc6ybB/4eygzlxcdA9tX/LBZK5hHnk3nGRuyLaQJTCySTZJArm08iiCRZnR
   skip_symbols: true
   on:
     branch: master
