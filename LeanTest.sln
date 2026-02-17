@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xunit", "Source\xUnit\Xunit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DI.DotNetCore", "Source\DI.DotNetCore\DI.DotNetCore.csproj", "{5317582F-F808-4ADF-B46A-BDBBE33984CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.L0Tests", "Source\AspNetCore.L0Tests\AspNetCore.L0Tests.csproj", "{7F7805E9-BD15-49B6-B376-47EBA9CA28B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{5317582F-F808-4ADF-B46A-BDBBE33984CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5317582F-F808-4ADF-B46A-BDBBE33984CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5317582F-F808-4ADF-B46A-BDBBE33984CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F7805E9-BD15-49B6-B376-47EBA9CA28B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F7805E9-BD15-49B6-B376-47EBA9CA28B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F7805E9-BD15-49B6-B376-47EBA9CA28B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F7805E9-BD15-49B6-B376-47EBA9CA28B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
