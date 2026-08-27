@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net472;net8</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net472;net10.0</TargetFrameworks>
     <AssemblyName>LeanTest.JSon</AssemblyName>
     <RootNamespace>LeanTest.JSon</RootNamespace>
 
