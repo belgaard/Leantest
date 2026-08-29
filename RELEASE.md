@@ -23,3 +23,18 @@ otherwise more than a fix (e.g. a .NET upgrade); patch otherwise. This mirrors p
 e.g. the .NET 5 → 8 upgrade bumped 4.13 → 4.14, the .NET 8 → 10 upgrade bumped 4.14 → 4.15.
 
 Commit message convention: `Bumped to X.Y.Z`, tag `vX.Y.Z` on the same commit.
+
+## Regenerating docs/
+
+The `docs/` folder (GitHub Pages) is generated from the `.md`/`.cs` sources by
+[LiterateCS](https://github.com/johtela/LiterateCS), a separate pass from the release itself.
+LiterateCS targets .NET 6.0; run it with `DOTNET_ROLL_FORWARD=LatestMajor` set so it rolls
+forward to whatever runtime is actually installed:
+
+```powershell
+$env:DOTNET_ROLL_FORWARD = "LatestMajor"
+literatecs -tv -d .md -e .cs -f html -m DefaultTheme.dll -o docs -s LeanTest.sln "**.cs" "**.md"
+```
+
+Do not pass `-u`/`--updatetoc` — it dumps every discovered `.cs`/`.md` file into `TOC.yml`,
+overwriting the hand-curated navigation menu.
