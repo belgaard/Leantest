@@ -4,7 +4,7 @@ configuration: Release
 platform: Any CPU
 build_script:  
   .\Build.cmd
-image: Visual Studio 2019
+image: Visual Studio 2026
 environment:
   matrix:
     - CLI_VERSION: Latest
